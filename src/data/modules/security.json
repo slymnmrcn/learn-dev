@@ -1,0 +1,157 @@
+{
+  "category": "SECURITY",
+  "icon": "🔒",
+  "topics": [
+    {
+      "id": "web-security",
+      "title": "Web Güvenliği",
+      "description": "XSS, CSRF, SQL injection ve yaygın web güvenlik açıkları.",
+      "progress": 0,
+      "lessons": [
+        {
+          "id": "sec-1",
+          "title": "XSS (Cross-Site Scripting)",
+          "duration": "11 dk",
+          "content": "XSS, saldırganın web sayfasına kötü amaçlı JavaScript enjekte etmesidir. Kullanıcı verilerini çalabilir, oturum hijack edebilir.\n\nReflected XSS: URL'den gelen veri direkt render edilir. Stored XSS: Kötü kod veritabanına kaydedilir. DOM-based XSS: Client-side JavaScript'te oluşur.\n\nKorunma: Input validation, output encoding, Content Security Policy (CSP), HTTPOnly cookie.",
+          "codeExample": "// ❌ XSS açığı\nconst userInput = req.query.name;\nres.send(`<h1>Merhaba ${userInput}</h1>`);\n// Saldırı: ?name=<script>alert('XSS')</script>\n\n// ✅ Güvenli - Escape edilmiş\nconst escapeHtml = (text) => {\n    return text\n        .replace(/&/g, '&amp;')\n        .replace(/</g, '&lt;')\n        .replace(/>/g, '&gt;')\n        .replace(/\"/g, '&quot;')\n        .replace(/'/g, '&#039;');\n};\n\nres.send(`<h1>Merhaba ${escapeHtml(userInput)}</h1>`);\n\n// React otomatik escape eder\nfunction Welcome({ name }) {\n    return <h1>Merhaba {name}</h1>;  // Güvenli\n}\n\n// ❌ dangerouslySetInnerHTML kullanma\nfunction Comment({ html }) {\n    return <div dangerouslySetInnerHTML={{ __html: html }} />;\n}\n\n// ✅ DOMPurify ile sanitize et\nimport DOMPurify from 'dompurify';\n\nfunction Comment({ html }) {\n    const clean = DOMPurify.sanitize(html);\n    return <div dangerouslySetInnerHTML={{ __html: clean }} />;\n}\n\n// Content Security Policy\nres.setHeader(\n    'Content-Security-Policy',\n    \"default-src 'self'; script-src 'self' 'unsafe-inline'\"\n);",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "XSS, saldırganın web sayfasına kötü amaçlı JavaScript enjekte etmesidir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda xss (cross-site scripting) için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "sec-2",
+          "title": "CSRF (Cross-Site Request Forgery)",
+          "duration": "10 dk",
+          "content": "CSRF, kullanıcının bilgisi dışında istek gönderilmesini sağlar. Kullanıcı oturum açıkken saldırgan sitesi istek yapar.\n\nKorunma: CSRF token, SameSite cookie attribute, Origin/Referer header kontrolü.\n\nCSRF token, her form için unique token üretir. Server token'ı doğrular.",
+          "codeExample": "// CSRF token oluşturma (Express + csurf)\nconst csrf = require('csurf');\nconst csrfProtection = csrf({ cookie: true });\n\napp.get('/form', csrfProtection, (req, res) => {\n    res.render('form', { csrfToken: req.csrfToken() });\n});\n\napp.post('/submit', csrfProtection, (req, res) => {\n    // Token otomatik doğrulanır\n    res.send('Form submitted');\n});\n\n// HTML form\n<form method=\"POST\" action=\"/submit\">\n    <input type=\"hidden\" name=\"_csrf\" value=\"{{csrfToken}}\" />\n    <input type=\"text\" name=\"data\" />\n    <button type=\"submit\">Submit</button>\n</form>\n\n// Fetch ile CSRF token\nconst token = document.querySelector('meta[name=\"csrf-token\"]').content;\n\nfetch('/api/data', {\n    method: 'POST',\n    headers: {\n        'Content-Type': 'application/json',\n        'CSRF-Token': token\n    },\n    body: JSON.stringify({ data: 'value' })\n});\n\n// SameSite cookie\nres.cookie('session', sessionId, {\n    httpOnly: true,\n    secure: true,\n    sameSite: 'strict'  // veya 'lax'\n});\n\n// Double Submit Cookie pattern\nconst csrfToken = generateToken();\nres.cookie('csrf-token', csrfToken);\nres.json({ csrfToken });",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "CSRF, kullanıcının bilgisi dışında istek gönderilmesini sağlar.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda csrf (cross-site request forgery) için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "sec-3",
+          "title": "SQL Injection",
+          "duration": "12 dk",
+          "content": "SQL injection, kullanıcı girdisinin SQL sorgusuna enjekte edilmesidir. Veritabanı erişimi, veri çalma, silme riski vardır.\n\nKorunma: Prepared statements, parameterized queries, ORM kullanımı, input validation.\n\nAsla kullanıcı girdisini direkt SQL sorgusuna eklemeyin.",
+          "codeExample": "// ❌ SQL Injection açığı\nconst username = req.body.username;\nconst password = req.body.password;\n\nconst query = `SELECT * FROM users WHERE username = '${username}' AND password = '${password}'`;\ndb.query(query);\n// Saldırı: username = \"admin' OR '1'='1\" password = \"anything\"\n// Sonuç: SELECT * FROM users WHERE username = 'admin' OR '1'='1' AND password = 'anything'\n\n// ✅ Prepared statement (MySQL)\nconst query = 'SELECT * FROM users WHERE username = ? AND password = ?';\ndb.query(query, [username, password], (err, results) => {\n    // Güvenli\n});\n\n// ✅ Parameterized query (PostgreSQL)\nconst query = 'SELECT * FROM users WHERE username = $1 AND password = $2';\nclient.query(query, [username, password]);\n\n// ✅ ORM kullanımı (Sequelize)\nconst user = await User.findOne({\n    where: {\n        username: username,\n        password: password\n    }\n});\n\n// ✅ Query builder (Knex)\nconst users = await knex('users')\n    .where('username', username)\n    .andWhere('password', password);\n\n// Input validation\nconst { body, validationResult } = require('express-validator');\n\napp.post('/login',\n    body('username').isAlphanumeric().trim().escape(),\n    body('password').isLength({ min: 8 }),\n    (req, res) => {\n        const errors = validationResult(req);\n        if (!errors.isEmpty()) {\n            return res.status(400).json({ errors: errors.array() });\n        }\n        // Güvenli işlem\n    }\n);",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "SQL injection, kullanıcı girdisinin SQL sorgusuna enjekte edilmesidir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda sql injection için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "sec-4",
+          "title": "Authentication Best Practices",
+          "duration": "13 dk",
+          "content": "Güvenli authentication, şifre hashing, session yönetimi ve 2FA içerir.\n\nŞifreler asla plain text saklanmaz. bcrypt, argon2 gibi hash algoritmaları kullanılır. Salt ile rainbow table saldırıları önlenir.\n\nJWT (JSON Web Token), stateless authentication sağlar. Access token kısa ömürlü, refresh token uzun ömürlüdür.",
+          "codeExample": "// Şifre hashing (bcrypt)\nconst bcrypt = require('bcrypt');\n\n// Kayıt\nconst saltRounds = 10;\nconst hashedPassword = await bcrypt.hash(password, saltRounds);\nawait db.users.insert({ username, password: hashedPassword });\n\n// Giriş\nconst user = await db.users.findOne({ username });\nconst isValid = await bcrypt.compare(password, user.password);\n\nif (isValid) {\n    // Oturum aç\n}\n\n// JWT oluşturma\nconst jwt = require('jsonwebtoken');\n\nconst accessToken = jwt.sign(\n    { userId: user.id, role: user.role },\n    process.env.JWT_SECRET,\n    { expiresIn: '15m' }\n);\n\nconst refreshToken = jwt.sign(\n    { userId: user.id },\n    process.env.REFRESH_SECRET,\n    { expiresIn: '7d' }\n);\n\n// JWT doğrulama middleware\nfunction authenticateToken(req, res, next) {\n    const token = req.headers['authorization']?.split(' ')[1];\n    \n    if (!token) {\n        return res.sendStatus(401);\n    }\n    \n    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {\n        if (err) return res.sendStatus(403);\n        req.user = user;\n        next();\n    });\n}\n\napp.get('/protected', authenticateToken, (req, res) => {\n    res.json({ message: 'Protected data', user: req.user });\n});\n\n// 2FA (TOTP)\nconst speakeasy = require('speakeasy');\n\n// Secret oluştur\nconst secret = speakeasy.generateSecret({ name: 'MyApp' });\n// QR code göster: secret.otpauth_url\n\n// Token doğrula\nconst verified = speakeasy.totp.verify({\n    secret: secret.base32,\n    encoding: 'base32',\n    token: userToken\n});",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Güvenli authentication, şifre hashing, session yönetimi ve 2FA içerir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda authentication best practices için hangi soruya cevap verebildiğini yaz."
+          }
+        }
+      ],
+      "quiz": true,
+      "study": {
+        "difficulty": "Orta",
+        "estimatedTime": "51 dk",
+        "prerequisites": [
+          "Ağ ve HTTP temelleri"
+        ],
+        "learningGoals": [
+          "Web Güvenliği için core concept ve terminology'i ayırabilmek",
+          "Pattern, API veya tool seçimini örnekler üzerinden yapabilmek",
+          "Küçük bir senaryoda doğru approach'u seçebilmek"
+        ],
+        "summary": "XSS, CSRF, SQL injection ve yaygın web güvenlik açıkları.",
+        "whyItMatters": "Güvenlik modülünde web güvenliği başlığı, core workflow içindeki kritik parçalardan biridir."
+      }
+    },
+    {
+      "id": "cryptography",
+      "title": "Kriptografi Temelleri",
+      "description": "Şifreleme, hashing ve dijital imza.",
+      "progress": 0,
+      "lessons": [
+        {
+          "id": "crypto-1",
+          "title": "Symmetric vs Asymmetric Encryption",
+          "duration": "11 dk",
+          "content": "Symmetric encryption, aynı anahtarla şifreler ve çözer. Hızlıdır ama anahtar paylaşımı zordur. AES yaygın kullanılır.\n\nAsymmetric encryption, public-private key çifti kullanır. Public key ile şifrele, private key ile çöz. RSA, ECC yaygındır.\n\nHybrid encryption, her ikisini birleştirir. Veri symmetric ile, symmetric key asymmetric ile şifrelenir.",
+          "codeExample": "// AES encryption (Node.js crypto)\nconst crypto = require('crypto');\n\nfunction encrypt(text, password) {\n    const algorithm = 'aes-256-cbc';\n    const key = crypto.scryptSync(password, 'salt', 32);\n    const iv = crypto.randomBytes(16);\n    \n    const cipher = crypto.createCipheriv(algorithm, key, iv);\n    let encrypted = cipher.update(text, 'utf8', 'hex');\n    encrypted += cipher.final('hex');\n    \n    return {\n        iv: iv.toString('hex'),\n        content: encrypted\n    };\n}\n\nfunction decrypt(hash, password) {\n    const algorithm = 'aes-256-cbc';\n    const key = crypto.scryptSync(password, 'salt', 32);\n    const iv = Buffer.from(hash.iv, 'hex');\n    \n    const decipher = crypto.createDecipheriv(algorithm, key, iv);\n    let decrypted = decipher.update(hash.content, 'hex', 'utf8');\n    decrypted += decipher.final('utf8');\n    \n    return decrypted;\n}\n\n// RSA encryption\nconst { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', {\n    modulusLength: 2048\n});\n\nconst data = 'Secret message';\nconst encrypted = crypto.publicEncrypt(publicKey, Buffer.from(data));\nconst decrypted = crypto.privateDecrypt(privateKey, encrypted);\n\nconsole.log(decrypted.toString());  // 'Secret message'",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Symmetric encryption, aynı anahtarla şifreler ve çözer.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda symmetric vs asymmetric encryption için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "crypto-2",
+          "title": "Hashing ve HMAC",
+          "duration": "10 dk",
+          "content": "Hash fonksiyonu, herhangi bir boyuttaki veriyi sabit boyutlu çıktıya dönüştürür. Tek yönlüdür, geri çevrilemez.\n\nSHA-256, SHA-3 güvenli hash algoritmalardır. MD5, SHA-1 artık güvenli değildir.\n\nHMAC (Hash-based Message Authentication Code), mesaj bütünlüğünü ve authenticity'sini doğrular.",
+          "codeExample": "// SHA-256 hash\nconst crypto = require('crypto');\n\nconst hash = crypto.createHash('sha256')\n    .update('Hello World')\n    .digest('hex');\n\nconsole.log(hash);\n// a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e\n\n// File hash\nconst fs = require('fs');\n\nfunction hashFile(filename) {\n    return new Promise((resolve, reject) => {\n        const hash = crypto.createHash('sha256');\n        const stream = fs.createReadStream(filename);\n        \n        stream.on('data', (data) => hash.update(data));\n        stream.on('end', () => resolve(hash.digest('hex')));\n        stream.on('error', reject);\n    });\n}\n\n// HMAC\nconst secret = 'my-secret-key';\nconst message = 'Important message';\n\nconst hmac = crypto.createHmac('sha256', secret)\n    .update(message)\n    .digest('hex');\n\n// Verify HMAC\nfunction verifyHmac(message, receivedHmac, secret) {\n    const calculatedHmac = crypto.createHmac('sha256', secret)\n        .update(message)\n        .digest('hex');\n    \n    return crypto.timingSafeEqual(\n        Buffer.from(receivedHmac),\n        Buffer.from(calculatedHmac)\n    );\n}",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Hash fonksiyonu, herhangi bir boyuttaki veriyi sabit boyutlu çıktıya dönüştürür.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda hashing ve hmac için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "crypto-3",
+          "title": "Digital Signatures",
+          "duration": "12 dk",
+          "content": "Dijital imza, mesajın authenticity ve integrity'sini garanti eder. Private key ile imzala, public key ile doğrula.\n\nRSA, ECDSA yaygın imza algoritmalarıdır. Blockchain'de transaction imzalama için kullanılır.\n\nCertificate Authority (CA), public key'leri doğrular ve sertifika verir.",
+          "codeExample": "// RSA digital signature\nconst crypto = require('crypto');\n\n// Key pair oluştur\nconst { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', {\n    modulusLength: 2048,\n    publicKeyEncoding: {\n        type: 'spki',\n        format: 'pem'\n    },\n    privateKeyEncoding: {\n        type: 'pkcs8',\n        format: 'pem'\n    }\n});\n\n// İmzala\nconst data = 'Important document';\nconst sign = crypto.createSign('SHA256');\nsign.update(data);\nsign.end();\nconst signature = sign.sign(privateKey, 'hex');\n\n// Doğrula\nconst verify = crypto.createVerify('SHA256');\nverify.update(data);\nverify.end();\nconst isValid = verify.verify(publicKey, signature, 'hex');\n\nconsole.log('Signature valid:', isValid);\n\n// ECDSA (Elliptic Curve)\nconst { publicKey: ecPublic, privateKey: ecPrivate } = \n    crypto.generateKeyPairSync('ec', {\n        namedCurve: 'secp256k1'  // Bitcoin curve\n    });\n\nconst ecSign = crypto.createSign('SHA256');\necSign.update(data);\nconst ecSignature = ecSign.sign(ecPrivate);\n\nconst ecVerify = crypto.createVerify('SHA256');\necVerify.update(data);\nconst ecValid = ecVerify.verify(ecPublic, ecSignature);\n\nconsole.log('EC signature valid:', ecValid);",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Dijital imza, mesajın authenticity ve integrity'sini garanti eder.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda digital signatures için hangi soruya cevap verebildiğini yaz."
+          }
+        }
+      ],
+      "quiz": true,
+      "study": {
+        "difficulty": "Orta",
+        "estimatedTime": "38 dk",
+        "prerequisites": [
+          "Ağ ve HTTP temelleri"
+        ],
+        "learningGoals": [
+          "Kriptografi Temelleri için core concept ve terminology'i ayırabilmek",
+          "Pattern, API veya tool seçimini örnekler üzerinden yapabilmek",
+          "Küçük bir senaryoda doğru approach'u seçebilmek"
+        ],
+        "summary": "Şifreleme, hashing ve dijital imza.",
+        "whyItMatters": "Güvenlik modülünde kriptografi temelleri başlığı, core workflow içindeki kritik parçalardan biridir."
+      }
+    }
+  ],
+  "guide": {
+    "displayName": "Güvenlik",
+    "summary": "Authentication, encryption, secure communication ve risk awareness.",
+    "level": "Orta",
+    "estimatedTime": "8-10 saat",
+    "prerequisites": [
+      "Ağ ve HTTP temelleri"
+    ],
+    "learningGoals": [
+      "Temel saldırı yüzeylerini tanımak",
+      "TLS ve sertifika akışını yorumlamak",
+      "Güvenlik açıklarını kategori halinde görmek"
+    ]
+  }
+}

@@ -1,0 +1,490 @@
+{
+  "category": "TESTING",
+  "icon": "🧪",
+  "description": "Backend, DevOps ve full-stack ekipleri için unit, integration, E2E, test stratejisi, kalite kapıları, CI/CD ve otomasyon odaklı test eğitim modülü.",
+  "level": "intermediate",
+  "estimatedTotalDuration": "5 saat 45 dk",
+  "topics": [
+    {
+      "id": "unit-testing",
+      "title": "Unit Testing",
+      "description": "Birim testleri, AAA pattern, mocking, stubbing, edge case testleri ve coverage mantığı.",
+      "progress": 0,
+      "lessons": [
+        {
+          "id": "unit-1",
+          "title": "Unit Testing Temelleri",
+          "duration": "15 dk",
+          "content": "Unit testing, kodun en küçük davranış birimlerini izole şekilde doğrulamaktır. Backend tarafında bu çoğunlukla pure function, service metodu, validator, mapper, parser veya domain logic seviyesidir.\n\nAAA Pattern:\n- Arrange: test verisini ve bağımlılıkları hazırla\n- Act: test edilen davranışı çalıştır\n- Assert: sonucu doğrula\n\nİyi unit test özellikleri:\n- Hızlıdır\n- Deterministic çalışır\n- Dış sistemlere bağımlı değildir\n- Tek davranışı test eder\n- Hata verdiğinde sebep anlaşılır\n\nUnit test, bütün sistemi kanıtlamaz. Sadece küçük parçanın beklenen davranışını kanıtlar.",
+          "codeExample": "// Jest ile basit unit test\nfunction add(a, b) {\n  return a + b;\n}\n\nfunction divide(a, b) {\n  if (b === 0) throw new Error('Division by zero');\n  return a / b;\n}\n\ndescribe('math functions', () => {\n  test('add should sum two numbers', () => {\n    const result = add(5, 3);\n    expect(result).toBe(8);\n  });\n\n  test('divide should throw when divisor is zero', () => {\n    expect(() => divide(10, 0)).toThrow('Division by zero');\n  });\n});",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Unit testing, kodun en küçük davranış birimlerini izole şekilde doğrulamaktır.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda unit testing temelleri için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "unit-2",
+          "title": "Mocking, Stubbing ve Spy",
+          "duration": "18 dk",
+          "content": "Mocking, test edilen kodun dış bağımlılıklarını kontrol altına almak için kullanılır. Örneğin email servisi, payment gateway, Redis, Kafka producer veya HTTP client doğrudan çağrılmaz.\n\nKavramlar:\n- Stub: Önceden belirlenmiş cevap döner\n- Spy: Fonksiyonun kaç kere ve hangi parametrelerle çağrıldığını kaydeder\n- Mock: Davranışı ve beklentiyi birlikte tanımlar\n- Fake: Gerçek implementasyona benzeyen hafif sahte implementasyon\n\nMock fazla kullanılırsa testler implementasyona yapışır. Bu yüzden domain logic için pure function, dış dünya için port/interface kullanmak daha sağlıklıdır.",
+          "codeExample": "// Jest mock örneği\nconst emailService = require('./emailService');\nconst userService = require('./userService');\n\njest.mock('./emailService');\n\ndescribe('user registration', () => {\n  beforeEach(() => {\n    jest.clearAllMocks();\n  });\n\n  test('sends welcome email after registration', async () => {\n    emailService.sendEmail.mockResolvedValue(true);\n\n    await userService.register({\n      email: 'test@example.com',\n      name: 'Test User'\n    });\n\n    expect(emailService.sendEmail).toHaveBeenCalledTimes(1);\n    expect(emailService.sendEmail).toHaveBeenCalledWith(\n      'test@example.com',\n      'Welcome!'\n    );\n  });\n});",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Mocking, test edilen kodun dış bağımlılıklarını kontrol altına almak için kullanılır.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda mocking, stubbing ve spy için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "unit-3",
+          "title": "Edge Case ve Boundary Testing",
+          "duration": "14 dk",
+          "content": "Unit test sadece happy path için yazılmaz. Asıl değer çoğu zaman boundary ve failure path testlerinde çıkar.\n\nTest edilmesi gereken tipik durumlar:\n- null / undefined / empty input\n- minimum ve maksimum değerler\n- invalid format\n- duplicate veri\n- timeout / retry limit\n- permission ve authorization kararları\n- idempotency davranışı\n\nBackend servislerde özellikle para, auth, quota, rate-limit, retry ve state transition kodları boundary test ister.",
+          "codeExample": "function calculateDiscount(amount) {\n  if (amount < 0) throw new Error('Invalid amount');\n  if (amount >= 1000) return amount * 0.20;\n  if (amount >= 500) return amount * 0.10;\n  return 0;\n}\n\ndescribe('calculateDiscount', () => {\n  test('rejects negative amount', () => {\n    expect(() => calculateDiscount(-1)).toThrow('Invalid amount');\n  });\n\n  test('returns no discount below 500', () => {\n    expect(calculateDiscount(499)).toBe(0);\n  });\n\n  test('returns 10 percent at boundary 500', () => {\n    expect(calculateDiscount(500)).toBe(50);\n  });\n\n  test('returns 20 percent at boundary 1000', () => {\n    expect(calculateDiscount(1000)).toBe(200);\n  });\n});",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Unit test sadece happy path için yazılmaz.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda edge case ve boundary testing için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "unit-4",
+          "title": "Test Coverage Nasıl Okunur?",
+          "duration": "12 dk",
+          "content": "Coverage, kodun test sırasında ne kadar çalıştığını gösterir; kodun doğru olduğunu garanti etmez.\n\nCoverage türleri:\n- Line coverage: Çalışan satır oranı\n- Branch coverage: if/else dallarının test edilme oranı\n- Function coverage: çağrılan fonksiyon oranı\n- Statement coverage: çalıştırılan statement oranı\n\n%100 coverage bile zayıf assertion varsa anlamsızdır. İyi hedef: kritik domain davranışlarında güçlü assertion, yüksek branch coverage ve anlamlı failure case testleridir.",
+          "codeExample": "// package.json Jest coverage config\n{\n  \"scripts\": {\n    \"test\": \"jest\",\n    \"test:coverage\": \"jest --coverage\"\n  },\n  \"jest\": {\n    \"coverageThreshold\": {\n      \"global\": {\n        \"branches\": 80,\n        \"functions\": 80,\n        \"lines\": 80,\n        \"statements\": 80\n      }\n    }\n  }\n}",
+          "codeLanguage": "json",
+          "study": {
+            "takeaway": "Coverage, kodun test sırasında ne kadar çalıştığını gösterir; kodun doğru olduğunu garanti etmez.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda test coverage nasıl okunur? için hangi soruya cevap verebildiğini yaz."
+          }
+        }
+      ],
+      "quiz": true,
+      "study": {
+        "difficulty": "Orta",
+        "estimatedTime": "64 dk",
+        "prerequisites": [
+          "Kod yazma pratiği"
+        ],
+        "learningGoals": [
+          "Unit Testing için core concept ve terminology'i ayırabilmek",
+          "Pattern, API veya tool seçimini örnekler üzerinden yapabilmek",
+          "Küçük bir senaryoda doğru approach'u seçebilmek"
+        ],
+        "summary": "Birim testleri, AAA pattern, mocking, stubbing, edge case testleri ve coverage mantığı.",
+        "whyItMatters": "Test modülünde unit testing başlığı, core workflow içindeki kritik parçalardan biridir."
+      }
+    },
+    {
+      "id": "integration-testing",
+      "title": "Integration Testing",
+      "description": "API, servis, veritabanı ve dış sistem entegrasyonlarını gerçekçi şekilde test etme.",
+      "progress": 0,
+      "lessons": [
+        {
+          "id": "integration-1",
+          "title": "Integration Testing Nedir?",
+          "duration": "14 dk",
+          "content": "Integration testing, birden fazla modülün birlikte doğru çalışıp çalışmadığını test eder. Unit testten daha yavaş ama daha gerçekçidir.\n\nBackend için entegrasyon testleri genelde şunları kapsar:\n- HTTP endpoint + service + repository\n- Gerçek veya containerized database\n- Transaction ve migration davranışı\n- Auth middleware\n- Queue publish/consume akışı\n- Cache invalidation\n\nMock tamamen yasak değildir; ama testin amacı entegrasyon ise kritik sınırların gerçek çalışması gerekir.",
+          "codeExample": "const request = require('supertest');\nconst app = require('../app');\nconst db = require('../db');\n\ndescribe('POST /api/users', () => {\n  beforeAll(async () => {\n    await db.connect();\n    await db.migrate();\n  });\n\n  beforeEach(async () => {\n    await db.clear();\n  });\n\n  afterAll(async () => {\n    await db.close();\n  });\n\n  test('creates user in database', async () => {\n    const response = await request(app)\n      .post('/api/users')\n      .send({ name: 'Jane', email: 'jane@example.com' })\n      .expect(201);\n\n    const user = await db.users.findById(response.body.id);\n    expect(user.email).toBe('jane@example.com');\n  });\n});",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Integration testing, birden fazla modülün birlikte doğru çalışıp çalışmadığını test eder.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda integration testing nedir? için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "integration-2",
+          "title": "Database Testing",
+          "duration": "16 dk",
+          "content": "Database testlerinde amaç SQL, ORM mapping, constraint, transaction ve migration davranışını doğrulamaktır.\n\nStratejiler:\n- Testcontainers ile gerçek DB\n- Ayrı test database\n- Transaction rollback\n- Her test öncesi truncate\n- Migration'ları test ortamında çalıştırma\n\nSQLite gibi in-memory DB hızlıdır ama PostgreSQL/MySQL davranışını birebir temsil etmeyebilir. Production PostgreSQL ise kritik testlerde PostgreSQL container daha güvenlidir.",
+          "codeExample": "// Testcontainers + PostgreSQL fikri\nconst { PostgreSqlContainer } = require('@testcontainers/postgresql');\n\nlet container;\nlet db;\n\nbeforeAll(async () => {\n  container = await new PostgreSqlContainer('postgres:16')\n    .withDatabase('testdb')\n    .withUsername('test')\n    .withPassword('test')\n    .start();\n\n  db = createDbClient(container.getConnectionUri());\n  await db.migrate();\n});\n\nafterAll(async () => {\n  await db.close();\n  await container.stop();\n});",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Database testlerinde amaç SQL, ORM mapping, constraint, transaction ve migration davranışını doğrulamaktır.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda database testing için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "integration-3",
+          "title": "API Contract ve Error Response Testleri",
+          "duration": "15 dk",
+          "content": "API integration testlerinde sadece status code değil response contract da doğrulanmalıdır.\n\nKontrol edilmesi gerekenler:\n- HTTP status code\n- Response schema\n- Error code standardı\n- Validation mesajları\n- Auth/permission davranışı\n- Pagination ve sorting\n- Idempotency\n\nBu testler frontend, mobile veya başka servislerin API değişikliklerinden kırılmasını önler.",
+          "codeExample": "test('returns validation error with stable contract', async () => {\n  const response = await request(app)\n    .post('/api/users')\n    .send({ email: 'not-an-email' })\n    .expect(400);\n\n  expect(response.body).toMatchObject({\n    error: {\n      code: 'VALIDATION_ERROR',\n      fields: {\n        email: expect.any(String),\n        name: expect.any(String)\n      }\n    }\n  });\n});",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "API integration testlerinde sadece status code değil response contract da doğrulanmalıdır.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda api contract ve error response testleri için hangi soruya cevap verebildiğini yaz."
+          }
+        }
+      ],
+      "quiz": true,
+      "study": {
+        "difficulty": "Orta",
+        "estimatedTime": "50 dk",
+        "prerequisites": [
+          "Kod yazma pratiği"
+        ],
+        "learningGoals": [
+          "Integration Testing için core concept ve terminology'i ayırabilmek",
+          "Pattern, API veya tool seçimini örnekler üzerinden yapabilmek",
+          "Küçük bir senaryoda doğru approach'u seçebilmek"
+        ],
+        "summary": "API, servis, veritabanı ve dış sistem entegrasyonlarını gerçekçi şekilde test etme.",
+        "whyItMatters": "Test modülünde integration testing başlığı, core workflow içindeki kritik parçalardan biridir."
+      }
+    },
+    {
+      "id": "e2e-testing",
+      "title": "End-to-End Testing",
+      "description": "Kritik kullanıcı akışlarını gerçek kullanıcıya yakın şekilde test etme.",
+      "progress": 0,
+      "lessons": [
+        {
+          "id": "e2e-1",
+          "title": "E2E Testing Temelleri",
+          "duration": "15 dk",
+          "content": "End-to-End testing, uygulamayı gerçek kullanıcı akışı gibi uçtan uca test eder. Frontend, backend, database, auth ve üçüncü parti sınırlar birlikte çalışır.\n\nNe zaman E2E yazılır?\n- Login / signup\n- Checkout / ödeme\n- Kritik form submit\n- Admin workflow\n- Role-based access\n- Regression riski yüksek akışlar\n\nE2E test sayısı az tutulmalıdır. Çünkü yavaştır, kırılgandır ve debug maliyeti yüksektir.",
+          "codeExample": "// Cypress login flow\ndescribe('login flow', () => {\n  it('logs in with valid credentials', () => {\n    cy.visit('/login');\n    cy.get('[data-testid=email]').type('user@example.com');\n    cy.get('[data-testid=password]').type('password123');\n    cy.get('[data-testid=submit]').click();\n\n    cy.url().should('include', '/dashboard');\n    cy.get('[data-testid=user-menu]').should('be.visible');\n  });\n});",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "End-to-End testing, uygulamayı gerçek kullanıcı akışı gibi uçtan uca test eder.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda e2e testing temelleri için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "e2e-2",
+          "title": "Playwright ile E2E Testing",
+          "duration": "18 dk",
+          "content": "Playwright, Chromium, Firefox ve WebKit üzerinde çalışan modern E2E framework'üdür. Auto-wait, trace viewer, screenshot, video recording ve paralel execution desteği güçlüdür.\n\nBest practice:\n- data-testid kullan\n- hard wait kullanma\n- test data seed et\n- bağımsız testler yaz\n- kritik senaryoları az ve net tut\n- CI'da retry ve trace aç\n\nPlaywright backend/devops ekipleri için de kullanışlıdır çünkü CI entegrasyonu düzgündür.",
+          "codeExample": "import { test, expect } from '@playwright/test';\n\ntest('user can create project', async ({ page }) => {\n  await page.goto('/login');\n  await page.getByTestId('email').fill('admin@example.com');\n  await page.getByTestId('password').fill('password123');\n  await page.getByTestId('submit').click();\n\n  await page.getByTestId('new-project').click();\n  await page.getByTestId('project-name').fill('Billing Service');\n  await page.getByTestId('save-project').click();\n\n  await expect(page.getByText('Billing Service')).toBeVisible();\n});",
+          "codeLanguage": "typescript",
+          "study": {
+            "takeaway": "Playwright, Chromium, Firefox ve WebKit üzerinde çalışan modern E2E framework'üdür.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda playwright ile e2e testing için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "e2e-3",
+          "title": "Page Object Model ve Flaky Test Önleme",
+          "duration": "14 dk",
+          "content": "Flaky test, bazen geçen bazen kalan testtir. Genelde timing, shared state, network belirsizliği veya zayıf selector yüzünden olur.\n\nÖnlemler:\n- Page Object Model ile UI operasyonlarını soyutla\n- data-testid kullan\n- fixed sleep yerine locator assertion kullan\n- her test kendi datasını oluştursun\n- paralel çalışmaya uygun tasarla\n- external servislere gereksiz bağımlılığı azalt\n\nE2E testte hedef çok test değil, güvenilir kritik sinyaldir.",
+          "codeExample": "export class LoginPage {\n  constructor(private page) {}\n\n  async goto() {\n    await this.page.goto('/login');\n  }\n\n  async login(email, password) {\n    await this.page.getByTestId('email').fill(email);\n    await this.page.getByTestId('password').fill(password);\n    await this.page.getByTestId('submit').click();\n  }\n}\n\ntest('login', async ({ page }) => {\n  const loginPage = new LoginPage(page);\n  await loginPage.goto();\n  await loginPage.login('user@example.com', 'password123');\n  await expect(page.getByTestId('user-menu')).toBeVisible();\n});",
+          "codeLanguage": "typescript",
+          "study": {
+            "takeaway": "Flaky test, bazen geçen bazen kalan testtir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda page object model ve flaky test önleme için hangi soruya cevap verebildiğini yaz."
+          }
+        }
+      ],
+      "quiz": true,
+      "study": {
+        "difficulty": "İleri",
+        "estimatedTime": "52 dk",
+        "prerequisites": [
+          "Kod yazma pratiği"
+        ],
+        "learningGoals": [
+          "End-to-End Testing için core concept ve terminology'i ayırabilmek",
+          "Pattern, API veya tool seçimini örnekler üzerinden yapabilmek",
+          "Küçük bir senaryoda doğru approach'u seçebilmek"
+        ],
+        "summary": "Kritik kullanıcı akışlarını gerçek kullanıcıya yakın şekilde test etme.",
+        "whyItMatters": "Test modülünde end-to-end testing başlığı, core workflow içindeki kritik parçalardan biridir."
+      }
+    },
+    {
+      "id": "test-strategies",
+      "title": "Test Stratejileri ve Piramidi",
+      "description": "Test piramidi, TDD, BDD, risk bazlı test seçimi ve test otomasyon stratejileri.",
+      "progress": 0,
+      "lessons": [
+        {
+          "id": "strategy-1",
+          "title": "Test Piramidi",
+          "duration": "12 dk",
+          "content": "Test Piramidi, test seviyelerinin yaklaşık oranını anlatır.\n\nGenel dağılım:\n- Unit tests: çok sayıda, hızlı, ucuz\n- Integration tests: orta sayıda, daha gerçekçi\n- E2E tests: az sayıda, kritik akış odaklı\n\nAnti-pattern: Ice Cream Cone\n- Az unit test\n- Çok E2E test\n- Yavaş CI\n- Kırılgan release süreci\n\nAma oranlar mutlak değildir. Mikroservis backend sistemlerinde contract ve integration test oranı daha yüksek olabilir.",
+          "codeExample": "// Örnek test dağılımı\nconst testStrategy = {\n  unit: { ratio: '60-70%', target: 'domain logic, validators, mappers' },\n  integration: { ratio: '20-30%', target: 'API, DB, queue, cache' },\n  e2e: { ratio: '5-10%', target: 'critical user journeys' }\n};",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Test Piramidi, test seviyelerinin yaklaşık oranını anlatır.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda test piramidi için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "strategy-2",
+          "title": "TDD - Test Driven Development",
+          "duration": "16 dk",
+          "content": "TDD, önce başarısız test yazıp sonra testi geçirecek minimum kodu yazma disiplinidir.\n\nRed-Green-Refactor:\n1. Red: Beklenen davranışı test olarak yaz, test kalsın\n2. Green: Minimum kodla testi geçir\n3. Refactor: Tasarımı iyileştir, testler yeşil kalsın\n\nTDD her yerde zorunlu değildir. Ama domain logic, parser, hesaplama, state machine ve business rule içeren kodlarda çok değerlidir.",
+          "codeExample": "class StringCalculator {\n  add(input) {\n    if (input === '') return 0;\n    return input.split(',').map(Number).reduce((a, b) => a + b, 0);\n  }\n}\n\ndescribe('StringCalculator', () => {\n  test('empty string returns 0', () => {\n    const calc = new StringCalculator();\n    expect(calc.add('')).toBe(0);\n  });\n\n  test('single number returns itself', () => {\n    const calc = new StringCalculator();\n    expect(calc.add('5')).toBe(5);\n  });\n\n  test('comma separated numbers are summed', () => {\n    const calc = new StringCalculator();\n    expect(calc.add('2,3,4')).toBe(9);\n  });\n});",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "TDD, önce başarısız test yazıp sonra testi geçirecek minimum kodu yazma disiplinidir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda tdd - test driven development için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "strategy-3",
+          "title": "BDD ve Acceptance Criteria",
+          "duration": "14 dk",
+          "content": "BDD, davranışı kullanıcı veya iş kuralı diliyle tanımlar. Amaç testleri teknik implementasyondan çok beklenen davranışa bağlamaktır.\n\nGiven-When-Then formatı:\n- Given: mevcut durum\n- When: aksiyon\n- Then: beklenen sonuç\n\nBDD özellikle product, QA ve developer arasında ortak dil kurmak için faydalıdır. Her şeyi Cucumber'a çevirmek şart değildir; test isimleri bile BDD mantığında yazılabilir.",
+          "codeExample": "// BDD stili test ismi\ndescribe('Password reset', () => {\n  test('given a registered email, when reset is requested, then reset token is created', async () => {\n    await users.create({ email: 'user@example.com' });\n\n    const result = await passwordReset.request('user@example.com');\n\n    expect(result.status).toBe('TOKEN_CREATED');\n    expect(await tokens.existsFor('user@example.com')).toBe(true);\n  });\n});",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "BDD, davranışı kullanıcı veya iş kuralı diliyle tanımlar.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda bdd ve acceptance criteria için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "strategy-4",
+          "title": "Risk Bazlı Test Seçimi",
+          "duration": "13 dk",
+          "content": "Her şeye aynı seviyede test yazmak verimsizdir. Test stratejisi risk bazlı kurulmalıdır.\n\nYüksek riskli alanlar:\n- Para ve ödeme\n- Authentication / authorization\n- Data migration\n- Silme ve geri alınamaz işlemler\n- Retry / idempotency\n- Multi-tenant izolasyon\n- Rate limiting ve quota\n\nDüşük riskli alanlarda snapshot veya basit smoke test yeterli olabilir. Kritik kodda ise unit + integration + E2E kombinasyonu gerekir.",
+          "codeExample": "const riskMatrix = [\n  { area: 'payment', unit: true, integration: true, e2e: true },\n  { area: 'auth', unit: true, integration: true, e2e: true },\n  { area: 'profile-ui-copy', unit: false, integration: false, e2e: false },\n  { area: 'email-template', unit: true, integration: false, e2e: false }\n];",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Her şeye aynı seviyede test yazmak verimsizdir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda risk bazlı test seçimi için hangi soruya cevap verebildiğini yaz."
+          }
+        }
+      ],
+      "quiz": true,
+      "study": {
+        "difficulty": "İleri",
+        "estimatedTime": "60 dk",
+        "prerequisites": [
+          "Kod yazma pratiği"
+        ],
+        "learningGoals": [
+          "Test Stratejileri ve Piramidi için core concept ve terminology'i ayırabilmek",
+          "Pattern, API veya tool seçimini örnekler üzerinden yapabilmek",
+          "Küçük bir senaryoda doğru approach'u seçebilmek"
+        ],
+        "summary": "Test piramidi, TDD, BDD, risk bazlı test seçimi ve test otomasyon stratejileri.",
+        "whyItMatters": "Test modülünde test stratejileri ve piramidi başlığı, core workflow içindeki kritik parçalardan biridir."
+      }
+    },
+    {
+      "id": "ci-quality-gates",
+      "title": "CI/CD Quality Gates",
+      "description": "Pipeline içinde lint, test, coverage, security scan ve build gate kurma.",
+      "progress": 0,
+      "lessons": [
+        {
+          "id": "ci-1",
+          "title": "Quality Gate Nedir?",
+          "duration": "13 dk",
+          "content": "Quality gate, kodun merge veya deploy edilmeden önce geçmesi gereken otomatik kontrol setidir.\n\nTipik gate'ler:\n- lint\n- format check\n- type check\n- unit test\n- integration test\n- coverage threshold\n- dependency vulnerability scan\n- build\n- container image scan\n\nQuality gate kaliteyi garanti etmez; ama bariz hataların main branch'e girmesini engeller.",
+          "codeExample": "{\n  \"scripts\": {\n    \"lint\": \"eslint src --max-warnings=0\",\n    \"typecheck\": \"tsc --noEmit\",\n    \"test\": \"jest\",\n    \"test:coverage\": \"jest --coverage\",\n    \"build\": \"tsc -p tsconfig.json\",\n    \"quality:check\": \"npm run lint && npm run typecheck && npm run test:coverage && npm run build\"\n  }\n}",
+          "codeLanguage": "json",
+          "study": {
+            "takeaway": "Quality gate, kodun merge veya deploy edilmeden önce geçmesi gereken otomatik kontrol setidir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda quality gate nedir? için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "ci-2",
+          "title": "GitHub Actions ile Test Pipeline",
+          "duration": "16 dk",
+          "content": "CI pipeline, localde çalışan kalite kontrollerinin pull request üzerinde otomatik çalışmasıdır.\n\nİyi pipeline özellikleri:\n- PR'da hızlı feedback verir\n- Cache kullanır\n- Testleri paralelleştirir\n- Coverage raporu üretir\n- Fail olduğunda açık log bırakır\n- Main branch'i korur\n\nPipeline yavaşsa developer bypass etmeye başlar. Bu yüzden hızlı gate ile ağır nightly testleri ayırmak mantıklıdır.",
+          "codeExample": "name: quality-gate\n\non:\n  pull_request:\n  push:\n    branches: [main]\n\njobs:\n  test:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-node@v4\n        with:\n          node-version: 20\n          cache: npm\n      - run: npm ci\n      - run: npm run lint\n      - run: npm run typecheck\n      - run: npm run test:coverage\n      - run: npm run build",
+          "codeLanguage": "yaml",
+          "study": {
+            "takeaway": "CI pipeline, localde çalışan kalite kontrollerinin pull request üzerinde otomatik çalışmasıdır.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda github actions ile test pipeline için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "ci-3",
+          "title": "Coverage Threshold ve Merge Policy",
+          "duration": "12 dk",
+          "content": "Coverage threshold tek başına kalite değildir ama minimum çıta koyar. Kritik olan threshold'u gerçekçi ve branch coverage odaklı tutmaktır.\n\nMerge policy örneği:\n- Yeni kod coverage düşürmemeli\n- Kritik paketlerde branch coverage >= 80\n- Unit testler PR'da zorunlu\n- Integration testler main veya staging öncesi zorunlu\n- E2E smoke test deploy öncesi zorunlu\n\nAmaç developer'ı yavaşlatmak değil, riskli kodun kontrolsüz merge edilmesini önlemektir.",
+          "codeExample": "module.exports = {\n  collectCoverageFrom: [\n    'src/**/*.{ts,tsx}',\n    '!src/**/*.d.ts',\n    '!src/main.ts'\n  ],\n  coverageThreshold: {\n    global: {\n      branches: 80,\n      functions: 80,\n      lines: 85,\n      statements: 85\n    }\n  }\n};",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Coverage threshold tek başına kalite değildir ama minimum çıta koyar.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda coverage threshold ve merge policy için hangi soruya cevap verebildiğini yaz."
+          }
+        }
+      ],
+      "quiz": true,
+      "study": {
+        "difficulty": "İleri",
+        "estimatedTime": "46 dk",
+        "prerequisites": [
+          "Kod yazma pratiği"
+        ],
+        "learningGoals": [
+          "CI/CD Quality Gates için core concept ve terminology'i ayırabilmek",
+          "Pattern, API veya tool seçimini örnekler üzerinden yapabilmek",
+          "Küçük bir senaryoda doğru approach'u seçebilmek"
+        ],
+        "summary": "Pipeline içinde lint, test, coverage, security scan ve build gate kurma.",
+        "whyItMatters": "Test modülünde ci/cd quality gates başlığı, core workflow içindeki kritik parçalardan biridir."
+      }
+    },
+    {
+      "id": "contract-testing",
+      "title": "Contract Testing",
+      "description": "Mikroservislerde consumer-provider contract, schema compatibility ve backward compatibility testleri.",
+      "progress": 0,
+      "lessons": [
+        {
+          "id": "contract-1",
+          "title": "Contract Testing Neden Gerekir?",
+          "duration": "14 dk",
+          "content": "Contract testing, servisler arası API beklentilerini doğrular. Mikroservislerde provider değiştiğinde consumer kırılabilir. Integration test ortamında bütün servisleri ayağa kaldırmak pahalı olduğu için contract test iyi bir ara katmandır.\n\nKontrol edilenler:\n- Endpoint var mı?\n- Request/response schema uyumlu mu?\n- Field tipi değişti mi?\n- Enum değerleri bozuldu mu?\n- Backward compatibility korundu mu?\n\nREST için OpenAPI, Pact; event-driven sistemlerde AsyncAPI ve schema registry kullanılabilir.",
+          "codeExample": "// Basit contract expectation örneği\nconst expectedUserContract = {\n  id: 'string',\n  email: 'string',\n  status: ['ACTIVE', 'PASSIVE'],\n  createdAt: 'iso-date'\n};\n\nfunction validateUserResponse(user) {\n  expect(typeof user.id).toBe('string');\n  expect(typeof user.email).toBe('string');\n  expect(['ACTIVE', 'PASSIVE']).toContain(user.status);\n  expect(new Date(user.createdAt).toString()).not.toBe('Invalid Date');\n}",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Contract testing, servisler arası API beklentilerini doğrular.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda contract testing neden gerekir? için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "contract-2",
+          "title": "OpenAPI Schema Validation",
+          "duration": "15 dk",
+          "content": "OpenAPI sadece dokümantasyon değildir; test aracı olarak da kullanılabilir. API response'larının OpenAPI contract'a uyup uymadığı CI'da doğrulanabilir.\n\nFaydaları:\n- Frontend/backend uyumu\n- SDK üretimi\n- Breaking change yakalama\n- API governance\n- Test datası üretimi\n\nContract güncel tutulmazsa faydasını kaybeder. Bu yüzden spec değişikliği PR review sürecine dahil edilmelidir.",
+          "codeExample": "openapi: 3.0.3\ninfo:\n  title: User API\n  version: 1.0.0\npaths:\n  /users/{id}:\n    get:\n      responses:\n        '200':\n          description: User response\n          content:\n            application/json:\n              schema:\n                type: object\n                required: [id, email, status]\n                properties:\n                  id:\n                    type: string\n                  email:\n                    type: string\n                    format: email\n                  status:\n                    type: string\n                    enum: [ACTIVE, PASSIVE]",
+          "codeLanguage": "yaml",
+          "study": {
+            "takeaway": "OpenAPI sadece dokümantasyon değildir; test aracı olarak da kullanılabilir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda openapi schema validation için hangi soruya cevap verebildiğini yaz."
+          }
+        }
+      ],
+      "quiz": true,
+      "study": {
+        "difficulty": "İleri",
+        "estimatedTime": "34 dk",
+        "prerequisites": [
+          "Kod yazma pratiği"
+        ],
+        "learningGoals": [
+          "Contract Testing için core concept ve terminology'i ayırabilmek",
+          "Pattern, API veya tool seçimini örnekler üzerinden yapabilmek",
+          "Küçük bir senaryoda doğru approach'u seçebilmek"
+        ],
+        "summary": "Mikroservislerde consumer-provider contract, schema compatibility ve backward compatibility testleri.",
+        "whyItMatters": "Test modülünde contract testing başlığı, core workflow içindeki kritik parçalardan biridir."
+      }
+    },
+    {
+      "id": "performance-security-testing",
+      "title": "Performance ve Security Testing",
+      "description": "Load test, smoke test, dependency scan ve temel security testleri.",
+      "progress": 0,
+      "lessons": [
+        {
+          "id": "perf-sec-1",
+          "title": "Load Testing Temelleri",
+          "duration": "15 dk",
+          "content": "Load testing, sistemin belirli trafik altında nasıl davrandığını ölçer. Amaç sadece kaç request kaldırdığını görmek değildir; latency, error rate, saturation ve bottleneck analizidir.\n\nMetrikler:\n- RPS / throughput\n- p50, p95, p99 latency\n- error rate\n- CPU, memory, network, disk IO\n- DB connection pool kullanımı\n- queue lag\n\nk6, JMeter, Locust ve Gatling yaygın araçlardır.",
+          "codeExample": "import http from 'k6/http';\nimport { check, sleep } from 'k6';\n\nexport const options = {\n  vus: 20,\n  duration: '1m',\n  thresholds: {\n    http_req_failed: ['rate<0.01'],\n    http_req_duration: ['p(95)<300']\n  }\n};\n\nexport default function () {\n  const res = http.get('http://localhost:3000/api/health');\n  check(res, {\n    'status is 200': r => r.status === 200\n  });\n  sleep(1);\n}",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Load testing, sistemin belirli trafik altında nasıl davrandığını ölçer.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda load testing temelleri için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "perf-sec-2",
+          "title": "Security Testleri ve Dependency Scan",
+          "duration": "14 dk",
+          "content": "Security testing tek bir araçla bitmez. En temel otomatik kontroller CI'a eklenmelidir.\n\nTemel kontroller:\n- dependency vulnerability scan\n- secret scanning\n- SAST\n- container image scan\n- auth bypass testleri\n- input validation testleri\n- rate limit testleri\n\nBackend için özellikle authorization testleri kritiktir. Kullanıcı A'nın kullanıcı B'nin kaynağına erişememesi integration test ile doğrulanmalıdır.",
+          "codeExample": "test('user cannot access another tenant resource', async () => {\n  const tokenA = await auth.loginAs('tenant-a-user');\n  const tenantBProject = await fixtures.createProject({ tenant: 'tenant-b' });\n\n  const response = await request(app)\n    .get(`/api/projects/${tenantBProject.id}`)\n    .set('Authorization', `Bearer ${tokenA}`)\n    .expect(403);\n\n  expect(response.body.error.code).toBe('FORBIDDEN');\n});",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Security testing tek bir araçla bitmez.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda security testleri ve dependency scan için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "perf-sec-3",
+          "title": "Smoke, Sanity ve Regression Testleri",
+          "duration": "11 dk",
+          "content": "Smoke test, sistemin en temel fonksiyonlarının ayakta olup olmadığını hızlıca kontrol eder. Sanity test, belirli bir değişiklikten sonra ilgili alanın makul çalıştığını doğrular. Regression test ise eski çalışan davranışların bozulmadığını kontrol eder.\n\nDeploy pipeline'da tipik sıra:\n1. Build\n2. Unit test\n3. Integration test\n4. Deploy staging\n5. Smoke test\n6. E2E critical path\n7. Production deploy\n\nSmoke test kısa, hızlı ve güvenilir olmalıdır.",
+          "codeExample": "test('production smoke check', async () => {\n  const health = await fetch(`${BASE_URL}/health`);\n  expect(health.status).toBe(200);\n\n  const version = await fetch(`${BASE_URL}/version`);\n  expect(version.status).toBe(200);\n\n  const login = await fetch(`${BASE_URL}/api/auth/login`, {\n    method: 'POST',\n    headers: { 'content-type': 'application/json' },\n    body: JSON.stringify({ email: TEST_EMAIL, password: TEST_PASSWORD })\n  });\n\n  expect(login.status).toBe(200);\n});",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Smoke test, sistemin en temel fonksiyonlarının ayakta olup olmadığını hızlıca kontrol eder.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda smoke, sanity ve regression testleri için hangi soruya cevap verebildiğini yaz."
+          }
+        }
+      ],
+      "quiz": true,
+      "study": {
+        "difficulty": "İleri",
+        "estimatedTime": "45 dk",
+        "prerequisites": [
+          "Kod yazma pratiği"
+        ],
+        "learningGoals": [
+          "Performance ve Security Testing için core concept ve terminology'i ayırabilmek",
+          "Pattern, API veya tool seçimini örnekler üzerinden yapabilmek",
+          "Küçük bir senaryoda doğru approach'u seçebilmek"
+        ],
+        "summary": "Load test, smoke test, dependency scan ve temel security testleri.",
+        "whyItMatters": "Test modülünde performance ve security testing başlığı, core workflow içindeki kritik parçalardan biridir."
+      }
+    }
+  ],
+  "finalProject": {
+    "id": "testing-quality-gate-project",
+    "title": "Express API için Otomatik Quality Gate Kurulumu",
+    "description": "Basit bir Express API üzerinde lint, typecheck, unit test, integration test, coverage threshold ve GitHub Actions pipeline kurulumu.",
+    "requirements": [
+      "En az 5 unit test",
+      "En az 3 integration test",
+      "Coverage threshold tanımı",
+      "npm run quality:check script'i",
+      "GitHub Actions workflow dosyası",
+      "README içinde test stratejisi açıklaması"
+    ],
+    "successCriteria": [
+      "npm run quality:check lokal ortamda geçmeli",
+      "CI pipeline pull request üzerinde çalışmalı",
+      "Negatif case testleri bulunmalı",
+      "Coverage raporu üretilmeli",
+      "Testler dış servislere gereksiz bağımlı olmamalı"
+    ]
+  },
+  "guide": {
+    "displayName": "Test",
+    "summary": "Verification strategy, unit test ve integration yaklaşımı.",
+    "level": "Orta",
+    "estimatedTime": "6-8 saat",
+    "prerequisites": [
+      "Kod yazma pratiği"
+    ],
+    "learningGoals": [
+      "Test piramidini ayırmak",
+      "Sahte veri ve fixture kullanımını anlamak",
+      "Davranış odaklı test mantığını kurmak"
+    ]
+  }
+}

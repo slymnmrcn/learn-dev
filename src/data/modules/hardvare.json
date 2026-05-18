@@ -1,0 +1,219 @@
+{
+  "category": "HARDWARE",
+  "icon": "🖥",
+  "topics": [
+    {
+      "id": "computer-architecture",
+      "title": "Bilgisayar Mimarisi",
+      "description": "CPU, RAM, cache, instruction set ve bilgisayarın temel bileşenleri.",
+      "progress": 0,
+      "lessons": [
+        {
+          "id": "arch-1",
+          "title": "CPU ve İşlemci Mimarisi",
+          "duration": "12 dk",
+          "content": "CPU (Central Processing Unit), bilgisayarın beynidir. Aritmetik ve mantıksal işlemleri yapar, program akışını kontrol eder.\n\nCPU bileşenleri: ALU (Arithmetic Logic Unit) hesaplamalar yapar, Control Unit komutları decode eder, Register'lar hızlı geçici depolama sağlar.\n\nModern CPU'lar multi-core'dur. Her core bağımsız işlem yapabilir. Hyper-threading ile her core 2 thread çalıştırabilir.",
+          "codeExample": "// CPU bilgilerini alma (Node.js)\nconst os = require('os');\n\nconsole.log('CPU Model:', os.cpus()[0].model);\nconsole.log('Core Sayısı:', os.cpus().length);\nconsole.log('Hız:', os.cpus()[0].speed, 'MHz');\n\n// CPU kullanımı\nconst startUsage = process.cpuUsage();\n\n// Yoğun işlem\nfor (let i = 0; i < 1000000; i++) {\n    Math.sqrt(i);\n}\n\nconst endUsage = process.cpuUsage(startUsage);\nconsole.log('User CPU time:', endUsage.user / 1000, 'ms');\nconsole.log('System CPU time:', endUsage.system / 1000, 'ms');\n\n// Linux'ta CPU info\n// cat /proc/cpuinfo\n// lscpu",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "CPU (Central Processing Unit), bilgisayarın beynidir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda cpu ve i̇şlemci mimarisi için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "arch-2",
+          "title": "Bellek Hiyerarşisi",
+          "duration": "11 dk",
+          "content": "Bellek hiyerarşisi, hız ve kapasite dengesini optimize eder. Register > L1 Cache > L2 Cache > L3 Cache > RAM > Disk.\n\nCache, sık kullanılan verileri CPU'ya yakın tutar. L1 en hızlı ama en küçük (32-64 KB), L3 daha yavaş ama büyük (8-32 MB).\n\nCache hit, verinin cache'te bulunmasıdır (hızlı). Cache miss, RAM'den getirmek gerekir (yavaş). Locality of reference, cache verimliliğini artırır.",
+          "codeExample": "// Cache etkisini gözlemleme\nconst size = 10000000;\nconst arr = new Array(size);\n\n// Cache-friendly: Sequential access\nconsole.time('Sequential');\nfor (let i = 0; i < size; i++) {\n    arr[i] = i * 2;\n}\nconsole.timeEnd('Sequential');\n\n// Cache-unfriendly: Random access\nconsole.time('Random');\nfor (let i = 0; i < size; i++) {\n    const index = Math.floor(Math.random() * size);\n    arr[index] = index * 2;\n}\nconsole.timeEnd('Random');\n\n// Matrix multiplication - cache optimization\nfunction matrixMultiply(A, B, N) {\n    const C = Array(N).fill(0).map(() => Array(N).fill(0));\n    \n    // Cache-friendly: i-k-j order\n    for (let i = 0; i < N; i++) {\n        for (let k = 0; k < N; k++) {\n            for (let j = 0; j < N; j++) {\n                C[i][j] += A[i][k] * B[k][j];\n            }\n        }\n    }\n    return C;\n}",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Bellek hiyerarşisi, hız ve kapasite dengesini optimize eder.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda bellek hiyerarşisi için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "arch-3",
+          "title": "Instruction Set Architecture",
+          "duration": "10 dk",
+          "content": "ISA (Instruction Set Architecture), CPU'nun anlayabileceği komut setidir. CISC (Complex) ve RISC (Reduced) olmak üzere iki ana yaklaşım vardır.\n\nCISC (x86): Karmaşık komutlar, değişken uzunluk, az register. RISC (ARM): Basit komutlar, sabit uzunluk, çok register.\n\nAssembly dili, ISA'nın insan okunabilir halidir. Her assembly komutu bir makine koduna karşılık gelir.",
+          "codeExample": "// C kodu\nint add(int a, int b) {\n    return a + b;\n}\n\n// x86-64 Assembly (CISC)\nadd:\n    push rbp\n    mov rbp, rsp\n    mov DWORD PTR [rbp-4], edi\n    mov DWORD PTR [rbp-8], esi\n    mov edx, DWORD PTR [rbp-4]\n    mov eax, DWORD PTR [rbp-8]\n    add eax, edx\n    pop rbp\n    ret\n\n// ARM Assembly (RISC)\nadd:\n    add w0, w0, w1\n    ret\n\n// Inline assembly (C)\nint result;\n__asm__(\"addl %%ebx, %%eax\"\n        : \"=a\"(result)\n        : \"a\"(5), \"b\"(3));\n// result = 8",
+          "codeLanguage": "c",
+          "study": {
+            "takeaway": "ISA (Instruction Set Architecture), CPU'nun anlayabileceği komut setidir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda instruction set architecture için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "arch-4",
+          "title": "GPU ve Paralel İşleme",
+          "duration": "13 dk",
+          "content": "GPU (Graphics Processing Unit), binlerce küçük core ile paralel hesaplama yapar. CPU'dan farklı olarak SIMD (Single Instruction Multiple Data) mimarisini kullanır.\n\nGPU, grafik rendering, makine öğrenmesi, video encoding, cryptocurrency mining gibi paralel işlemler için idealdir.\n\nCUDA (NVIDIA) ve OpenCL, GPU programlama için kullanılan framework'lerdir. WebGPU, tarayıcıda GPU erişimi sağlar.",
+          "codeExample": "// WebGPU örneği (basitleştirilmiş)\nconst adapter = await navigator.gpu.requestAdapter();\nconst device = await adapter.requestDevice();\n\n// Shader kodu (WGSL)\nconst shaderCode = `\n@compute @workgroup_size(64)\nfn main(@builtin(global_invocation_id) global_id: vec3<u32>) {\n    let index = global_id.x;\n    output[index] = input[index] * 2.0;\n}\n`;\n\n// CPU vs GPU karşılaştırma\nconst size = 1000000;\nconst data = new Float32Array(size);\n\n// CPU (sequential)\nconsole.time('CPU');\nfor (let i = 0; i < size; i++) {\n    data[i] = data[i] * 2;\n}\nconsole.timeEnd('CPU');\n\n// GPU (parallel) - çok daha hızlı\n// Her eleman aynı anda işlenir",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "GPU (Graphics Processing Unit), binlerce küçük core ile paralel hesaplama yapar.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda gpu ve paralel i̇şleme için hangi soruya cevap verebildiğini yaz."
+          }
+        }
+      ],
+      "quiz": true,
+      "study": {
+        "difficulty": "Başlangıç",
+        "estimatedTime": "51 dk",
+        "prerequisites": [
+          "Bilgisayar bileşenlerine genel bakış"
+        ],
+        "learningGoals": [
+          "Bilgisayar Mimarisi için core concept ve terminology'i ayırabilmek",
+          "Pattern, API veya tool seçimini örnekler üzerinden yapabilmek",
+          "Küçük bir senaryoda doğru approach'u seçebilmek"
+        ],
+        "summary": "CPU, RAM, cache, instruction set ve bilgisayarın temel bileşenleri.",
+        "whyItMatters": "Donanım modülünde bilgisayar mimarisi başlığı, core workflow içindeki kritik parçalardan biridir."
+      }
+    },
+    {
+      "id": "storage",
+      "title": "Depolama Sistemleri",
+      "description": "HDD, SSD, RAID ve depolama teknolojileri.",
+      "progress": 0,
+      "lessons": [
+        {
+          "id": "storage-1",
+          "title": "HDD vs SSD",
+          "duration": "10 dk",
+          "content": "HDD (Hard Disk Drive), dönen diskler ve okuma kafası kullanır. Mekanik parçalar nedeniyle yavaş ama ucuzdur. Büyük kapasiteler için idealdir.\n\nSSD (Solid State Drive), flash bellek kullanır. Mekanik parça yok, çok hızlı, sessiz, dayanıklı. Ancak GB başına daha pahalıdır.\n\nNVMe SSD, PCIe üzerinden bağlanır ve SATA SSD'den 5-7 kat daha hızlıdır. M.2 form faktörü yaygındır.",
+          "codeExample": "// Disk performans testi (Node.js)\nconst fs = require('fs');\nconst path = require('path');\n\nfunction testDiskSpeed(filePath, sizeInMB) {\n    const data = Buffer.alloc(sizeInMB * 1024 * 1024);\n    \n    // Write test\n    console.time('Write');\n    fs.writeFileSync(filePath, data);\n    console.timeEnd('Write');\n    \n    // Read test\n    console.time('Read');\n    fs.readFileSync(filePath);\n    console.timeEnd('Read');\n    \n    // Cleanup\n    fs.unlinkSync(filePath);\n}\n\ntestDiskSpeed('/tmp/test.dat', 100);\n\n// Linux'ta disk bilgisi\n// lsblk\n// df -h\n// hdparm -Tt /dev/sda  # HDD speed test\n// fio --name=test --rw=randread --size=1G  # Benchmark",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "HDD (Hard Disk Drive), dönen diskler ve okuma kafası kullanır.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda hdd vs ssd için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "storage-2",
+          "title": "RAID Sistemleri",
+          "duration": "11 dk",
+          "content": "RAID (Redundant Array of Independent Disks), birden fazla diski birleştirerek performans ve/veya güvenilirlik artırır.\n\nRAID 0: Striping, hız artışı, veri güvenliği yok. RAID 1: Mirroring, tam yedekleme, kapasite yarıya düşer. RAID 5: Striping + parity, 1 disk arızasına dayanır.\n\nRAID 10 (1+0): Mirror + stripe, hem hızlı hem güvenli. Minimum 4 disk gerekir.",
+          "codeExample": "// Linux'ta software RAID oluşturma\n\n// RAID 1 (Mirror) oluştur\nsudo mdadm --create /dev/md0 --level=1 --raid-devices=2 /dev/sdb /dev/sdc\n\n// RAID 5 oluştur\nsudo mdadm --create /dev/md1 --level=5 --raid-devices=3 /dev/sdd /dev/sde /dev/sdf\n\n// RAID durumunu kontrol et\ncat /proc/mdstat\n\n// Detaylı bilgi\nsudo mdadm --detail /dev/md0\n\n// Disk arızası simülasyonu\nsudo mdadm --manage /dev/md0 --fail /dev/sdb\n\n// Arızalı diski çıkar\nsudo mdadm --manage /dev/md0 --remove /dev/sdb\n\n// Yeni disk ekle\nsudo mdadm --manage /dev/md0 --add /dev/sdg",
+          "codeLanguage": "bash",
+          "study": {
+            "takeaway": "RAID (Redundant Array of Independent Disks), birden fazla diski birleştirerek performans ve/veya güvenilirlik artırır.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda raid sistemleri için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "storage-3",
+          "title": "Dosya Sistemleri",
+          "duration": "12 dk",
+          "content": "Dosya sistemi, verilerin disk üzerinde nasıl organize edildiğini belirler. ext4 (Linux), NTFS (Windows), APFS (macOS) yaygın dosya sistemleridir.\n\nJournaling, dosya sistemi tutarlılığını korur. Değişiklikler önce journal'a yazılır, sonra uygulanır. Kaza durumunda kurtarma kolaylaşır.\n\nCopy-on-write (CoW) dosya sistemleri (Btrfs, ZFS), veri bütünlüğü ve snapshot özelliği sunar.",
+          "codeExample": "// Dosya sistemi bilgisi (Node.js)\nconst { execSync } = require('child_process');\n\n// Disk kullanımı\nconst df = execSync('df -h').toString();\nconsole.log(df);\n\n// İnode kullanımı\nconst dfI = execSync('df -i').toString();\nconsole.log(dfI);\n\n// Dosya sistemi tipi\nconst fsType = execSync('df -T').toString();\nconsole.log(fsType);\n\n// Btrfs snapshot oluşturma\nsudo btrfs subvolume snapshot /home /home/.snapshots/$(date +%Y%m%d)\n\n// ZFS snapshot\nsudo zfs snapshot tank/data@backup-$(date +%Y%m%d)\n\n// ext4 dosya sistemi oluşturma\nsudo mkfs.ext4 /dev/sdb1\n\n// Mount\nsudo mount /dev/sdb1 /mnt/data",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Dosya sistemi, verilerin disk üzerinde nasıl organize edildiğini belirler.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda dosya sistemleri için hangi soruya cevap verebildiğini yaz."
+          }
+        }
+      ],
+      "quiz": true,
+      "study": {
+        "difficulty": "Orta",
+        "estimatedTime": "38 dk",
+        "prerequisites": [
+          "Bilgisayar bileşenlerine genel bakış"
+        ],
+        "learningGoals": [
+          "Depolama Sistemleri için core concept ve terminology'i ayırabilmek",
+          "Pattern, API veya tool seçimini örnekler üzerinden yapabilmek",
+          "Küçük bir senaryoda doğru approach'u seçebilmek"
+        ],
+        "summary": "HDD, SSD, RAID ve depolama teknolojileri.",
+        "whyItMatters": "Donanım modülünde depolama sistemleri başlığı, core workflow içindeki kritik parçalardan biridir."
+      }
+    },
+    {
+      "id": "peripherals",
+      "title": "Çevre Birimleri",
+      "description": "USB, PCIe, I/O portları ve donanım arabirimleri.",
+      "progress": 0,
+      "lessons": [
+        {
+          "id": "periph-1",
+          "title": "USB Protokolü",
+          "duration": "10 dk",
+          "content": "USB (Universal Serial Bus), çevre birimlerini bağlamak için standart arayüzdür. Hot-pluggable (çalışırken takılabilir) ve plug-and-play özelliğine sahiptir.\n\nUSB 2.0: 480 Mbps, USB 3.0: 5 Gbps, USB 3.1: 10 Gbps, USB 4.0: 40 Gbps. USB-C fiziksel konnektör, her iki yönde takılabilir.\n\nUSB host (bilgisayar) ve device (klavye, mouse) arasında master-slave ilişkisi vardır. USB hub ile birden fazla cihaz bağlanabilir.",
+          "codeExample": "// USB cihazları listeleme (Linux)\nlsusb\n\n// Detaylı bilgi\nlsusb -v\n\n// USB cihaz ağacı\nlsusb -t\n\n// Node.js ile USB erişimi (usb paketi)\nconst usb = require('usb');\n\n// Tüm USB cihazları listele\nconst devices = usb.getDeviceList();\ndevices.forEach(device => {\n    console.log('Vendor ID:', device.deviceDescriptor.idVendor);\n    console.log('Product ID:', device.deviceDescriptor.idProduct);\n});\n\n// Belirli bir cihazı bul\nconst device = usb.findByIds(0x1234, 0x5678);\nif (device) {\n    device.open();\n    // Cihazla iletişim kur\n}",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "USB (Universal Serial Bus), çevre birimlerini bağlamak için standart arayüzdür.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda usb protokolü için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "periph-2",
+          "title": "PCIe ve Genişleme Kartları",
+          "duration": "11 dk",
+          "content": "PCIe (PCI Express), yüksek hızlı genişleme kartları için kullanılır. GPU, NVMe SSD, network kartları PCIe üzerinden bağlanır.\n\nPCIe lane'leri paralel veri yollarıdır. x1, x4, x8, x16 konfigürasyonları vardır. x16 slot genellikle GPU için kullanılır.\n\nPCIe 3.0: ~1 GB/s per lane, PCIe 4.0: ~2 GB/s per lane, PCIe 5.0: ~4 GB/s per lane.",
+          "codeExample": "// PCIe cihazları listeleme (Linux)\nlspci\n\n// Detaylı bilgi\nlspci -v\n\n// Ağaç görünümü\nlspci -tv\n\n// Belirli bir cihaz\nlspci -s 01:00.0 -vv\n\n// GPU bilgisi\nlspci | grep VGA\n\n// NVMe SSD bilgisi\nlspci | grep NVMe\n\n// PCIe bandwidth testi\nsudo lspci -vv | grep -i 'lnkcap\\|lnksta'\n\n// Kernel modülü yükleme\nsudo modprobe <module_name>\n\n// Yüklü modüller\nlsmod",
+          "codeLanguage": "bash",
+          "study": {
+            "takeaway": "PCIe (PCI Express), yüksek hızlı genişleme kartları için kullanılır.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda pcie ve genişleme kartları için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "periph-3",
+          "title": "Seri ve Paralel İletişim",
+          "duration": "9 dk",
+          "content": "Seri iletişim, verileri bit bit gönderir. UART, I2C, SPI yaygın seri protokollerdir. Uzun mesafeler için uygundur.\n\nParalel iletişim, birden fazla bit aynı anda gönderir. Daha hızlı ama kablo sayısı fazladır. Kısa mesafeler için kullanılır.\n\nRS-232, eski seri port standardıdır. Modern sistemlerde USB-to-serial dönüştürücüler kullanılır.",
+          "codeExample": "// Node.js ile serial port (serialport paketi)\nconst { SerialPort } = require('serialport');\n\n// Port listesi\nSerialPort.list().then(ports => {\n    ports.forEach(port => {\n        console.log(port.path);\n    });\n});\n\n// Serial port aç\nconst port = new SerialPort({\n    path: '/dev/ttyUSB0',\n    baudRate: 9600\n});\n\n// Veri gönder\nport.write('Hello Arduino\\n');\n\n// Veri al\nport.on('data', (data) => {\n    console.log('Received:', data.toString());\n});\n\n// Arduino ile iletişim\n// Arduino: Serial.println(\"Hello\");\n// Node.js: port.on('data', ...)",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Seri iletişim, verileri bit bit gönderir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda seri ve paralel i̇letişim için hangi soruya cevap verebildiğini yaz."
+          }
+        }
+      ],
+      "quiz": true,
+      "study": {
+        "difficulty": "İleri",
+        "estimatedTime": "35 dk",
+        "prerequisites": [
+          "Bilgisayar bileşenlerine genel bakış"
+        ],
+        "learningGoals": [
+          "Çevre Birimleri için core concept ve terminology'i ayırabilmek",
+          "Pattern, API veya tool seçimini örnekler üzerinden yapabilmek",
+          "Küçük bir senaryoda doğru approach'u seçebilmek"
+        ],
+        "summary": "USB, PCIe, I/O portları ve donanım arabirimleri.",
+        "whyItMatters": "Donanım modülünde çevre birimleri başlığı, core workflow içindeki kritik parçalardan biridir."
+      }
+    }
+  ],
+  "guide": {
+    "displayName": "Donanım",
+    "summary": "CPU, memory, ISA ve machine-level bileşenleri anlaşılır hale getirir.",
+    "level": "Başlangıç",
+    "estimatedTime": "6-8 saat",
+    "prerequisites": [
+      "Bilgisayar bileşenlerine genel bakış"
+    ],
+    "learningGoals": [
+      "CPU ve bellek katmanlarını ayırmak",
+      "ISA ile assembly ilişkisini görmek",
+      "Donanım performansını temel düzeyde yorumlamak"
+    ]
+  }
+}

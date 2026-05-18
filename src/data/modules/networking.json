@@ -1,0 +1,320 @@
+{
+  "category": "NETWORKING",
+  "icon": "⇄",
+  "topics": [
+    {
+      "id": "network-basics",
+      "title": "Ağ Temelleri",
+      "description": "OSI modeli, TCP/IP stack, IP adresleme ve routing temelleri.",
+      "progress": 0,
+      "lessons": [
+        {
+          "id": "net-1",
+          "title": "OSI ve TCP/IP Modelleri",
+          "duration": "12 dk",
+          "content": "OSI 7 katmanlı bir referans modelidir: Physical, Data Link, Network, Transport, Session, Presentation, Application. Her katman belirli görevlerden sorumludur.\n\nTCP/IP modeli pratikte kullanılan 4 katmanlı modeldir: Link, Internet, Transport, Application. OSI'nin basitleştirilmiş halidir.\n\nEncapsulation: Her katman kendi header'ını ekler. Decapsulation: Alıcı tarafta header'lar sırayla çıkarılır. Bu katmanlı yapı, ağ protokollerinin modüler olmasını sağlar.",
+          "codeExample": "// TCP/IP Stack Katmanları\n\n// Application Layer (HTTP, FTP, DNS, SMTP)\nGET /index.html HTTP/1.1\nHost: example.com\n\n// Transport Layer (TCP/UDP)\n[TCP Header: Source Port, Dest Port, Seq, Ack, Flags]\n\n// Internet Layer (IP)\n[IP Header: Source IP, Dest IP, TTL, Protocol]\n\n// Link Layer (Ethernet)\n[Ethernet Header: Source MAC, Dest MAC, Type]\n\n// Paket yapısı:\n// [Ethernet][IP][TCP][HTTP Data][Ethernet Trailer]\n\n// Her katman bir sonrakini kapsüller:\n// HTTP data -> TCP segment -> IP packet -> Ethernet frame",
+          "codeLanguage": "text",
+          "study": {
+            "takeaway": "OSI 7 katmanlı bir referans modelidir: Physical, Data Link, Network, Transport, Session, Presentation, Application.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda osi ve tcp/ip modelleri için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "net-2",
+          "title": "IP Adresleme",
+          "duration": "11 dk",
+          "content": "IPv4 adresi 32 bit'tir ve 4 oktet olarak gösterilir (192.168.1.1). Her oktet 0-255 arasındadır. Toplam 4.3 milyar adres vardır.\n\nSubnet mask, ağ ve host kısmını ayırır. /24 (255.255.255.0) son okteti host için bırakır, 254 kullanılabilir adres verir. CIDR notation daha esnektir.\n\nIPv6, 128 bit adres kullanır ve adres tükenmesi sorununu çözer. 2001:0db8:85a3::8a2e:0370:7334 formatındadır. Sıfırlar kısaltılabilir.",
+          "codeExample": "// IP adresleme örnekleri\n\n// IPv4 sınıfları (eski)\nClass A: 1.0.0.0 - 126.255.255.255    (/8)\nClass B: 128.0.0.0 - 191.255.255.255  (/16)\nClass C: 192.0.0.0 - 223.255.255.255  (/24)\n\n// Private IP aralıkları\n10.0.0.0/8        (10.0.0.0 - 10.255.255.255)\n172.16.0.0/12     (172.16.0.0 - 172.31.255.255)\n192.168.0.0/16    (192.168.0.0 - 192.168.255.255)\n\n// CIDR hesaplama\n192.168.1.0/24\n  Network: 192.168.1.0\n  Broadcast: 192.168.1.255\n  Usable: 192.168.1.1 - 192.168.1.254\n  Total hosts: 254\n\n// IPv6 örneği\n2001:0db8:0000:0000:0000:0000:0000:0001\n// Kısaltılmış:\n2001:db8::1",
+          "codeLanguage": "text",
+          "study": {
+            "takeaway": "IPv4 adresi 32 bit'tir ve 4 oktet olarak gösterilir (192.168.1.1).",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda ip adresleme için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "net-3",
+          "title": "Routing ve Switching",
+          "duration": "10 dk",
+          "content": "Router, farklı ağlar arasında paket yönlendirir. Routing table'a bakarak en iyi yolu seçer. Static routing manuel, dynamic routing otomatik güncellenir.\n\nSwitch, aynı ağ içinde MAC adreslerine göre frame iletir. Layer 2 cihazıdır. Hub ise tüm portlara broadcast yapar (eski teknoloji).\n\nDefault gateway, yerel ağ dışına çıkmak için kullanılan router'dır. Traceroute komutu, paketi hedefe götüren router'ları gösterir.",
+          "codeExample": "// Routing table örneği (Linux)\n$ route -n\nDestination     Gateway         Genmask         Iface\n0.0.0.0         192.168.1.1     0.0.0.0         eth0  # Default route\n192.168.1.0     0.0.0.0         255.255.255.0   eth0  # Local network\n\n// Traceroute\n$ traceroute google.com\n 1  192.168.1.1 (192.168.1.1)  1.234 ms\n 2  10.0.0.1 (10.0.0.1)  5.678 ms\n 3  172.16.0.1 (172.16.0.1)  12.345 ms\n ...\n\n// ARP table (MAC adresleri)\n$ arp -a\n? (192.168.1.1) at aa:bb:cc:dd:ee:ff [ether] on eth0\n? (192.168.1.100) at 11:22:33:44:55:66 [ether] on eth0\n\n// Route ekleme\n$ sudo ip route add 10.0.0.0/24 via 192.168.1.254",
+          "codeLanguage": "bash",
+          "study": {
+            "takeaway": "Router, farklı ağlar arasında paket yönlendirir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda routing ve switching için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "net-4",
+          "title": "NAT ve Port Forwarding",
+          "duration": "9 dk",
+          "content": "NAT (Network Address Translation), private IP'leri public IP'ye çevirir. Ev router'ları NAT kullanır, böylece tek public IP ile birden fazla cihaz internete çıkar.\n\nPAT (Port Address Translation), aynı public IP'de farklı portlar kullanarak çoklu bağlantı sağlar. Source port değiştirilerek her bağlantı ayırt edilir.\n\nPort forwarding, dışarıdan gelen bağlantıları iç ağdaki bir cihaza yönlendirir. Web sunucusu, oyun sunucusu için gereklidir.",
+          "codeExample": "// NAT çalışma prensibi\n\n// İç ağdan dışarı (Outbound)\nPrivate: 192.168.1.100:5000 -> google.com:443\nNAT:     203.0.113.5:12345  -> google.com:443\n// Router, 192.168.1.100:5000 <-> 12345 mapping'i tutar\n\n// Dışarıdan içeri (Inbound - Port Forwarding)\nExternal: 203.0.113.5:80 -> 192.168.1.10:8080\n// Port 80'e gelen istekler 192.168.1.10:8080'e yönlendirilir\n\n// iptables ile NAT (Linux)\nsudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE\n\n// Port forwarding\nsudo iptables -t nat -A PREROUTING -p tcp --dport 80 \\\n  -j DNAT --to-destination 192.168.1.10:8080",
+          "codeLanguage": "bash",
+          "study": {
+            "takeaway": "NAT (Network Address Translation), private IP'leri public IP'ye çevirir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda nat ve port forwarding için hangi soruya cevap verebildiğini yaz."
+          }
+        }
+      ],
+      "quiz": true,
+      "study": {
+        "difficulty": "Orta",
+        "estimatedTime": "47 dk",
+        "prerequisites": [
+          "Temel terminal bilgisi"
+        ],
+        "learningGoals": [
+          "Ağ Temelleri için core concept ve terminology'i ayırabilmek",
+          "Pattern, API veya tool seçimini örnekler üzerinden yapabilmek",
+          "Küçük bir senaryoda doğru approach'u seçebilmek"
+        ],
+        "summary": "OSI modeli, TCP/IP stack, IP adresleme ve routing temelleri.",
+        "whyItMatters": "Ağ modülünde ağ temelleri başlığı, core workflow içindeki kritik parçalardan biridir."
+      }
+    },
+    {
+      "id": "tcp-udp",
+      "title": "TCP ve UDP",
+      "description": "TCP three-way handshake, flow control, UDP özellikleri ve kullanım alanları.",
+      "progress": 0,
+      "lessons": [
+        {
+          "id": "tcp-1",
+          "title": "TCP Three-Way Handshake",
+          "duration": "11 dk",
+          "content": "TCP bağlantı kurulumu SYN → SYN-ACK → ACK üçlü el sıkışmasıyla yapılır. Bu, her iki tarafın da hazır olduğunu garanti eder.\n\nSYN: Client, random sequence number ile bağlantı ister. SYN-ACK: Server kabul eder, kendi sequence number'ını gönderir. ACK: Client onaylar, veri akışı başlar.\n\nBağlantı kapatma FIN → ACK → FIN → ACK dörtlü el sıkışmasıyla yapılır. TIME_WAIT durumu, geç gelen paketlerin yeni bağlantıyla karışmamasını sağlar.",
+          "codeExample": "// TCP handshake süreci\n\n// 1. SYN\nClient -> Server: SYN, Seq=100\n\n// 2. SYN-ACK\nServer -> Client: SYN-ACK, Seq=300, Ack=101\n\n// 3. ACK\nClient -> Server: ACK, Seq=101, Ack=301\n\n// Bağlantı kuruldu, veri akışı başlar\n\n// Bağlantı kapatma\nClient -> Server: FIN, Seq=500\nServer -> Client: ACK, Ack=501\nServer -> Client: FIN, Seq=800\nClient -> Server: ACK, Ack=801\n\n// tcpdump ile görüntüleme\n$ sudo tcpdump -i eth0 'tcp[tcpflags] & (tcp-syn) != 0'\n\n// netstat ile bağlantı durumları\n$ netstat -an | grep ESTABLISHED\n$ netstat -an | grep TIME_WAIT",
+          "codeLanguage": "text",
+          "study": {
+            "takeaway": "TCP bağlantı kurulumu SYN → SYN-ACK → ACK üçlü el sıkışmasıyla yapılır.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda tcp three-way handshake için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "tcp-2",
+          "title": "TCP Flow Control ve Congestion",
+          "duration": "12 dk",
+          "content": "Flow control, alıcının buffer'ını taşırmamak için gönderici hızını ayarlar. Sliding window mekanizması kullanılır. Window size, alıcının ne kadar veri kabul edebileceğini belirtir.\n\nCongestion control, ağ tıkanıklığını önler. Slow start, congestion avoidance, fast retransmit, fast recovery algoritmaları kullanılır.\n\nTCP Reno, NewReno, CUBIC gibi farklı congestion control algoritmaları vardır. Linux'ta sysctl ile değiştirilebilir.",
+          "codeExample": "// TCP window size\nClient -> Server: Data (Seq=1000, Len=1000, Win=65535)\nServer -> Client: ACK (Ack=2000, Win=32768)\n// Server, 32KB daha kabul edebilir\n\n// Congestion control durumları\n1. Slow Start: cwnd exponential artar\n2. Congestion Avoidance: cwnd linear artar\n3. Fast Retransmit: 3 duplicate ACK -> hemen yeniden gönder\n4. Fast Recovery: cwnd'yi yarıya düşür\n\n// Linux TCP ayarları\n$ sysctl net.ipv4.tcp_congestion_control\nnet.ipv4.tcp_congestion_control = cubic\n\n// Değiştirme\n$ sudo sysctl -w net.ipv4.tcp_congestion_control=bbr\n\n// TCP istatistikleri\n$ ss -ti\n  cubic wscale:7,7 rto:204 rtt:3.5/1.5 cwnd:10",
+          "codeLanguage": "bash",
+          "study": {
+            "takeaway": "Flow control, alıcının buffer'ını taşırmamak için gönderici hızını ayarlar.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda tcp flow control ve congestion için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "tcp-3",
+          "title": "UDP Protokolü",
+          "duration": "9 dk",
+          "content": "UDP connectionless bir protokoldür. Handshake yok, güvenilirlik yok, sıralama yok. Ancak çok hızlıdır ve overhead'i düşüktür.\n\nUDP header sadece 8 byte'tır (TCP 20+ byte). Source port, dest port, length, checksum içerir. Paket kaybolursa yeniden gönderilmez.\n\nKullanım alanları: DNS, DHCP, streaming (video/audio), online gaming, VoIP. Hız önemliyse ve kayıp tolere edilebiliyorsa UDP tercih edilir.",
+          "codeExample": "// UDP vs TCP karşılaştırma\n\nTCP:\n  + Güvenilir (retransmission)\n  + Sıralı teslimat\n  + Flow control\n  + Congestion control\n  - Yavaş (handshake, overhead)\n  - Head-of-line blocking\n\nUDP:\n  + Hızlı (no handshake)\n  + Düşük overhead\n  + No head-of-line blocking\n  - Güvenilir değil\n  - Sıralama yok\n  - Flow control yok\n\n// UDP socket (Python)\nimport socket\n\n# Server\nsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)\nsock.bind(('0.0.0.0', 5000))\ndata, addr = sock.recvfrom(1024)\n\n# Client\nsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)\nsock.sendto(b'Hello', ('server.com', 5000))",
+          "codeLanguage": "python",
+          "study": {
+            "takeaway": "UDP connectionless bir protokoldür.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda udp protokolü için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "tcp-4",
+          "title": "Socket Programming",
+          "duration": "13 dk",
+          "content": "Socket, ağ iletişimi için endpoint'tir. TCP socket (SOCK_STREAM) ve UDP socket (SOCK_DGRAM) olmak üzere iki tiptir.\n\nTCP server: socket() -> bind() -> listen() -> accept() -> send/recv -> close(). Client: socket() -> connect() -> send/recv -> close().\n\nUDP'de listen() ve accept() yoktur. Doğrudan sendto() ve recvfrom() kullanılır. Her paket bağımsızdır.",
+          "codeExample": "// TCP Server (Python)\nimport socket\n\nserver = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\nserver.bind(('0.0.0.0', 8080))\nserver.listen(5)\nprint('Server listening on port 8080')\n\nwhile True:\n    client, addr = server.accept()\n    print(f'Connection from {addr}')\n\n    data = client.recv(1024)\n    print(f'Received: {data.decode()}')\n\n    client.send(b'HTTP/1.1 200 OK\\r\\n\\r\\nHello!')\n    client.close()\n\n// TCP Client (Python)\nimport socket\n\nclient = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\nclient.connect(('localhost', 8080))\n\nclient.send(b'GET / HTTP/1.1\\r\\n\\r\\n')\nresponse = client.recv(4096)\nprint(response.decode())\n\nclient.close()",
+          "codeLanguage": "python",
+          "study": {
+            "takeaway": "Socket, ağ iletişimi için endpoint'tir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda socket programming için hangi soruya cevap verebildiğini yaz."
+          }
+        }
+      ],
+      "quiz": true,
+      "study": {
+        "difficulty": "Orta",
+        "estimatedTime": "50 dk",
+        "prerequisites": [
+          "Temel terminal bilgisi"
+        ],
+        "learningGoals": [
+          "TCP ve UDP için core concept ve terminology'i ayırabilmek",
+          "Pattern, API veya tool seçimini örnekler üzerinden yapabilmek",
+          "Küçük bir senaryoda doğru approach'u seçebilmek"
+        ],
+        "summary": "TCP three-way handshake, flow control, UDP özellikleri ve kullanım alanları.",
+        "whyItMatters": "Ağ modülünde tcp ve udp başlığı, core workflow içindeki kritik parçalardan biridir."
+      }
+    },
+    {
+      "id": "http",
+      "title": "HTTP ve Web Protokolleri",
+      "description": "HTTP/1.1, HTTP/2, HTTPS, REST API ve web iletişim protokolleri.",
+      "progress": 0,
+      "lessons": [
+        {
+          "id": "http-1",
+          "title": "HTTP Temelleri",
+          "duration": "11 dk",
+          "content": "HTTP (Hypertext Transfer Protocol), web iletişiminin temelidir. Request-response modeli kullanır. Stateless'tır, her istek bağımsızdır.\n\nHTTP metodları: GET (veri al), POST (veri gönder), PUT (güncelle), DELETE (sil), PATCH (kısmi güncelle), HEAD (sadece header), OPTIONS (desteklenen metodlar).\n\nStatus kodları: 2xx başarı, 3xx yönlendirme, 4xx client hatası, 5xx server hatası. 200 OK, 404 Not Found, 500 Internal Server Error en yaygınlarıdır.",
+          "codeExample": "// HTTP Request\nGET /api/users/123 HTTP/1.1\nHost: api.example.com\nUser-Agent: Mozilla/5.0\nAccept: application/json\nAuthorization: Bearer token123\n\n// HTTP Response\nHTTP/1.1 200 OK\nContent-Type: application/json\nContent-Length: 85\nCache-Control: max-age=3600\n\n{\"id\": 123, \"name\": \"Ahmet\", \"email\": \"ahmet@example.com\"}\n\n// Yaygın status kodları\n200 OK - Başarılı\n201 Created - Kaynak oluşturuldu\n204 No Content - Başarılı ama içerik yok\n301 Moved Permanently - Kalıcı yönlendirme\n302 Found - Geçici yönlendirme\n400 Bad Request - Hatalı istek\n401 Unauthorized - Kimlik doğrulama gerekli\n403 Forbidden - Erişim yasak\n404 Not Found - Kaynak bulunamadı\n500 Internal Server Error - Sunucu hatası\n503 Service Unavailable - Servis kullanılamıyor",
+          "codeLanguage": "text",
+          "study": {
+            "takeaway": "HTTP (Hypertext Transfer Protocol), web iletişiminin temelidir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda http temelleri için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "http-2",
+          "title": "HTTP/2 ve HTTP/3",
+          "duration": "12 dk",
+          "content": "HTTP/1.1'de her istek için ayrı TCP bağlantısı gerekir (veya sıralı keep-alive). Head-of-line blocking sorunu vardır.\n\nHTTP/2, tek TCP bağlantısı üzerinde multiplexing sağlar. Birden fazla stream paralel çalışır. Header compression (HPACK) ile tekrar azaltılır. Server push ile sunucu proaktif veri gönderebilir.\n\nHTTP/3, QUIC protokolü üzerinde çalışır (UDP tabanlı). TCP'nin head-of-line blocking'ini tamamen çözer. 0-RTT ile bağlantı kurulum süresini azaltır.",
+          "codeExample": "// HTTP/1.1 - Sıralı istekler\nGET /style.css\n  -> Response\nGET /script.js\n  -> Response\nGET /image.png\n  -> Response\n// Her biri bir öncekini bekler\n\n// HTTP/2 - Paralel streamler\nStream 1: GET /style.css\nStream 3: GET /script.js\nStream 5: GET /image.png\n// Hepsi aynı anda\n\n// HTTP/2 frame yapısı\n+-----------------------------------------------+\n|                 Length (24)                   |\n+---------------+---------------+---------------+\n|   Type (8)    |   Flags (8)   |\n+-+-------------+---------------+-------------------------------+\n|R|                 Stream Identifier (31)                      |\n+=+=============================================================+\n|                   Frame Payload (0...)                      ...\n+---------------------------------------------------------------+\n\n// curl ile HTTP/2\n$ curl -I --http2 https://example.com\n\n// HTTP/3 kontrol\n$ curl -I --http3 https://cloudflare.com",
+          "codeLanguage": "text",
+          "study": {
+            "takeaway": "HTTP/1.1'de her istek için ayrı TCP bağlantısı gerekir (veya sıralı keep-alive).",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda http/2 ve http/3 için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "http-3",
+          "title": "HTTPS ve TLS",
+          "duration": "13 dk",
+          "content": "HTTPS, HTTP'nin TLS/SSL ile şifrelenmiş halidir. Man-in-the-middle saldırılarını önler. Port 443 kullanır.\n\nTLS handshake: Client Hello -> Server Hello + Certificate -> Key Exchange -> Finished. Asymmetric encryption (RSA/ECDHE) ile session key üretilir, sonra symmetric encryption (AES) ile veri şifrelenir.\n\nCertificate Authority (CA), sunucu sertifikasını imzalar. Browser, CA'nın public key'i ile doğrular. Self-signed certificate'ler güvenilir değildir.",
+          "codeExample": "// TLS Handshake süreci\n\n1. Client Hello\n   - TLS version\n   - Cipher suites\n   - Random bytes\n\n2. Server Hello\n   - Seçilen cipher suite\n   - Server certificate (public key)\n   - Random bytes\n\n3. Key Exchange\n   - Client, pre-master secret üretir\n   - Server'ın public key ile şifreler\n   - Gönderir\n\n4. Both sides\n   - Master secret hesaplar\n   - Session keys türetir\n\n5. Finished\n   - Şifreli iletişim başlar\n\n// OpenSSL ile test\n$ openssl s_client -connect example.com:443\n\n// Sertifika bilgisi\n$ openssl x509 -in cert.pem -text -noout\n\n// Cipher suites\n$ nmap --script ssl-enum-ciphers -p 443 example.com",
+          "codeLanguage": "bash",
+          "study": {
+            "takeaway": "HTTPS, HTTP'nin TLS/SSL ile şifrelenmiş halidir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda https ve tls için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "http-4",
+          "title": "REST API Tasarımı",
+          "duration": "10 dk",
+          "content": "REST (Representational State Transfer), HTTP üzerinde API tasarım prensibidir. Stateless, cacheable, uniform interface özelliklerine sahiptir.\n\nResource-based URL'ler kullanılır: /users, /users/123, /users/123/posts. HTTP metodları CRUD işlemlerine map edilir: GET (Read), POST (Create), PUT/PATCH (Update), DELETE (Delete).\n\nİyi API tasarımı: versiyonlama (/v1/users), pagination, filtering, sorting, hata mesajları, rate limiting, dokümantasyon içerir.",
+          "codeExample": "// REST API örnekleri\n\n// Kullanıcıları listele\nGET /api/v1/users?page=1&limit=20&sort=created_at\n\n// Tek kullanıcı\nGET /api/v1/users/123\n\n// Yeni kullanıcı oluştur\nPOST /api/v1/users\nContent-Type: application/json\n\n{\"name\": \"Ahmet\", \"email\": \"ahmet@example.com\"}\n\n// Kullanıcı güncelle\nPUT /api/v1/users/123\n{\"name\": \"Ahmet Yılmaz\"}\n\n// Kısmi güncelleme\nPATCH /api/v1/users/123\n{\"email\": \"yeni@example.com\"}\n\n// Kullanıcı sil\nDELETE /api/v1/users/123\n\n// Nested resources\nGET /api/v1/users/123/posts\nPOST /api/v1/users/123/posts\n\n// Hata response\n{\n  \"error\": {\n    \"code\": \"VALIDATION_ERROR\",\n    \"message\": \"Email is required\",\n    \"field\": \"email\"\n  }\n}",
+          "codeLanguage": "json",
+          "study": {
+            "takeaway": "REST (Representational State Transfer), HTTP üzerinde API tasarım prensibidir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda rest api tasarımı için hangi soruya cevap verebildiğini yaz."
+          }
+        }
+      ],
+      "quiz": true,
+      "study": {
+        "difficulty": "İleri",
+        "estimatedTime": "51 dk",
+        "prerequisites": [
+          "Temel terminal bilgisi"
+        ],
+        "learningGoals": [
+          "HTTP ve Web Protokolleri için core concept ve terminology'i ayırabilmek",
+          "Pattern, API veya tool seçimini örnekler üzerinden yapabilmek",
+          "Küçük bir senaryoda doğru approach'u seçebilmek"
+        ],
+        "summary": "HTTP/1.1, HTTP/2, HTTPS, REST API ve web iletişim protokolleri.",
+        "whyItMatters": "Ağ modülünde http ve web protokolleri başlığı, core workflow içindeki kritik parçalardan biridir."
+      }
+    },
+    {
+      "id": "dns",
+      "title": "DNS ve Domain Yönetimi",
+      "description": "DNS çözümleme, record tipleri, DNS güvenliği ve domain yapılandırması.",
+      "progress": 0,
+      "lessons": [
+        {
+          "id": "dns-1",
+          "title": "DNS Nasıl Çalışır?",
+          "duration": "11 dk",
+          "content": "DNS (Domain Name System), domain adlarını IP adreslerine çevirir. Dağıtık, hiyerarşik bir veritabanıdır.\n\nÇözümleme sırası: Browser cache -> OS cache -> Router cache -> ISP DNS (Recursive Resolver) -> Root Server -> TLD Server (.com) -> Authoritative Server.\n\nRecursive query, tam cevap alana kadar devam eder. Iterative query, her adımda bir sonraki sunucuyu gösterir. Caching, tekrarlı sorguları hızlandırır.",
+          "codeExample": "// DNS çözümleme adımları\n\n1. example.com sorgusu\n2. Local cache kontrol -> Yok\n3. Recursive resolver'a sor (8.8.8.8)\n4. Root server'a sor -> \".com\" TLD server'ı ver\n5. TLD server'a sor -> example.com authoritative server'ı ver\n6. Authoritative server'a sor -> 93.184.216.34\n7. Cevabı cache'le ve döndür\n\n// dig komutu ile DNS sorgusu\n$ dig example.com\n\n;; ANSWER SECTION:\nexample.com.  3600  IN  A  93.184.216.34\n\n// Trace ile tüm adımları gör\n$ dig +trace example.com\n\n// Belirli DNS server kullan\n$ dig @8.8.8.8 example.com\n\n// Reverse DNS lookup\n$ dig -x 93.184.216.34",
+          "codeLanguage": "bash",
+          "study": {
+            "takeaway": "DNS (Domain Name System), domain adlarını IP adreslerine çevirir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda dns nasıl çalışır? için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "dns-2",
+          "title": "DNS Record Tipleri",
+          "duration": "10 dk",
+          "content": "A record, domain'i IPv4 adresine map eder. AAAA record IPv6 içindir. CNAME, bir domain'i başka bir domain'e alias yapar.\n\nMX record, mail server'ları belirtir. Priority değeri düşük olan önceliklidir. TXT record, metin bilgisi tutar (SPF, DKIM, domain verification).\n\nNS record, authoritative name server'ları gösterir. SOA record, zone'un başlangıç bilgilerini içerir. TTL, record'un ne kadar cache'leneceğini belirtir.",
+          "codeExample": "// DNS record örnekleri\n\n// A record\nexample.com.  3600  IN  A  93.184.216.34\n\n// AAAA record (IPv6)\nexample.com.  3600  IN  AAAA  2606:2800:220:1:248:1893:25c8:1946\n\n// CNAME record\nwww.example.com.  3600  IN  CNAME  example.com.\n\n// MX record\nexample.com.  3600  IN  MX  10 mail1.example.com.\nexample.com.  3600  IN  MX  20 mail2.example.com.\n\n// TXT record\nexample.com.  3600  IN  TXT  \"v=spf1 include:_spf.google.com ~all\"\n\n// NS record\nexample.com.  3600  IN  NS  ns1.example.com.\nexample.com.  3600  IN  NS  ns2.example.com.\n\n// SOA record\nexample.com.  3600  IN  SOA  ns1.example.com. admin.example.com. (\n                              2024010101 ; Serial\n                              3600       ; Refresh\n                              1800       ; Retry\n                              604800     ; Expire\n                              86400 )    ; Minimum TTL",
+          "codeLanguage": "text",
+          "study": {
+            "takeaway": "A record, domain'i IPv4 adresine map eder.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda dns record tipleri için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "dns-3",
+          "title": "DNS Güvenliği",
+          "duration": "9 dk",
+          "content": "DNS spoofing/poisoning, sahte DNS cevapları ile kullanıcıyı yanlış siteye yönlendirir. DNSSEC, dijital imza ile DNS cevaplarını doğrular.\n\nDNS over HTTPS (DoH) ve DNS over TLS (DoT), DNS sorgularını şifreler. ISP ve saldırganların sorguları görmesini engeller.\n\nDNS amplification attack, küçük sorgu ile büyük cevap alarak DDoS yapar. Rate limiting ve response rate limiting (RRL) ile önlenir.",
+          "codeExample": "// DNSSEC doğrulama\n$ dig +dnssec example.com\n\n;; ANSWER SECTION:\nexample.com.  3600  IN  A  93.184.216.34\nexample.com.  3600  IN  RRSIG  A 13 2 3600 ...\n\n// DNS over HTTPS (DoH)\n$ curl -H 'accept: application/dns-json' \\\n  'https://cloudflare-dns.com/dns-query?name=example.com&type=A'\n\n// DNS over TLS (DoT) test\n$ kdig -d @1.1.1.1 +tls example.com\n\n// DNS cache poisoning testi\n$ dig @vulnerable-dns-server.com attacker.com\n\n// Güvenli DNS sunucuları\nCloudflare: 1.1.1.1, 1.0.0.1\nGoogle: 8.8.8.8, 8.8.4.4\nQuad9: 9.9.9.9",
+          "codeLanguage": "bash",
+          "study": {
+            "takeaway": "DNS spoofing/poisoning, sahte DNS cevapları ile kullanıcıyı yanlış siteye yönlendirir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda dns güvenliği için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "dns-4",
+          "title": "DNS Troubleshooting",
+          "duration": "8 dk",
+          "content": "DNS sorunları, web sitelerine erişimi engeller. nslookup, dig, host komutları ile DNS sorguları test edilir.\n\nPropagation delay, DNS değişikliklerinin tüm sunuculara yayılma süresidir. TTL kadar sürebilir. Flush DNS cache ile yerel cache temizlenir.\n\nNegative caching, NXDOMAIN (domain yok) cevaplarını da cache'ler. Yeni eklenen domain'ler için sorun yaratabilir.",
+          "codeExample": "// DNS troubleshooting komutları\n\n// nslookup\n$ nslookup example.com\nServer:  8.8.8.8\nAddress:  8.8.8.8#53\n\nName:  example.com\nAddress: 93.184.216.34\n\n// host komutu\n$ host example.com\nexample.com has address 93.184.216.34\n\n// DNS cache temizleme\n# Linux\n$ sudo systemd-resolve --flush-caches\n\n# macOS\n$ sudo dscacheutil -flushcache\n\n# Windows\n> ipconfig /flushdns\n\n// DNS propagation kontrol\n$ dig @8.8.8.8 example.com\n$ dig @1.1.1.1 example.com\n\n// Tüm record'ları göster\n$ dig example.com ANY\n\n// DNS sunucu yanıt süresi\n$ dig example.com | grep \"Query time\"",
+          "codeLanguage": "bash",
+          "study": {
+            "takeaway": "DNS sorunları, web sitelerine erişimi engeller.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda dns troubleshooting için hangi soruya cevap verebildiğini yaz."
+          }
+        }
+      ],
+      "quiz": true,
+      "study": {
+        "difficulty": "İleri",
+        "estimatedTime": "43 dk",
+        "prerequisites": [
+          "Temel terminal bilgisi"
+        ],
+        "learningGoals": [
+          "DNS ve Domain Yönetimi için core concept ve terminology'i ayırabilmek",
+          "Pattern, API veya tool seçimini örnekler üzerinden yapabilmek",
+          "Küçük bir senaryoda doğru approach'u seçebilmek"
+        ],
+        "summary": "DNS çözümleme, record tipleri, DNS güvenliği ve domain yapılandırması.",
+        "whyItMatters": "Ağ modülünde dns ve domain yönetimi başlığı, core workflow içindeki kritik parçalardan biridir."
+      }
+    }
+  ],
+  "guide": {
+    "displayName": "Ağ",
+    "summary": "DNS, TCP, HTTP ve TLS zincirini gerçek connection flow ile bağlar.",
+    "level": "Orta",
+    "estimatedTime": "10-12 saat",
+    "prerequisites": [
+      "Temel terminal bilgisi"
+    ],
+    "learningGoals": [
+      "DNS çözümleme zincirini takip etmek",
+      "HTTP ve TLS katmanlarını ayırmak",
+      "Ağ problemlerini komutla teşhis etmek"
+    ]
+  }
+}

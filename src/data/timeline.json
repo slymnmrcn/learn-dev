@@ -1,0 +1,392 @@
+[
+  {
+    "id": "turing-machine",
+    "year": "1936",
+    "title": "Turing Makinesi",
+    "tag": "TEORİ",
+    "color": "#a78bfa",
+    "who": "Alan Turing — Cambridge",
+    "summary": "Alan Turing, 'hesaplanabilirlik' sorusunu yanıtlamak için teorik bir makine modeli önerdi. Hiçbir fiziksel donanım yoktu; sadece kağıt üzerindeki bir fikirdi. Ama bu fikir, bilgisayar biliminin tüm teorik temelini oluşturdu.",
+    "impact": "Turing makinesi, modern CPU'ların teorik atasıdır. 'Bu problem hesaplanabilir mi?' sorusunun cevabı hâlâ bu modele dayanır. Alan Turing, yazılım kavramını icat etmiş kişi olarak kabul edilir."
+  },
+  {
+    "id": "first-compiler",
+    "year": "1952",
+    "title": "İlk Derleyici (A-0)",
+    "tag": "DERLEYİCİ",
+    "color": "#a78bfa",
+    "who": "Grace Hopper — Remington Rand",
+    "summary": "Grace Hopper, bir bilgisayar kullanıcısının sayılar yerine İngilizce'ye benzer kelimeler kullanarak bilgisayara talimat verebileceği ilk derleyiciyi tamamladı. Üstleri buna inanmadı; 'bilgisayarlar matematik yapar, İngilizce anlamaz' dediler.",
+    "impact": "Hopper'ın çalışması tüm yüksek seviyeli programlama dillerinin kapısını araladı. COBOL'u da o geliştirdi. Bugün yazdığınız her satır kod, onun fikriyle var oldu."
+  },
+  {
+    "id": "fortran",
+    "year": "1957",
+    "title": "FORTRAN",
+    "tag": "DİL",
+    "color": "#a78bfa",
+    "who": "John Backus — IBM",
+    "summary": "IBM'de çalışan John Backus, bilim insanlarının makine kodu yerine matematiksel formüllerle program yazabilmesi için FORTRAN'ı tasarladı. İnsanlar önce inanmadı; kimse bir dilin makine kodu kadar hızlı çalışabileceğine inanmıyordu.",
+    "impact": "Yüksek seviyeli programlama dillerinin ilk öncüsü. NASA, CERN ve finans dünyası on yıllar boyunca FORTRAN kullandı. Bugün hâlâ bilimsel hesaplamalarda aktif olarak kullanılıyor."
+  },
+  {
+    "id": "unix",
+    "year": "1969",
+    "title": "Unix",
+    "tag": "İŞLETİM SİSTEMİ",
+    "color": "#a78bfa",
+    "who": "Ken Thompson, Dennis Ritchie — Bell Labs",
+    "summary": "Bell Labs, büyük bir işletim sistemi projesi olan Multics'ten çekildi. Ken Thompson, boş kalan eski bir PDP-7 bilgisayarına 3 haftada kendi oyununu çalıştırmak için Unix'i yazdı. Ritchie sonradan C dilini yaratıp Unix'i onunla yeniden yazdı.",
+    "impact": "Linux, macOS, Android — hepsinin atası Unix'tir. 'Her şey bir dosyadır' ve 'küçük araçları pipe ile birleştir' felsefesi, modern yazılım mimarisinin DNA'sına işledi."
+  },
+  {
+    "id": "c-language",
+    "year": "1972",
+    "title": "C Programlama Dili",
+    "tag": "DİL",
+    "color": "#a78bfa",
+    "who": "Dennis Ritchie — Bell Labs",
+    "summary": "Unix'i yeniden yazmak için tasarlanan C, hem düşük seviyeli donanım kontrolü hem de insanın okuyabileceği sözdizimini bir arada sunuyordu. Bugüne kadar bu dengeyi bu kadar iyi kuran çok az dil çıktı.",
+    "impact": "C, Python'ın, Java'nın, C#'ın, Go'nun ve neredeyse her modern dilin atasıdır. İşletim sistemleri, gömülü sistemler, derleyiciler — hepsinin çekirdeği C ile yazılı. Dennis Ritchie, Steve Jobs'la aynı hafta öldü; dünya neredeyse fark etmedi."
+  },
+  {
+    "id": "tcp-ip",
+    "year": "1974",
+    "title": "TCP/IP",
+    "tag": "PROTOKOL",
+    "color": "#60a5fa",
+    "who": "Vint Cerf, Bob Kahn — DARPA",
+    "summary": "ARPANET çalışıyordu ama farklı ağlar birbirleriyle konuşamıyordu. Cerf ve Kahn, tüm bilgisayarların ortak bir dil konuşmasını sağlayacak protokolü tasarladılar. İnternetin 'ortak dili' böyle doğdu.",
+    "impact": "TCP/IP olmadan internet olmazdı. Üzerinde durduğunuz tüm dijital altyapı — web, e-posta, video konferans, bulut — bu iki protokolün üstüne inşa edilmiş."
+  },
+  {
+    "id": "gnu-project",
+    "year": "1983",
+    "title": "GNU Projesi & Özgür Yazılım",
+    "tag": "AÇIK KAYNAK",
+    "color": "#34d399",
+    "who": "Richard Stallman — MIT",
+    "summary": "Stallman, yazıcı sürücüsünü değiştiremediği için öfkelendi ve tüm insanlığa açık, özgürce değiştirilebilir bir işletim sistemi yazmaya karar verdi. 'Copyleft' kavramını icat etti, GPL lisansını yazdı.",
+    "impact": "Açık kaynak hareketinin ideolojik temeli. Linux, Apache, Firefox, Android'in içindeki araçlar — hepsinin lisans mirası GNU'ya dayanıyor. Bugün yazılım dünyasının büyük çoğunluğu açık kaynak."
+  },
+  {
+    "id": "cplus-plus",
+    "year": "1985",
+    "title": "C++",
+    "tag": "DİL",
+    "color": "#a78bfa",
+    "who": "Bjarne Stroustrup — Bell Labs",
+    "summary": "Stroustrup, büyük yazılım projelerini organize etmek için C'ye nesne yönelimli programlama ekledi. 'C with Classes' olarak başladı, sonra C++ adını aldı. Başlangıçta kimse bu kadar yaygınlaşacağını tahmin etmemişti.",
+    "impact": "Oyun motorları (Unreal, Unity'nin çekirdeği), işletim sistemleri, tarayıcılar, veritabanları — performans kritik olan her şeyin arkasında C++ var. Dünya'nın en çok kullanılan dillerinden biri olmayı sürdürüyor."
+  },
+  {
+    "id": "world-wide-web",
+    "year": "1991",
+    "title": "World Wide Web",
+    "tag": "İNTERNET",
+    "color": "#60a5fa",
+    "who": "Tim Berners-Lee — CERN",
+    "summary": "CERN'deki araştırmacıların belgelerini paylaşmasını kolaylaştırmak için bir sistem tasarladı. HTTP, HTML ve ilk web tarayıcısını tek başına yazdı. Bunu patent almadan, ücretsiz olarak dünyaya hediye etti.",
+    "impact": "İnternetin üzerinde gezebileceğimiz bir yer haline gelmesi. E-ticaret, sosyal medya, bulut, streaming — modern dijital ekonominin tamamı WWW'nin üstüne inşa edildi."
+  },
+  {
+    "id": "linux",
+    "year": "1991",
+    "title": "Linux Kernel",
+    "tag": "İŞLETİM SİSTEMİ",
+    "color": "#34d399",
+    "who": "Linus Torvalds — Helsinki Üniversitesi",
+    "summary": "21 yaşındaki Linus Torvalds, Usenet'e 'sadece hobim için küçük bir işletim sistemi yapıyorum, büyük ve profesyonel olmayacak' diye yazdı. O 'küçük hobi projesi' bugün dünyanın en kritik yazılımı.",
+    "impact": "Android telefonlar, web sunucularının %96'sı, tüm süper bilgisayarlar, AWS/GCP/Azure altyapısı, ISS'deki bilgisayarlar — hepsi Linux çalıştırıyor. Tarihin en büyük açık kaynak projesi."
+  },
+  {
+    "id": "python",
+    "year": "1991",
+    "title": "Python",
+    "tag": "DİL",
+    "color": "#a78bfa",
+    "who": "Guido van Rossum — CWI Amsterdam",
+    "summary": "Noel tatilinde sıkılan Guido van Rossum, ABC dilinin devamı niteliğinde, okunabilirliği ön planda tutan yeni bir dil yazmaya karar verdi. İsmini Monty Python'dan aldı. Ciddiye alınması yıllar aldı.",
+    "impact": "Yapay zeka ve veri biliminin fiili dili. TensorFlow, PyTorch, NumPy, scikit-learn hepsi Python. Bugün dünyanın en popüler programlama dili konumunda; yeni nesil AI devriminin taşıyıcısı."
+  },
+  {
+    "id": "mosaic-browser",
+    "year": "1993",
+    "title": "Mosaic Tarayıcı",
+    "tag": "TARAYICI",
+    "color": "#60a5fa",
+    "who": "Marc Andreessen, Eric Bina — NCSA",
+    "summary": "Web sayfaları önce sadece metin gösteriyordu. Mosaic, görsel ve metni aynı sayfada gösteren ilk tarayıcı oldu. Bir üniversite projesiydi ama interneti herkese açtı.",
+    "impact": "Mosaic'in devamı Netscape Navigator oldu, ardından Firefox. Tarayıcı savaşlarını başlattı. Web'i akademisyenlerin aracından kitlelerin platformuna dönüştüren geçiş noktası."
+  },
+  {
+    "id": "java",
+    "year": "1995",
+    "title": "Java",
+    "tag": "DİL",
+    "color": "#a78bfa",
+    "who": "James Gosling ve ekibi — Sun Microsystems",
+    "summary": "Sun Microsystems'te akıllı cihazlar için tasarlanan Oak dili, internetin patlamasıyla yön değiştirdi. 'Write Once, Run Anywhere' sloganıyla piyasaya çıktı. O dönem her tarayıcıda Java applet çalışırdı.",
+    "impact": "Kurumsal yazılımın bel kemiği. Android uygulamalar, büyük ölçekli backend sistemler, Hadoop/Spark ekosistemi Java ile yazılı. JVM mimarisi yüzlerce dile ilham verdi."
+  },
+  {
+    "id": "javascript",
+    "year": "1995",
+    "title": "JavaScript",
+    "tag": "DİL",
+    "color": "#a78bfa",
+    "who": "Brendan Eich — Netscape",
+    "summary": "Netscape, web sayfalarını etkileşimli yapmak için bir dil istedi. Brendan Eich bu dili 10 günde yazdı. İlk adı Mocha'ydı, sonra LiveScript, ardından pazarlama için JavaScript. Java ile ilgisi yoktu.",
+    "impact": "Dünyanın tek istemci tarafı web dili. Node.js ile sunucu tarafına da sıçradı. React, Vue, Angular ekosistemi; her web sitesi JavaScript çalıştırıyor. Dünyada en çok kullanılan dil."
+  },
+  {
+    "id": "mysql",
+    "year": "1995",
+    "title": "MySQL",
+    "tag": "VERİTABANI",
+    "color": "#fabc45",
+    "who": "Michael Widenius, David Axmark — MySQL AB",
+    "summary": "İsveçli geliştiriciler, ücretsiz ve hızlı bir ilişkisel veritabanına ihtiyaç duyuyordu. Mevcut seçenekler ya pahalıydı ya da yavaştı. MySQL, LAMP stack'in 'M'si olarak web patlamasının tam ortasına doğdu.",
+    "impact": "WordPress, Facebook (başlangıçta), Wikipedia, YouTube (başlangıçta) MySQL üzerinde kuruldu. Açık kaynak veritabanı ekosisteminin kapısını açtı. PostgreSQL ile birlikte hâlâ en yaygın DB'ler."
+  },
+  {
+    "id": "google-search",
+    "year": "1998",
+    "title": "Google PageRank",
+    "tag": "ALGORİTMA",
+    "color": "#fabc45",
+    "who": "Larry Page, Sergey Brin — Stanford",
+    "summary": "Mevcut arama motorları sayfaları içeriğe göre sıralıyordu ve spam'e doluydu. Stanford'da iki doktora öğrencisi, sayfaları birbirine bağlayan linkleri 'akademik atıf' gibi değerlendiren PageRank algoritmasını geliştirdi.",
+    "impact": "Google, bilgiye erişimi demokratize etti. Reklam modeliyle kurumsal yapıyı finanse etti; Android, Gmail, Maps, YouTube'u satın aldı. Bugün günde 8 milyardan fazla arama yapılıyor."
+  },
+  {
+    "id": "agile-manifesto",
+    "year": "2001",
+    "title": "Agile Manifesto",
+    "tag": "METODOLOJİ",
+    "color": "#f87171",
+    "who": "17 yazılımcı — Snowbird, Utah",
+    "summary": "17 yazılımcı, Utah'daki bir kayak merkezinde buluştu. Yıllarca süren şelale (waterfall) projelerinin çöküşünden bıkmışlardı. Bir hafta sonu 4 değer ve 12 ilkeyi kağıda döktüler.",
+    "impact": "Yazılım geliştirme kültürünü kökten değiştirdi. Scrum, Kanban, XP — metodolojilerin tümü bu manifestodan besleniyor. 'Sprint', 'backlog', 'retrospective' kelimeleri günlük dile girdi."
+  },
+  {
+    "id": "aws",
+    "year": "2006",
+    "title": "Amazon Web Services (AWS)",
+    "tag": "BULUT",
+    "color": "#fabc45",
+    "who": "Andy Jassy — Amazon",
+    "summary": "Amazon, kendi altyapısını kurmakta o kadar zorlandı ki sistemi standartlaştırdı. Sonra 'Bu altyapıyı başkalarına da kiralasak?' diye sordu. S3 ve EC2 ile bulut bilişim çağı başladı.",
+    "impact": "Startup'ların veri merkezi kurmasına gerek kalmadı. Netflix, Airbnb, Uber AWS üzerinde büyüdü. Bulut bilişim pazarı bugün trilyon dolarlık bir endüstri. GCP ve Azure'u da doğuran rekabet AWS ile başladı."
+  },
+  {
+    "id": "iphone-sdk",
+    "year": "2008",
+    "title": "App Store & Mobil Ekosistem",
+    "tag": "MOBİL",
+    "color": "#fabc45",
+    "who": "Steve Jobs — Apple",
+    "summary": "İlk iPhone (2007) üçüncü parti uygulamaya izin vermiyordu. Jobs, 'Web uygulamaları yeterli' dedi. Ama baskılar sonucu 2008'de App Store açıldı. İlk günde 500 uygulama vardı.",
+    "impact": "Mobil uygulama ekonomisi sıfırdan yaratıldı. Uber, Instagram, WhatsApp, TikTok App Store'dan doğdu. Google Play ile birlikte yazılım dağıtımını fiziksel medyadan dijital platforma taşıdı."
+  },
+  {
+    "id": "bitcoin",
+    "year": "2009",
+    "title": "Bitcoin & Blockchain",
+    "tag": "DAĞITIK SİSTEM",
+    "color": "#fabc45",
+    "who": "Satoshi Nakamoto — kimliği bilinmiyor",
+    "summary": "2008 mali krizinin ortasında, kimliği bilinmeyen biri 'Satoshi Nakamoto' takma adıyla bir whitepaper yayınladı. Merkezi bir otoriteye gerek kalmadan güven yaratmanın matematiksel yolunu gösterdi.",
+    "impact": "Blockchain teknolojisi fintech, tedarik zinciri, dijital kimlik ve akıllı sözleşme alanlarını dönüştürdü. Ethereum, DeFi, NFT, Web3 hepsinin temeli Satoshi'nin o 9 sayfalık whitepaper'ına dayanıyor."
+  },
+  {
+    "id": "nodejs",
+    "year": "2009",
+    "title": "Node.js",
+    "tag": "RUNTIME",
+    "color": "#70ffe0",
+    "who": "Ryan Dahl — JSConf",
+    "summary": "Ryan Dahl, Flickr'ın dosya yükleme progress bar'ının çalışmamasından sinirlenip JavaScript'i tarayıcı dışında, sunucuda çalıştırmaya karar verdi. V8 engine'ini alıp event-loop mimarisiyle Node.js'i yarattı.",
+    "impact": "JavaScript'i tam yığın (full-stack) dil yaptı. Netflix, LinkedIn, PayPal backend'lerini Node.js'e taşıdı. npm, tarihin en büyük paket ekosistemi haline geldi. Async programlama paradigması yaygınlaştı."
+  },
+  {
+    "id": "tensorflow",
+    "year": "2015",
+    "title": "TensorFlow",
+    "tag": "YAPAY ZEKA",
+    "color": "#f87171",
+    "who": "Google Brain ekibi — Google",
+    "summary": "Google'ın iç makine öğrenmesi kütüphanesi DistBelief'in açık kaynak hali. Araştırmacıların büyük ölçekli sinir ağlarını eğitmesini demokratize etti. Açıklandığında AI araştırma dünyasını sarstı.",
+    "impact": "Yapay zeka araştırmalarının önündeki en büyük bariyerleri kaldırdı. PyTorch ile birlikte modern AI'ın iki temel çerçevesini oluşturuyor. Binlerce şirket ve milyonlarca araştırmacı kullanıyor."
+  },
+  {
+    "id": "react",
+    "year": "2013",
+    "title": "React",
+    "tag": "FRAMEWORK",
+    "color": "#60a5fa",
+    "who": "Jordan Walke — Facebook",
+    "summary": "Facebook'un haber akışı, çok sayıda anlık güncelleme yüzünden performans sorunları yaşıyordu. Jordan Walke, FaxJS adlı bir prototip geliştirdi. JSX ve Virtual DOM fikirleriyle birlikte React adını alarak açık kaynağa geçti.",
+    "impact": "Frontend geliştirmeyi component-based düşünceye taşıdı. React Native ile mobil geliştirmeye girdi. Next.js, Remix gibi framework'lere zemin hazırladı. Bugün en yaygın kullanılan UI kütüphanesi."
+  },
+  {
+    "id": "vscode",
+    "year": "2015",
+    "title": "Visual Studio Code",
+    "tag": "ARAÇ",
+    "color": "#60a5fa",
+    "who": "Erich Gamma ve ekibi — Microsoft",
+    "summary": "Microsoft, hafif bir kod editörü yapmak istedi ve bunu Electron (web teknolojileriyle masaüstü uygulama) üzerine inşa etti. Kimse bir Microsoft ürününün bu kadar sevilmesini beklemiyordu.",
+    "impact": "Stack Overflow'un her anketinde yıllardır 1. sıradaki editör. Uzantı ekosistemi devasa boyutlara ulaştı. Remote Development ve Dev Containers özellikleriyle geliştirme ortamlarını dönüştürdü."
+  },
+  {
+    "id": "ansible",
+    "year": "2012",
+    "title": "Ansible & Infrastructure as Code",
+    "tag": "DEVOPS",
+    "color": "#70ffe0",
+    "who": "Michael DeHaan — Ansible Inc.",
+    "summary": "Sunucu yapılandırmasını elle yapmak hem yavaş hem de hatalıydı. Michael DeHaan, SSH üzerinden, ajan kurmadan çalışan, YAML ile yazılan bir otomasyon aracı tasarladı. Sadeliği onu rakiplerinden ayırdı.",
+    "impact": "'Infrastructure as Code' felsefesini yaygınlaştırdı. Red Hat tarafından satın alındı. Terraform, Puppet, Chef ile birlikte DevOps kültürünün temel araçları haline geldi."
+  },
+  {
+    "id": "graphql",
+    "year": "2015",
+    "title": "GraphQL",
+    "tag": "API",
+    "color": "#60a5fa",
+    "who": "Lee Byron ve ekibi — Facebook",
+    "summary": "Facebook'un mobil uygulaması REST API'den çok fazla ya da çok az veri çekiyordu. İçten geliştirdikleri ve 3 yıl kullandıkları yeni bir query dili olan GraphQL'yi 2015'te dünyayla paylaştılar.",
+    "impact": "REST'in katı yapısına alternatif sundu. İstemcinin tam olarak istediği veriyi çekmesini sağladı. GitHub, Shopify, Twitter gibi devler API'lerini GraphQL'e taşıdı."
+  },
+  {
+    "id": "rust",
+    "year": "2015",
+    "title": "Rust",
+    "tag": "DİL",
+    "color": "#a78bfa",
+    "who": "Graydon Hoare — Mozilla Research",
+    "summary": "Mozilla'da bir asansörde yazılımın çökmesinden bıkan Graydon Hoare, bellek güvenliğini derleme zamanında garanti eden yeni bir dil yazmaya başladı. Mozilla, Firefox'un paralel renderingini buna taşıdı.",
+    "impact": "Stack Overflow'da 10 yıl üst üste 'en sevilen dil' seçildi. Linux kernel'e kabul edilen ikinci dil oldu. Microsoft, Google, AWS bellek güvenliği için Rust'a geçiyor. C++'ın geleceğine meydan okuyor."
+  },
+  {
+    "id": "transformer",
+    "year": "2017",
+    "title": "Transformer Mimarisi",
+    "tag": "YAPAY ZEKA",
+    "color": "#f87171",
+    "who": "Vaswani ve ekibi (8 kişi) — Google Brain",
+    "summary": "'Attention is All You Need' başlıklı makale yayınlandı. RNN ve LSTM'lerin yerini alan bu mimari, dizi verilerini paralel işleyebiliyordu. 8 Google araştırmacısı imzaladı; hepsi kısa süre sonra şirketten ayrıldı.",
+    "impact": "GPT, BERT, LLaMA, Gemini, Claude — tüm büyük dil modellerinin mimarisi Transformer'a dayanıyor. ChatGPT patlaması, bu tek makalenin ürünü. Modern AI tarihinin en etkili akademik çalışması."
+  },
+  {
+    "id": "chatgpt",
+    "year": "2022",
+    "title": "ChatGPT",
+    "tag": "YAPAY ZEKA",
+    "color": "#f87171",
+    "who": "OpenAI ekibi — San Francisco",
+    "summary": "OpenAI, GPT-3.5 üzerine RLHF (insan geri bildirimiyle pekiştirmeli öğrenme) tekniğini uygulayarak ChatGPT'yi 'sadece demo' olarak yayınladı. 5 günde 1 milyon kullanıcıya ulaştı; hiçbir ürün bu kadar hızlı büyümemişti.",
+    "impact": "2 ay içinde 100 milyon kullanıcı. AI'ı sıradan insanların günlük aracına dönüştürdü. Yazılım geliştirme, eğitim, yaratıcı endüstriler kökten sarsıldı. Tarihin en hızlı büyüyen tüketici uygulaması."
+  },
+  {
+    "id": "git",
+    "year": "2005",
+    "title": "Git",
+    "tag": "VERSİYON KONTROL",
+    "color": "#70ffe0",
+    "who": "Linus Torvalds — Linux kernel projesi için",
+    "summary": "Linux kernel ekibi BitKeeper'ı (ücretli VCS) kullanıyordu. Bir geliştirici BitKeeper'ı ters mühendislik ederek açık kaynak clone yazmaya çalışınca, lisans iptal edildi. Torvalds 2 haftada Git'i yazdı.",
+    "impact": "GitHub, GitLab, Bitbucket — dünyanın yazılım altyapısı Git üzerine kurulu. Her gün milyarlarca commit atılıyor. Dağıtık tasarımı, merkezi sunucu olmadan bile tam geçmiş tutmasını sağlıyor."
+  },
+  {
+    "id": "golang",
+    "year": "2009",
+    "title": "Go (Golang)",
+    "tag": "DİL",
+    "color": "#70ffe0",
+    "who": "Robert Griesemer, Rob Pike, Ken Thompson — Google",
+    "summary": "Google'da C++ derleme süreleri saatlerce sürüyordu. Rob Pike, Robert Griesemer ve Ken Thompson (Unix'in yaratıcısı!) bir toplantıda bu sorundan bıkıp yeni bir dil tasarlamaya karar verdi. 2009'da açık kaynak olarak yayınlandı.",
+    "impact": "Docker, Kubernetes, Terraform, Consul, InfluxDB, CockroachDB — modern cloud-native altyapının büyük çoğunluğu Go ile yazılmış. Goroutine modeli, concurrency programlamayı köklü biçimde değiştirdi."
+  },
+  {
+    "id": "docker",
+    "year": "2013",
+    "title": "Docker",
+    "tag": "KONTEYNER",
+    "color": "#70ffe0",
+    "who": "Solomon Hykes — dotCloud",
+    "summary": "Solomon Hykes, PyCon 2013'te 5 dakikalık bir lightning talk ile Docker'ı tanıttı. Aslında dotCloud'un iç aracıydı, şirketi kurtarmak için açık kaynak yaptı. O 5 dakika, yazılım dünyasını değiştirdi.",
+    "impact": "Docker, 'bende çalışıyor' sorununu çözdü. Linux namespace ve cgroup'larını kullanıcı dostu bir API'ye sardı. Bugün Kubernetes ile birlikte modern deployment'ın temel taşı haline geldi."
+  },
+  {
+    "id": "kubernetes",
+    "year": "2014",
+    "title": "Kubernetes",
+    "tag": "ORKESTRASYON",
+    "color": "#fabc45",
+    "who": "Joe Beda, Brendan Burns, Craig McLuckie — Google",
+    "summary": "Google, 10 yıldır Borg adlı iç container orchestration sistemini kullanıyordu. Docker'ın popülerleşmesiyle birlikte Borg'dan ilham alan Kubernetes'i açık kaynak olarak yayınladı.",
+    "impact": "Bulut dünyasının 'Linux'u' oldu. AWS, Azure, GCP — hepsi managed Kubernetes hizmetleri sunar. CNCF'e bağışlanmasıyla vendor-bağımsız bir ekosistem oluştu."
+  },
+  {
+    "id": "github",
+    "year": "2008",
+    "title": "GitHub",
+    "tag": "PLATFORM",
+    "color": "#70ffe0",
+    "who": "Tom Preston-Werner, Chris Wanstrath, PJ Hyett",
+    "summary": "Git'i herkese açık, sosyal bir platforma taşıdılar. 'Fork' ve 'Pull Request' kavramları burada anlam kazandı. Başlangıçta 'GitHub, Git'in Facebook'u olacak' diye alay edildi.",
+    "impact": "Açık kaynak işbirliğini yeniden tanımladı. 100 milyonun üzerinde geliştirici kullanıyor. Microsoft 7.5 milyar dolara satın aldı. GitHub Copilot ile AI destekli kod yazımının öncüsü oldu."
+  },
+  {
+    "id": "mapreduce-hadoop",
+    "year": "2004",
+    "title": "MapReduce & Hadoop",
+    "tag": "VERİ",
+    "color": "#fabc45",
+    "who": "Jeff Dean, Sanjay Ghemawat — Google / Doug Cutting — Yahoo",
+    "summary": "Google, web'i indekslemek için muazzam miktarda veriyi işlemesi gerekiyordu. MapReduce makalesini yayınladılar. Doug Cutting bunu açık kaynak olarak Hadoop adıyla uyguladı; ismini oğlunun oyuncak filinden aldı.",
+    "impact": "Big Data çağını başlattı. Petabyte ölçekli veriyi sıradan sunucularda işlemenin yolunu açtı. Spark, Hive, Flink ekosistemi buradan doğdu. Veri mühendisliği bir meslek haline geldi."
+  },
+  {
+    "id": "stripe",
+    "year": "2010",
+    "title": "Stripe API",
+    "tag": "API",
+    "color": "#60a5fa",
+    "who": "Patrick Collison, John Collison — Y Combinator",
+    "summary": "Çevrimiçi ödeme entegrasyonu inanılmaz karmaşıktı; bankalar, işlemciler, her biri ayrı bir cehennem. İrlandalı iki kardeş 7 satır kodla ödeme almayı mümkün kılan bir API tasarladılar.",
+    "impact": "Geliştirici deneyimini (DX) ürünün merkezine koyan ilk şirket. 'API-first' iş modeli anlayışı Stripe ile standart haline geldi. Bugün internet ekonomisinin ödeme altyapısının büyük bölümü Stripe'ta."
+  },
+  {
+    "id": "devops-cicd",
+    "year": "2010",
+    "title": "DevOps & CI/CD",
+    "tag": "DEVOPS",
+    "color": "#70ffe0",
+    "who": "Patrick Debois — DevOpsDays Gent, Belçika",
+    "summary": "Geliştirici ve operasyon ekipleri birbirinden kopuk çalışıyor, deploy'lar ayda bir yapılıyor ve çoğu zaman felaket oluyordu. Patrick Debois bir konferans düzenledi; 'DevOps' terimi doğdu.",
+    "impact": "Amazon günde binlerce kez deploy yapıyor, Netflix sürekli kaotik testler çalıştırıyor. Jenkins, GitLab CI, GitHub Actions bu felsefenin araçları. Yazılım teslimatının hızı aylıktan saatliğe indi."
+  },
+  {
+    "id": "webassembly",
+    "year": "2019",
+    "title": "WebAssembly (WASM)",
+    "tag": "RUNTIME",
+    "color": "#60a5fa",
+    "who": "W3C — Mozilla, Google, Microsoft, Apple",
+    "summary": "Tarayıcı üzerinde yüksek performanslı uygulama çalıştırmanın bir yolu yoktu; JavaScript yeterliydi ama C/C++ hızında değildi. Dört büyük tarayıcı şirketi bir araya gelip W3C standardı olarak WASM'ı kabul etti.",
+    "impact": "Figma, AutoCAD, Google Earth tarayıcıda WASM kullanıyor. 'Tarayıcı bir sandbox' anlayışını kırdı. Sunucu tarafında da büyüyor; Cloudflare Workers, Fastly gibi edge runtime'lar WASM üzerine kurulu."
+  },
+  {
+    "id": "llm-gpt3",
+    "year": "2020",
+    "title": "GPT-3 & Büyük Dil Modelleri",
+    "tag": "YAPAY ZEKA",
+    "color": "#f87171",
+    "who": "OpenAI — San Francisco",
+    "summary": "175 milyar parametreyle eğitilen GPT-3, prompt verilen her tür metni üretebiliyordu: kod, şiir, makale, hukuki belge. API erişimi beta'da sınırlı tutuldu; bekleyenler listesi on binlere ulaştı.",
+    "impact": "LLM tabanlı ürün ekosistemini başlattı. Copilot, Jasper, Notion AI, ve yüzlerce startup GPT-3 üzerine kuruldu. Yazılım geliştirme araçlarını, metin üretimini ve arama motorlarını temelden sarstı."
+  }
+]

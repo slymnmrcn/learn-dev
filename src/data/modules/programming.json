@@ -1,0 +1,646 @@
+{
+  "category": "PROGRAMMING",
+  "icon": "⌨",
+  "topics": [
+    {
+      "id": "prog-basics",
+      "title": "Programlama Temelleri",
+      "description": "Değişkenler, veri tipleri, operatörler ve kontrol yapıları ile programlamanın temel taşlarını öğreniyoruz.",
+      "progress": 0,
+      "lessons": [
+        {
+          "id": "prog-basics-1",
+          "title": "Değişkenler ve Veri Tipleri",
+          "duration": "8 dk",
+          "content": "Değişkenler, programlarımızda veri saklamak için kullandığımız isimlendirilmiş bellek alanlarıdır. Her değişkenin bir veri tipi vardır ve bu tip, o değişkenin hangi tür değerleri saklayabileceğini belirler.\n\nTemel veri tipleri arasında sayılar (integer, float), metinler (string), mantıksal değerler (boolean) ve karakter (char) bulunur. Statik tipli dillerde değişken tipi derleme zamanında belirlenir, dinamik tipli dillerde ise çalışma zamanında.\n\nTip güvenliği, programlarımızın daha az hata içermesini sağlar. Örneğin bir sayı değişkenine metin atamaya çalışırsak, derleyici bizi uyarır.",
+          "codeExample": "// JavaScript - Dinamik tipleme\nlet age = 25;          // number\nlet name = \"Ahmet\";    // string\nlet isActive = true;   // boolean\n\n// TypeScript - Statik tipleme\nlet age: number = 25;\nlet name: string = \"Ahmet\";\nlet isActive: boolean = true;\n\n// Tip hatası\n// age = \"yirmi beş\";  // Hata!",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Değişkenler, programlarımızda veri saklamak için kullandığımız isimlendirilmiş bellek alanlarıdır.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda değişkenler ve veri tipleri için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "prog-basics-2",
+          "title": "Operatörler ve İfadeler",
+          "duration": "7 dk",
+          "content": "Operatörler, değişkenler ve değerler üzerinde işlem yapmamızı sağlayan sembollerdir. Aritmetik operatörler (+, -, *, /) matematiksel işlemler için, karşılaştırma operatörleri (==, !=, <, >) değerleri kıyaslamak için kullanılır.\n\nMantıksal operatörler (&&, ||, !) boolean değerlerle çalışır ve koşullu ifadelerde sıkça kullanılır. Atama operatörü (=) ise bir değişkene değer atamak için kullanılır.\n\nOperatör önceliği önemlidir: çarpma ve bölme, toplama ve çıkarmadan önce yapılır. Parantezler önceliği değiştirebilir.",
+          "codeExample": "// Aritmetik operatörler\nlet result = 10 + 5 * 2;  // 20 (önce çarpma)\nlet result2 = (10 + 5) * 2;  // 30 (parantez öncelikli)\n\n// Karşılaştırma\nlet isEqual = (5 == \"5\");   // true (tip dönüşümü)\nlet isStrictEqual = (5 === \"5\");  // false (tip kontrolü)\n\n// Mantıksal operatörler\nlet canVote = age >= 18 && isCitizen;\nlet hasDiscount = isStudent || isSenior;",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Operatörler, değişkenler ve değerler üzerinde işlem yapmamızı sağlayan sembollerdir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda operatörler ve i̇fadeler için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "prog-basics-3",
+          "title": "Kontrol Yapıları: If-Else",
+          "duration": "9 dk",
+          "content": "Kontrol yapıları, programın akışını yönlendirmemizi sağlar. If-else yapısı, bir koşulun doğru olup olmadığına göre farklı kod bloklarını çalıştırır.\n\nKoşul ifadesi boolean bir değer döndürmelidir. Eğer koşul true ise if bloğu, false ise else bloğu çalışır. Birden fazla koşul için else if kullanabiliriz.\n\nTernary operator (? :) basit if-else yapılarını tek satırda yazmamızı sağlar ve daha okunabilir kod üretir.",
+          "codeExample": "// Basit if-else\nif (age >= 18) {\n    console.log(\"Reşitsiniz\");\n} else {\n    console.log(\"Reşit değilsiniz\");\n}\n\n// Çoklu koşul\nif (score >= 90) {\n    grade = \"A\";\n} else if (score >= 80) {\n    grade = \"B\";\n} else if (score >= 70) {\n    grade = \"C\";\n} else {\n    grade = \"F\";\n}\n\n// Ternary operator\nlet status = age >= 18 ? \"adult\" : \"minor\";",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Kontrol yapıları, programın akışını yönlendirmemizi sağlar.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda kontrol yapıları: if-else için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "prog-basics-4",
+          "title": "Döngüler: For ve While",
+          "duration": "10 dk",
+          "content": "Döngüler, bir kod bloğunu belirli bir koşul sağlandığı sürece tekrar tekrar çalıştırmamızı sağlar. For döngüsü genellikle kaç kez döneceğimizi bildiğimizde, while döngüsü ise bir koşul sağlandığı sürece dönmek istediğimizde kullanılır.\n\nFor döngüsü üç bölümden oluşur: başlangıç değeri, koşul ve artış ifadesi. While döngüsü sadece koşul içerir, başlangıç ve artış manuel yapılır.\n\nBreak ifadesi döngüyü tamamen sonlandırır, continue ise o iterasyonu atlayıp bir sonrakine geçer.",
+          "codeExample": "// For döngüsü\nfor (let i = 0; i < 5; i++) {\n    console.log(i);  // 0, 1, 2, 3, 4\n}\n\n// While döngüsü\nlet count = 0;\nwhile (count < 5) {\n    console.log(count);\n    count++;\n}\n\n// Break ve continue\nfor (let i = 0; i < 10; i++) {\n    if (i === 3) continue;  // 3'ü atla\n    if (i === 7) break;     // 7'de dur\n    console.log(i);  // 0,1,2,4,5,6\n}",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Döngüler, bir kod bloğunu belirli bir koşul sağlandığı sürece tekrar tekrar çalıştırmamızı sağlar.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda döngüler: for ve while için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "prog-basics-5",
+          "title": "Fonksiyonlar ve Parametreler",
+          "duration": "11 dk",
+          "content": "Fonksiyonlar, belirli bir görevi yerine getiren yeniden kullanılabilir kod bloklarıdır. Fonksiyonlar kodu modüler hale getirir ve tekrarı azaltır.\n\nParametreler, fonksiyona dışarıdan veri göndermenizi sağlar. Return ifadesi fonksiyonun sonucunu döndürür. Bir fonksiyon hiçbir şey döndürmeyebilir (void) veya bir değer döndürebilir.\n\nDefault parametreler, fonksiyon çağrılırken parametre verilmezse kullanılacak varsayılan değerleri tanımlar. Arrow function'lar (=>) daha kısa sözdizimi sunar.",
+          "codeExample": "// Klasik fonksiyon\nfunction greet(name) {\n    return `Merhaba, ${name}!`;\n}\n\n// Default parametre\nfunction multiply(a, b = 1) {\n    return a * b;\n}\n\nconsole.log(multiply(5));     // 5\nconsole.log(multiply(5, 3));  // 15\n\n// Arrow function\nconst add = (a, b) => a + b;\nconst square = x => x * x;\n\nconsole.log(add(3, 4));    // 7\nconsole.log(square(5));    // 25",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Fonksiyonlar, belirli bir görevi yerine getiren yeniden kullanılabilir kod bloklarıdır.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda fonksiyonlar ve parametreler için hangi soruya cevap verebildiğini yaz."
+          }
+        }
+      ],
+      "quiz": true,
+      "study": {
+        "difficulty": "Başlangıç",
+        "estimatedTime": "50 dk",
+        "prerequisites": [
+          "Temel bilgisayar kullanımı"
+        ],
+        "learningGoals": [
+          "Programlama Temelleri için core concept ve terminology'i ayırabilmek",
+          "Pattern, API veya tool seçimini örnekler üzerinden yapabilmek",
+          "Küçük bir senaryoda doğru approach'u seçebilmek"
+        ],
+        "summary": "Değişkenler, veri tipleri, operatörler ve kontrol yapıları ile programlamanın temel taşlarını öğreniyoruz.",
+        "whyItMatters": "Programlama modülünde programlama temelleri başlığı, core workflow içindeki kritik parçalardan biridir."
+      }
+    },
+    {
+      "id": "data-structures",
+      "title": "Veri Yapıları",
+      "description": "Array, linked list, stack, queue, hash table gibi temel veri yapılarını ve kullanım alanlarını öğreniyoruz.",
+      "progress": 0,
+      "lessons": [
+        {
+          "id": "ds-1",
+          "title": "Diziler (Arrays)",
+          "duration": "9 dk",
+          "content": "Diziler, aynı tipte birden fazla değeri sıralı şekilde saklayan veri yapılarıdır. Her elemana index numarası ile erişilir ve indexler 0'dan başlar.\n\nDiziler bellekte ardışık olarak saklanır, bu yüzden index ile erişim O(1) karmaşıklığındadır. Ancak ortaya eleman eklemek veya silmek O(n) karmaşıklığındadır çünkü diğer elemanları kaydırmak gerekir.\n\nDinamik diziler (JavaScript'te Array, Python'da list) otomatik olarak boyutlarını büyütebilir. Statik dizilerde ise boyut baştan belirlenir.",
+          "codeExample": "// Dizi oluşturma\nconst numbers = [1, 2, 3, 4, 5];\nconst fruits = new Array('elma', 'armut', 'muz');\n\n// Erişim ve değiştirme\nconsole.log(numbers[0]);  // 1\nnumbers[2] = 10;  // [1, 2, 10, 4, 5]\n\n// Yaygın metodlar\nnumbers.push(6);        // Sona ekle\nnumbers.pop();          // Sondan çıkar\nnumbers.unshift(0);     // Başa ekle\nnumbers.shift();        // Baştan çıkar\n\n// Dizi metodları\nconst doubled = numbers.map(n => n * 2);\nconst evens = numbers.filter(n => n % 2 === 0);",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Diziler, aynı tipte birden fazla değeri sıralı şekilde saklayan veri yapılarıdır.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda diziler (arrays) için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "ds-2",
+          "title": "Bağlı Listeler (Linked Lists)",
+          "duration": "12 dk",
+          "content": "Bağlı liste, her düğümün (node) veri ve bir sonraki düğüme referans içerdiği dinamik bir veri yapısıdır. Dizilerden farklı olarak bellekte ardışık olarak saklanmazlar.\n\nTekli bağlı listede her düğüm sadece sonrakini gösterir. Çift bağlı listede ise hem sonraki hem önceki düğüme referans vardır. Bu, geriye doğru gezinmeyi mümkün kılar.\n\nBağlı listelerde ekleme ve silme işlemleri O(1) karmaşıklığındadır (pozisyon biliniyorsa), ancak erişim O(n)'dir çünkü baştan itibaren gezinmek gerekir.",
+          "codeExample": "class Node {\n    constructor(data) {\n        this.data = data;\n        this.next = null;\n    }\n}\n\nclass LinkedList {\n    constructor() {\n        this.head = null;\n    }\n\n    append(data) {\n        const newNode = new Node(data);\n        if (!this.head) {\n            this.head = newNode;\n            return;\n        }\n        let current = this.head;\n        while (current.next) {\n            current = current.next;\n        }\n        current.next = newNode;\n    }\n\n    print() {\n        let current = this.head;\n        while (current) {\n            console.log(current.data);\n            current = current.next;\n        }\n    }\n}",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Bağlı liste, her düğümün (node) veri ve bir sonraki düğüme referans içerdiği dinamik bir veri yapısıdır.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda bağlı listeler (linked lists) için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "ds-3",
+          "title": "Stack (Yığın)",
+          "duration": "8 dk",
+          "content": "Stack, LIFO (Last In First Out - Son Giren İlk Çıkar) prensibine göre çalışan bir veri yapısıdır. En son eklenen eleman ilk çıkarılır, tıpkı bir tabak yığını gibi.\n\nTemel operasyonlar push (ekleme) ve pop (çıkarma) işlemleridir. Peek operasyonu en üstteki elemanı çıkarmadan görmeyi sağlar. Tüm operasyonlar O(1) karmaşıklığındadır.\n\nStack kullanım alanları: fonksiyon çağrı yığını, geri alma (undo) işlemleri, parantez eşleştirme, derinlik öncelikli arama (DFS).",
+          "codeExample": "class Stack {\n    constructor() {\n        this.items = [];\n    }\n\n    push(element) {\n        this.items.push(element);\n    }\n\n    pop() {\n        if (this.isEmpty()) return null;\n        return this.items.pop();\n    }\n\n    peek() {\n        return this.items[this.items.length - 1];\n    }\n\n    isEmpty() {\n        return this.items.length === 0;\n    }\n}\n\n// Kullanım\nconst stack = new Stack();\nstack.push(1);\nstack.push(2);\nstack.push(3);\nconsole.log(stack.pop());  // 3\nconsole.log(stack.peek()); // 2",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Stack, LIFO (Last In First Out - Son Giren İlk Çıkar) prensibine göre çalışan bir veri yapısıdır.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda stack (yığın) için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "ds-4",
+          "title": "Queue (Kuyruk)",
+          "duration": "8 dk",
+          "content": "Queue, FIFO (First In First Out - İlk Giren İlk Çıkar) prensibine göre çalışır. İlk eklenen eleman ilk çıkarılır, tıpkı bir banka kuyruğu gibi.\n\nEnqueue operasyonu kuyruğun sonuna eleman ekler, dequeue operasyonu baştan eleman çıkarır. Her iki işlem de O(1) karmaşıklığındadır.\n\nKullanım alanları: görev sıralaması, mesaj kuyrukları, genişlik öncelikli arama (BFS), yazıcı kuyruğu, CPU görev zamanlama.",
+          "codeExample": "class Queue {\n    constructor() {\n        this.items = [];\n    }\n\n    enqueue(element) {\n        this.items.push(element);\n    }\n\n    dequeue() {\n        if (this.isEmpty()) return null;\n        return this.items.shift();\n    }\n\n    front() {\n        return this.items[0];\n    }\n\n    isEmpty() {\n        return this.items.length === 0;\n    }\n}\n\n// Kullanım\nconst queue = new Queue();\nqueue.enqueue('Ahmet');\nqueue.enqueue('Ayşe');\nqueue.enqueue('Mehmet');\nconsole.log(queue.dequeue());  // 'Ahmet'",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Queue, FIFO (First In First Out - İlk Giren İlk Çıkar) prensibine göre çalışır.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda queue (kuyruk) için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "ds-5",
+          "title": "Hash Table (Hash Map)",
+          "duration": "11 dk",
+          "content": "Hash table, anahtar-değer çiftlerini saklayan ve ortalama O(1) erişim süresi sunan bir veri yapısıdır. Hash fonksiyonu, anahtarı bir index'e dönüştürür.\n\nÇakışma (collision), farklı anahtarların aynı index'e hash'lenmesi durumudur. Bu, chaining (bağlı liste ile) veya open addressing (alternatif index bulma) yöntemleriyle çözülür.\n\nJavaScript'te Object ve Map, Python'da dictionary, Java'da HashMap bu yapıyı kullanır. Hızlı arama gerektiren her yerde kullanılır.",
+          "codeExample": "// JavaScript Map kullanımı\nconst map = new Map();\n\n// Ekleme\nmap.set('name', 'Ahmet');\nmap.set('age', 25);\nmap.set('city', 'İstanbul');\n\n// Erişim\nconsole.log(map.get('name'));  // 'Ahmet'\n\n// Kontrol\nconsole.log(map.has('age'));   // true\n\n// Silme\nmap.delete('city');\n\n// Basit hash table implementasyonu\nclass HashTable {\n    constructor(size = 50) {\n        this.buckets = new Array(size);\n    }\n\n    hash(key) {\n        let hash = 0;\n        for (let char of key) {\n            hash += char.charCodeAt(0);\n        }\n        return hash % this.buckets.length;\n    }\n\n    set(key, value) {\n        const index = this.hash(key);\n        this.buckets[index] = value;\n    }\n\n    get(key) {\n        const index = this.hash(key);\n        return this.buckets[index];\n    }\n}",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Hash table, anahtar-değer çiftlerini saklayan ve ortalama O(1) erişim süresi sunan bir veri yapısıdır.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda hash table (hash map) için hangi soruya cevap verebildiğini yaz."
+          }
+        }
+      ],
+      "quiz": true,
+      "study": {
+        "difficulty": "Orta",
+        "estimatedTime": "53 dk",
+        "prerequisites": [
+          "Temel bilgisayar kullanımı"
+        ],
+        "learningGoals": [
+          "Veri Yapıları için core concept ve terminology'i ayırabilmek",
+          "Pattern, API veya tool seçimini örnekler üzerinden yapabilmek",
+          "Küçük bir senaryoda doğru approach'u seçebilmek"
+        ],
+        "summary": "Array, linked list, stack, queue, hash table gibi temel veri yapılarını ve kullanım alanlarını öğreniyoruz.",
+        "whyItMatters": "Programlama modülünde veri yapıları başlığı, core workflow içindeki kritik parçalardan biridir."
+      }
+    },
+    {
+      "id": "oop",
+      "title": "Nesne Yönelimli Programlama",
+      "description": "Sınıflar, nesneler, kalıtım, polimorfizm ve encapsulation prensipleriyle OOP'nin temellerini öğreniyoruz.",
+      "progress": 0,
+      "lessons": [
+        {
+          "id": "oop-1",
+          "title": "Sınıflar ve Nesneler",
+          "duration": "10 dk",
+          "content": "Sınıf (class), nesnelerin şablonudur. Bir sınıf, özellikleri (properties) ve davranışları (methods) tanımlar. Nesne (object) ise sınıfın somut bir örneğidir.\n\nConstructor, nesne oluşturulurken çalışan özel bir fonksiyondur ve genellikle başlangıç değerlerini ayarlamak için kullanılır. This anahtar kelimesi, o anki nesneyi işaret eder.\n\nBir sınıftan birden fazla nesne oluşturabilirsiniz ve her nesne kendi özellik değerlerine sahiptir.",
+          "codeExample": "class Person {\n    constructor(name, age) {\n        this.name = name;\n        this.age = age;\n    }\n\n    introduce() {\n        return `Ben ${this.name}, ${this.age} yaşındayım.`;\n    }\n\n    haveBirthday() {\n        this.age++;\n    }\n}\n\nconst person1 = new Person(\"Ayşe\", 25);\nconst person2 = new Person(\"Mehmet\", 30);\n\nconsole.log(person1.introduce());\nperson1.haveBirthday();\nconsole.log(person1.age);  // 26",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Sınıf (class), nesnelerin şablonudur.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda sınıflar ve nesneler için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "oop-2",
+          "title": "Encapsulation (Kapsülleme)",
+          "duration": "9 dk",
+          "content": "Encapsulation, bir nesnenin iç detaylarını gizleyip sadece gerekli arayüzü dışarıya açma prensibidir. Bu, veri bütünlüğünü korur ve kodun bakımını kolaylaştırır.\n\nPrivate özellikler ve metodlar sadece sınıf içinden erişilebilir. Public olanlar ise her yerden erişilebilir. Getter ve setter metodları, kontrollü erişim sağlar.\n\nModern JavaScript'te # işareti ile private alanlar tanımlanabilir. Bu sayede dışarıdan doğrudan erişim engellenir.",
+          "codeExample": "class BankAccount {\n    #balance = 0;  // Private alan\n\n    constructor(owner) {\n        this.owner = owner;\n    }\n\n    deposit(amount) {\n        if (amount > 0) {\n            this.#balance += amount;\n            return true;\n        }\n        return false;\n    }\n\n    getBalance() {\n        return this.#balance;\n    }\n}\n\nconst account = new BankAccount(\"Ali\");\naccount.deposit(1000);\nconsole.log(account.getBalance());  // 1000\n// console.log(account.#balance);   // Hata!",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Encapsulation, bir nesnenin iç detaylarını gizleyip sadece gerekli arayüzü dışarıya açma prensibidir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda encapsulation (kapsülleme) için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "oop-3",
+          "title": "Kalıtım (Inheritance)",
+          "duration": "12 dk",
+          "content": "Kalıtım, bir sınıfın başka bir sınıftan özellik ve metodları miras almasıdır. Bu, kod tekrarını azaltır ve hiyerarşik ilişkiler kurmamızı sağlar.\n\nExtends anahtar kelimesi ile bir sınıf başka bir sınıfı genişletir. Alt sınıf (child class), üst sınıfın (parent class) tüm özelliklerine erişebilir.\n\nSuper anahtar kelimesi, üst sınıfın constructor'ını veya metodlarını çağırmak için kullanılır. Alt sınıf, üst sınıfın metodlarını override edebilir.",
+          "codeExample": "class Animal {\n    constructor(name) {\n        this.name = name;\n    }\n\n    makeSound() {\n        return \"Bir ses çıkarıyor\";\n    }\n}\n\nclass Dog extends Animal {\n    constructor(name, breed) {\n        super(name);\n        this.breed = breed;\n    }\n\n    makeSound() {\n        return \"Hav hav!\";\n    }\n\n    fetch() {\n        return `${this.name} topu getiriyor`;\n    }\n}\n\nconst dog = new Dog(\"Karabaş\", \"Golden\");\nconsole.log(dog.makeSound());  // \"Hav hav!\"\nconsole.log(dog.fetch());",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Kalıtım, bir sınıfın başka bir sınıftan özellik ve metodları miras almasıdır.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda kalıtım (inheritance) için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "oop-4",
+          "title": "Polimorfizm",
+          "duration": "10 dk",
+          "content": "Polimorfizm, aynı arayüzün farklı şekillerde uygulanabilmesi demektir. Bir metodun farklı sınıflarda farklı davranışlar sergilemesini sağlar.\n\nMethod overriding, alt sınıfın üst sınıftaki bir metodu yeniden tanımlamasıdır. Bu sayede aynı metod adı farklı nesnelerde farklı işler yapabilir.\n\nPolimorfizm sayesinde kod daha esnek ve genişletilebilir hale gelir. Yeni sınıflar eklerken mevcut kodu değiştirmemize gerek kalmaz.",
+          "codeExample": "class Shape {\n    area() {\n        return 0;\n    }\n}\n\nclass Circle extends Shape {\n    constructor(radius) {\n        super();\n        this.radius = radius;\n    }\n\n    area() {\n        return Math.PI * this.radius ** 2;\n    }\n}\n\nclass Rectangle extends Shape {\n    constructor(width, height) {\n        super();\n        this.width = width;\n        this.height = height;\n    }\n\n    area() {\n        return this.width * this.height;\n    }\n}\n\nconst shapes = [\n    new Circle(5),\n    new Rectangle(4, 6)\n];\n\nshapes.forEach(shape => {\n    console.log(shape.area());\n});",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Polimorfizm, aynı arayüzün farklı şekillerde uygulanabilmesi demektir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda polimorfizm için hangi soruya cevap verebildiğini yaz."
+          }
+        }
+      ],
+      "quiz": true,
+      "study": {
+        "difficulty": "İleri",
+        "estimatedTime": "46 dk",
+        "prerequisites": [
+          "Temel bilgisayar kullanımı"
+        ],
+        "learningGoals": [
+          "Nesne Yönelimli Programlama için core concept ve terminology'i ayırabilmek",
+          "Pattern, API veya tool seçimini örnekler üzerinden yapabilmek",
+          "Küçük bir senaryoda doğru approach'u seçebilmek"
+        ],
+        "summary": "Sınıflar, nesneler, kalıtım, polimorfizm ve encapsulation prensipleriyle OOP'nin temellerini öğreniyoruz.",
+        "whyItMatters": "Programlama modülünde nesne yönelimli programlama başlığı, core workflow içindeki kritik parçalardan biridir."
+      }
+    },
+    {
+      "id": "algorithms",
+      "title": "Algoritma Temelleri",
+      "description": "Algoritma karmaşıklığı, Big O notasyonu, sıralama ve arama algoritmalarını öğreniyoruz.",
+      "progress": 0,
+      "lessons": [
+        {
+          "id": "algo-1",
+          "title": "Big O Notasyonu",
+          "duration": "12 dk",
+          "content": "Big O notasyonu, bir algoritmanın performansını girdi boyutu arttıkça nasıl değiştiğini ifade eder. En kötü durum senaryosunu gösterir ve algoritmaları karşılaştırmamızı sağlar.\n\nYaygın karmaşıklıklar: O(1) sabit zaman, O(log n) logaritmik, O(n) lineer, O(n log n) lineer-logaritmik, O(n²) karesel, O(2^n) üstel. Küçükten büyüğe doğru performans kötüleşir.\n\nBir algoritmanın zaman karmaşıklığını hesaplarken, en dıştaki döngüyü ve iç içe döngüleri dikkate alırız. Sabitler ve düşük dereceli terimler ihmal edilir.",
+          "codeExample": "// O(1) - Sabit zaman\nfunction getFirst(arr) {\n    return arr[0];  // Her zaman 1 işlem\n}\n\n// O(n) - Lineer zaman\nfunction findMax(arr) {\n    let max = arr[0];\n    for (let i = 1; i < arr.length; i++) {\n        if (arr[i] > max) max = arr[i];\n    }\n    return max;  // n işlem\n}\n\n// O(n²) - Karesel zaman\nfunction bubbleSort(arr) {\n    for (let i = 0; i < arr.length; i++) {\n        for (let j = 0; j < arr.length - i - 1; j++) {\n            if (arr[j] > arr[j + 1]) {\n                [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];\n            }\n        }\n    }\n}  // n * n işlem",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Big O notasyonu, bir algoritmanın performansını girdi boyutu arttıkça nasıl değiştiğini ifade eder.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda big o notasyonu için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "algo-2",
+          "title": "Binary Search (İkili Arama)",
+          "duration": "10 dk",
+          "content": "Binary search, sıralı bir dizide eleman aramak için kullanılan O(log n) karmaşıklığında bir algoritmadır. Her adımda arama alanını yarıya indirir.\n\nAlgoritma ortadaki elemanı kontrol eder. Aranan eleman ortadakinden küçükse sol yarıda, büyükse sağ yarıda arama devam eder. Bu işlem eleman bulunana veya arama alanı bitene kadar tekrarlanır.\n\n1 milyon elemanlı dizide en fazla 20 karşılaştırma yeterlidir. Linear search'te ise ortalama 500,000 karşılaştırma gerekir.",
+          "codeExample": "function binarySearch(arr, target) {\n    let left = 0;\n    let right = arr.length - 1;\n\n    while (left <= right) {\n        const mid = Math.floor((left + right) / 2);\n\n        if (arr[mid] === target) {\n            return mid;  // Bulundu\n        } else if (arr[mid] < target) {\n            left = mid + 1;  // Sağ yarıda ara\n        } else {\n            right = mid - 1;  // Sol yarıda ara\n        }\n    }\n\n    return -1;  // Bulunamadı\n}\n\nconst numbers = [1, 3, 5, 7, 9, 11, 13, 15];\nconsole.log(binarySearch(numbers, 7));  // 3\nconsole.log(binarySearch(numbers, 6));  // -1",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Binary search, sıralı bir dizide eleman aramak için kullanılan O(log n) karmaşıklığında bir algoritmadır.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda binary search (i̇kili arama) için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "algo-3",
+          "title": "Bubble Sort",
+          "duration": "9 dk",
+          "content": "Bubble sort, komşu elemanları karşılaştırıp gerekirse yer değiştiren basit bir sıralama algoritmasıdır. Her geçişte en büyük eleman sona \"yüzer\".\n\nZaman karmaşıklığı O(n²) olduğu için büyük veri setlerinde yavaştır. Ancak algoritma basit ve anlaşılırdır, bu yüzden eğitim amaçlı kullanılır.\n\nEn iyi durum (zaten sıralı dizi) O(n), en kötü durum (ters sıralı) O(n²) karmaşıklığındadır. Space complexity O(1)'dir çünkü yerinde sıralama yapar.",
+          "codeExample": "function bubbleSort(arr) {\n    const n = arr.length;\n    let swapped;\n\n    for (let i = 0; i < n - 1; i++) {\n        swapped = false;\n\n        for (let j = 0; j < n - i - 1; j++) {\n            if (arr[j] > arr[j + 1]) {\n                // Swap\n                [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];\n                swapped = true;\n            }\n        }\n\n        // Eğer hiç swap olmadıysa, dizi sıralı demektir\n        if (!swapped) break;\n    }\n\n    return arr;\n}\n\nconst numbers = [64, 34, 25, 12, 22, 11, 90];\nconsole.log(bubbleSort(numbers));",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Bubble sort, komşu elemanları karşılaştırıp gerekirse yer değiştiren basit bir sıralama algoritmasıdır.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda bubble sort için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "algo-4",
+          "title": "Quick Sort",
+          "duration": "13 dk",
+          "content": "Quick sort, divide-and-conquer stratejisini kullanan hızlı bir sıralama algoritmasıdır. Bir pivot eleman seçilir, küçükler sola büyükler sağa yerleştirilir, sonra her iki yarı özyinelemeli olarak sıralanır.\n\nOrtalama ve en iyi durum karmaşıklığı O(n log n)'dir. En kötü durum (pivot her zaman en küçük/büyük eleman) O(n²)'dir ama iyi pivot seçimi ile bu nadirdir.\n\nÇoğu programlama dilinin yerleşik sort fonksiyonu quick sort veya onun varyasyonlarını kullanır. In-place sıralama yapar, ekstra bellek gerektirmez.",
+          "codeExample": "function quickSort(arr, low = 0, high = arr.length - 1) {\n    if (low < high) {\n        const pivotIndex = partition(arr, low, high);\n        quickSort(arr, low, pivotIndex - 1);\n        quickSort(arr, pivotIndex + 1, high);\n    }\n    return arr;\n}\n\nfunction partition(arr, low, high) {\n    const pivot = arr[high];\n    let i = low - 1;\n\n    for (let j = low; j < high; j++) {\n        if (arr[j] <= pivot) {\n            i++;\n            [arr[i], arr[j]] = [arr[j], arr[i]];\n        }\n    }\n\n    [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];\n    return i + 1;\n}\n\nconst numbers = [10, 7, 8, 9, 1, 5];\nconsole.log(quickSort(numbers));",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Quick sort, divide-and-conquer stratejisini kullanan hızlı bir sıralama algoritmasıdır.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda quick sort için hangi soruya cevap verebildiğini yaz."
+          }
+        }
+      ],
+      "quiz": true,
+      "study": {
+        "difficulty": "İleri",
+        "estimatedTime": "49 dk",
+        "prerequisites": [
+          "Temel bilgisayar kullanımı"
+        ],
+        "learningGoals": [
+          "Algoritma Temelleri için core concept ve terminology'i ayırabilmek",
+          "Pattern, API veya tool seçimini örnekler üzerinden yapabilmek",
+          "Küçük bir senaryoda doğru approach'u seçebilmek"
+        ],
+        "summary": "Algoritma karmaşıklığı, Big O notasyonu, sıralama ve arama algoritmalarını öğreniyoruz.",
+        "whyItMatters": "Programlama modülünde algoritma temelleri başlığı, core workflow içindeki kritik parçalardan biridir."
+      }
+    },
+    {
+      "id": "functional",
+      "title": "Fonksiyonel Programlama",
+      "description": "Pure functions, immutability, higher-order functions ve fonksiyonel programlama prensiplerini öğreniyoruz.",
+      "progress": 0,
+      "lessons": [
+        {
+          "id": "func-1",
+          "title": "Pure Functions (Saf Fonksiyonlar)",
+          "duration": "10 dk",
+          "content": "Pure function, aynı girdi için her zaman aynı çıktıyı üreten ve yan etkisi (side effect) olmayan fonksiyondur. Dış değişkenleri değiştirmez, sadece parametrelerine bağlıdır.\n\nPure fonksiyonlar test edilmesi kolay, öngörülebilir ve paralel çalıştırılabilir. Debugging daha basittir çünkü fonksiyonun davranışı sadece girdilerine bağlıdır.\n\nYan etkiler: global değişken değiştirme, dosya yazma, console.log, API çağrısı gibi dış dünyayı etkileyen işlemlerdir. Pure fonksiyonlar bunlardan kaçınır.",
+          "codeExample": "// Pure function\nfunction add(a, b) {\n    return a + b;  // Sadece parametrelere bağlı\n}\n\nfunction multiply(arr, factor) {\n    return arr.map(x => x * factor);  // Orijinal diziyi değiştirmez\n}\n\n// Impure function\nlet total = 0;\nfunction addToTotal(value) {\n    total += value;  // Global değişken değiştiriyor\n    return total;\n}\n\nconst numbers = [1, 2, 3];\nfunction addRandom(arr) {\n    arr.push(Math.random());  // Yan etki: diziyi değiştiriyor\n    return arr;\n}",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Pure function, aynı girdi için her zaman aynı çıktıyı üreten ve yan etkisi (side effect) olmayan fonksiyondur.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda pure functions (saf fonksiyonlar) için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "func-2",
+          "title": "Immutability (Değişmezlik)",
+          "duration": "11 dk",
+          "content": "Immutability, veri yapılarının oluşturulduktan sonra değiştirilmemesi prensibidir. Değişiklik gerektiğinde yeni bir kopya oluşturulur, orijinal korunur.\n\nBu yaklaşım, beklenmedik yan etkileri önler ve kodun akışını takip etmeyi kolaylaştırır. React gibi kütüphaneler immutability'ye dayanır.\n\nJavaScript'te spread operator (...), Object.assign(), Array.map/filter/reduce gibi metodlar immutable işlemler için kullanılır. Const keyword değişken referansını sabitler ama içeriği değil.",
+          "codeExample": "// Mutable (kötü)\nconst user = { name: 'Ali', age: 25 };\nuser.age = 26;  // Orijinal nesne değişti\n\n// Immutable (iyi)\nconst user = { name: 'Ali', age: 25 };\nconst updatedUser = { ...user, age: 26 };  // Yeni nesne\n\n// Dizi işlemleri\nconst numbers = [1, 2, 3];\n\n// Mutable\nnumbers.push(4);  // Orijinal dizi değişti\n\n// Immutable\nconst newNumbers = [...numbers, 4];  // Yeni dizi\nconst doubled = numbers.map(n => n * 2);  // Yeni dizi\n\n// Nested immutability\nconst state = {\n    user: { name: 'Ali', settings: { theme: 'dark' } }\n};\n\nconst newState = {\n    ...state,\n    user: {\n        ...state.user,\n        settings: { ...state.user.settings, theme: 'light' }\n    }\n};",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Immutability, veri yapılarının oluşturulduktan sonra değiştirilmemesi prensibidir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda immutability (değişmezlik) için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "func-3",
+          "title": "Higher-Order Functions",
+          "duration": "12 dk",
+          "content": "Higher-order function, başka bir fonksiyonu parametre olarak alan veya fonksiyon döndüren fonksiyondur. Bu, kodun yeniden kullanılabilirliğini ve esnekliğini artırır.\n\nMap, filter, reduce gibi dizi metodları higher-order function'lardır. Callback fonksiyonları alır ve her eleman için uygularlar.\n\nFunction composition, küçük fonksiyonları birleştirerek karmaşık işlemler oluşturma tekniğidir. Her fonksiyon tek bir iş yapar ve birlikte güçlü pipeline'lar oluşturur.",
+          "codeExample": "// Higher-order function örneği\nfunction multiplyBy(factor) {\n    return function(number) {\n        return number * factor;\n    };\n}\n\nconst double = multiplyBy(2);\nconst triple = multiplyBy(3);\n\nconsole.log(double(5));  // 10\nconsole.log(triple(5));  // 15\n\n// Map, filter, reduce\nconst numbers = [1, 2, 3, 4, 5];\n\nconst doubled = numbers.map(n => n * 2);\nconst evens = numbers.filter(n => n % 2 === 0);\nconst sum = numbers.reduce((acc, n) => acc + n, 0);\n\n// Function composition\nconst compose = (f, g) => x => f(g(x));\n\nconst addOne = x => x + 1;\nconst square = x => x * x;\n\nconst addOneThenSquare = compose(square, addOne);\nconsole.log(addOneThenSquare(3));  // 16",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Higher-order function, başka bir fonksiyonu parametre olarak alan veya fonksiyon döndüren fonksiyondur.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda higher-order functions için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "func-4",
+          "title": "Currying ve Partial Application",
+          "duration": "10 dk",
+          "content": "Currying, çok parametreli bir fonksiyonu, her biri tek parametre alan fonksiyonlar zincirine dönüştürme tekniğidir. Her çağrı bir sonraki fonksiyonu döndürür.\n\nPartial application, bir fonksiyonun bazı parametrelerini önceden doldurarak yeni bir fonksiyon oluşturmaktır. Bu, özelleştirilmiş fonksiyonlar yaratmayı kolaylaştırır.\n\nBu teknikler, kod tekrarını azaltır ve daha esnek, yeniden kullanılabilir fonksiyonlar yazmamızı sağlar.",
+          "codeExample": "// Currying\nfunction add(a) {\n    return function(b) {\n        return function(c) {\n            return a + b + c;\n        };\n    };\n}\n\nconsole.log(add(1)(2)(3));  // 6\n\n// Arrow function ile daha kısa\nconst addCurried = a => b => c => a + b + c;\n\n// Partial application\nfunction multiply(a, b, c) {\n    return a * b * c;\n}\n\nconst multiplyByTwo = multiply.bind(null, 2);\nconsole.log(multiplyByTwo(3, 4));  // 24\n\n// Pratik örnek\nconst log = level => message => {\n    console.log(`[${level}] ${message}`);\n};\n\nconst logError = log('ERROR');\nconst logInfo = log('INFO');\n\nlogError('Bir hata oluştu');\nlogInfo('İşlem başarılı');",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Currying, çok parametreli bir fonksiyonu, her biri tek parametre alan fonksiyonlar zincirine dönüştürme tekniğidir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda currying ve partial application için hangi soruya cevap verebildiğini yaz."
+          }
+        }
+      ],
+      "quiz": true,
+      "study": {
+        "difficulty": "İleri",
+        "estimatedTime": "48 dk",
+        "prerequisites": [
+          "Temel bilgisayar kullanımı"
+        ],
+        "learningGoals": [
+          "Fonksiyonel Programlama için core concept ve terminology'i ayırabilmek",
+          "Pattern, API veya tool seçimini örnekler üzerinden yapabilmek",
+          "Küçük bir senaryoda doğru approach'u seçebilmek"
+        ],
+        "summary": "Pure functions, immutability, higher-order functions ve fonksiyonel programlama prensiplerini öğreniyoruz.",
+        "whyItMatters": "Programlama modülünde fonksiyonel programlama başlığı, core workflow içindeki kritik parçalardan biridir."
+      }
+    },
+    {
+      "id": "async",
+      "title": "Asenkron Programlama",
+      "description": "Callbacks, Promises, async/await ve asenkron işlemlerin yönetimini öğreniyoruz.",
+      "progress": 0,
+      "lessons": [
+        {
+          "id": "async-1",
+          "title": "Callbacks ve Callback Hell",
+          "duration": "9 dk",
+          "content": "Callback, başka bir fonksiyona parametre olarak geçirilen ve belirli bir olay gerçekleştiğinde çağrılan fonksiyondur. Asenkron işlemlerde yaygın kullanılır.\n\nCallback hell (pyramid of doom), iç içe geçmiş callback'lerin oluşturduğu okunması zor kod yapısıdır. Her asenkron işlem bir sonrakinin içine yerleştirilir ve kod sağa doğru kayar.\n\nBu sorun, kodun bakımını zorlaştırır ve hata yönetimini karmaşıklaştırır. Modern JavaScript'te Promise ve async/await bu sorunu çözer.",
+          "codeExample": "// Basit callback\nfunction fetchData(callback) {\n    setTimeout(() => {\n        callback('Veri geldi');\n    }, 1000);\n}\n\nfetchData(data => {\n    console.log(data);\n});\n\n// Callback hell örneği\ngetUser(userId, (user) => {\n    getPosts(user.id, (posts) => {\n        getComments(posts[0].id, (comments) => {\n            getAuthor(comments[0].authorId, (author) => {\n                console.log(author);\n                // Daha da derinleşebilir...\n            });\n        });\n    });\n});",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Callback, başka bir fonksiyona parametre olarak geçirilen ve belirli bir olay gerçekleştiğinde çağrılan fonksiyondur.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda callbacks ve callback hell için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "async-2",
+          "title": "Promises",
+          "duration": "12 dk",
+          "content": "Promise, asenkron bir işlemin sonucunu temsil eden bir nesnedir. Üç durumu vardır: pending (bekliyor), fulfilled (başarılı), rejected (başarısız).\n\nThen() metodu başarılı durumda, catch() metodu hata durumunda çalışır. Finally() her durumda çalışır. Promise chain'ler callback hell'i önler.\n\nPromise.all() birden fazla promise'i paralel çalıştırır ve hepsi bitince sonuç döner. Promise.race() ilk biteni döndürür.",
+          "codeExample": "// Promise oluşturma\nconst myPromise = new Promise((resolve, reject) => {\n    setTimeout(() => {\n        const success = true;\n        if (success) {\n            resolve('İşlem başarılı');\n        } else {\n            reject('Hata oluştu');\n        }\n    }, 1000);\n});\n\n// Promise kullanımı\nmyPromise\n    .then(result => console.log(result))\n    .catch(error => console.error(error))\n    .finally(() => console.log('İşlem tamamlandı'));\n\n// Promise chaining\nfetch('/api/user')\n    .then(response => response.json())\n    .then(user => fetch(`/api/posts/${user.id}`))\n    .then(response => response.json())\n    .then(posts => console.log(posts))\n    .catch(error => console.error(error));\n\n// Promise.all\nPromise.all([\n    fetch('/api/users'),\n    fetch('/api/posts'),\n    fetch('/api/comments')\n]).then(([users, posts, comments]) => {\n    console.log('Hepsi geldi');\n});",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Promise, asenkron bir işlemin sonucunu temsil eden bir nesnedir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda promises için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "async-3",
+          "title": "Async/Await",
+          "duration": "11 dk",
+          "content": "Async/await, Promise'leri daha okunabilir şekilde yazmamızı sağlayan sözdizimi şekeridir (syntactic sugar). Asenkron kodu senkron gibi yazmamıza olanak tanır.\n\nAsync anahtar kelimesi bir fonksiyonu asenkron yapar ve otomatik olarak Promise döndürür. Await anahtar kelimesi bir Promise'in çözülmesini bekler.\n\nTry/catch blokları ile hata yönetimi yapılır. Await sadece async fonksiyonlar içinde kullanılabilir. Top-level await modern JavaScript'te desteklenir.",
+          "codeExample": "// Async function tanımlama\nasync function fetchUser(userId) {\n    try {\n        const response = await fetch(`/api/users/${userId}`);\n        const user = await response.json();\n        return user;\n    } catch (error) {\n        console.error('Hata:', error);\n        throw error;\n    }\n}\n\n// Kullanım\nasync function main() {\n    const user = await fetchUser(1);\n    console.log(user);\n}\n\n// Paralel işlemler\nasync function fetchAll() {\n    // Sıralı (yavaş)\n    const user = await fetchUser(1);\n    const posts = await fetchPosts(1);\n\n    // Paralel (hızlı)\n    const [user2, posts2] = await Promise.all([\n        fetchUser(2),\n        fetchPosts(2)\n    ]);\n}\n\n// Arrow function ile\nconst getData = async () => {\n    const data = await fetch('/api/data');\n    return data.json();\n};",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Async/await, Promise'leri daha okunabilir şekilde yazmamızı sağlayan sözdizimi şekeridir (syntactic sugar).",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda async/await için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "async-4",
+          "title": "Event Loop ve Concurrency",
+          "duration": "13 dk",
+          "content": "Event loop, JavaScript'in asenkron işlemleri yönetme mekanizmasıdır. Call stack, callback queue ve event loop birlikte çalışır.\n\nCall stack senkron kodları çalıştırır. Asenkron işlemler (setTimeout, fetch) Web API'lere gönderilir. Tamamlandığında callback queue'ya eklenir. Event loop, stack boşken queue'dan callback'leri alır.\n\nMicrotask queue (Promise) normal task queue'dan önceliklidir. Bu yüzden Promise.then() setTimeout'tan önce çalışır.\n\nJavaScript single-threaded'dir ama asenkron işlemlerle concurrent davranış sergiler. Blocking işlemler UI'ı dondurur, bu yüzden asenkron yaklaşım önemlidir.",
+          "codeExample": "// Event loop örneği\nconsole.log('1');\n\nsetTimeout(() => {\n    console.log('2');\n}, 0);\n\nPromise.resolve().then(() => {\n    console.log('3');\n});\n\nconsole.log('4');\n\n// Çıktı: 1, 4, 3, 2\n// Açıklama:\n// 1 ve 4 senkron, hemen çalışır\n// Promise (microtask) setTimeout'tan önce\n\n// Blocking vs Non-blocking\nfunction blockingOperation() {\n    const start = Date.now();\n    while (Date.now() - start < 3000) {\n        // 3 saniye bekle (UI dondu!)\n    }\n    console.log('Bitti');\n}\n\nfunction nonBlockingOperation() {\n    setTimeout(() => {\n        console.log('Bitti');\n    }, 3000);  // UI responsive kalır\n}",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Event loop, JavaScript'in asenkron işlemleri yönetme mekanizmasıdır.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda event loop ve concurrency için hangi soruya cevap verebildiğini yaz."
+          }
+        }
+      ],
+      "quiz": true,
+      "study": {
+        "difficulty": "İleri",
+        "estimatedTime": "50 dk",
+        "prerequisites": [
+          "Temel bilgisayar kullanımı"
+        ],
+        "learningGoals": [
+          "Asenkron Programlama için core concept ve terminology'i ayırabilmek",
+          "Pattern, API veya tool seçimini örnekler üzerinden yapabilmek",
+          "Küçük bir senaryoda doğru approach'u seçebilmek"
+        ],
+        "summary": "Callbacks, Promises, async/await ve asenkron işlemlerin yönetimini öğreniyoruz.",
+        "whyItMatters": "Programlama modülünde asenkron programlama başlığı, core workflow içindeki kritik parçalardan biridir."
+      }
+    },
+    {
+      "id": "design-patterns",
+      "title": "Design Patterns",
+      "description": "Singleton, Factory, Observer gibi yaygın tasarım kalıplarını ve kullanım alanlarını öğreniyoruz.",
+      "progress": 0,
+      "lessons": [
+        {
+          "id": "dp-1",
+          "title": "Singleton Pattern",
+          "duration": "10 dk",
+          "content": "Singleton pattern, bir sınıftan sadece tek bir instance oluşturulmasını garanti eder. Global erişim noktası sağlar ve kaynak paylaşımı için kullanılır.\n\nDatabase bağlantısı, logger, configuration manager gibi tek olması gereken nesneler için idealdir. Ancak aşırı kullanımı global state yaratır ve test edilebilirliği azaltır.\n\nJavaScript'te module pattern veya closure ile de singleton davranışı elde edilebilir. ES6 modülleri doğal olarak singleton'dır.",
+          "codeExample": "// Singleton class\nclass Database {\n    constructor() {\n        if (Database.instance) {\n            return Database.instance;\n        }\n        this.connection = 'Connected';\n        Database.instance = this;\n    }\n\n    query(sql) {\n        console.log(`Executing: ${sql}`);\n    }\n}\n\nconst db1 = new Database();\nconst db2 = new Database();\n\nconsole.log(db1 === db2);  // true\n\n// Module pattern ile\nconst Logger = (() => {\n    let instance;\n\n    function createInstance() {\n        return {\n            log: (message) => console.log(`[LOG] ${message}`)\n        };\n    }\n\n    return {\n        getInstance: () => {\n            if (!instance) {\n                instance = createInstance();\n            }\n            return instance;\n        }\n    };\n})();\n\nconst logger1 = Logger.getInstance();\nconst logger2 = Logger.getInstance();\nconsole.log(logger1 === logger2);  // true",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Singleton pattern, bir sınıftan sadece tek bir instance oluşturulmasını garanti eder.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda singleton pattern için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "dp-2",
+          "title": "Factory Pattern",
+          "duration": "11 dk",
+          "content": "Factory pattern, nesne oluşturma mantığını soyutlar. Hangi sınıfın instance'ının oluşturulacağına runtime'da karar verilir.\n\nKarmaşık nesne oluşturma süreçlerini gizler ve kodun esnekliğini artırır. Yeni tip eklemek için mevcut kodu değiştirmemize gerek kalmaz.\n\nAbstract factory, ilişkili nesne ailelerini oluşturmak için kullanılır. Factory method ise alt sınıfların hangi nesneyi oluşturacağına karar vermesini sağlar.",
+          "codeExample": "// Simple Factory\nclass Car {\n    constructor(type) {\n        this.type = type;\n    }\n}\n\nclass CarFactory {\n    static createCar(type) {\n        switch(type) {\n            case 'sedan':\n                return new Car('Sedan');\n            case 'suv':\n                return new Car('SUV');\n            case 'sports':\n                return new Car('Sports');\n            default:\n                throw new Error('Unknown car type');\n        }\n    }\n}\n\nconst sedan = CarFactory.createCar('sedan');\nconst suv = CarFactory.createCar('suv');\n\n// Factory Method Pattern\nclass Button {\n    render() {}\n}\n\nclass WindowsButton extends Button {\n    render() {\n        return '<button>Windows Button</button>';\n    }\n}\n\nclass MacButton extends Button {\n    render() {\n        return '<button>Mac Button</button>';\n    }\n}\n\nclass Dialog {\n    createButton() {}\n\n    render() {\n        const button = this.createButton();\n        return button.render();\n    }\n}\n\nclass WindowsDialog extends Dialog {\n    createButton() {\n        return new WindowsButton();\n    }\n}\n\nclass MacDialog extends Dialog {\n    createButton() {\n        return new MacButton();\n    }\n}",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Factory pattern, nesne oluşturma mantığını soyutlar.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda factory pattern için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "dp-3",
+          "title": "Observer Pattern",
+          "duration": "12 dk",
+          "content": "Observer pattern, bir nesnenin durumu değiştiğinde bağımlı nesnelerin otomatik olarak bilgilendirilmesini sağlar. Pub/sub (publish-subscribe) modeli olarak da bilinir.\n\nSubject (observable) durumu tutar ve observer'ları yönetir. Observer'lar değişiklikleri dinler ve tepki verir. Bu, loose coupling sağlar.\n\nEvent-driven sistemlerde, UI güncellemelerinde (React state), real-time uygulamalarda yaygın kullanılır. RxJS gibi kütüphaneler bu pattern'i temel alır.",
+          "codeExample": "// Observer Pattern\nclass Subject {\n    constructor() {\n        this.observers = [];\n    }\n\n    subscribe(observer) {\n        this.observers.push(observer);\n    }\n\n    unsubscribe(observer) {\n        this.observers = this.observers.filter(obs => obs !== observer);\n    }\n\n    notify(data) {\n        this.observers.forEach(observer => observer.update(data));\n    }\n}\n\nclass Observer {\n    constructor(name) {\n        this.name = name;\n    }\n\n    update(data) {\n        console.log(`${this.name} received: ${data}`);\n    }\n}\n\n// Kullanım\nconst subject = new Subject();\n\nconst observer1 = new Observer('Observer 1');\nconst observer2 = new Observer('Observer 2');\n\nsubject.subscribe(observer1);\nsubject.subscribe(observer2);\n\nsubject.notify('Hello!');  // Her iki observer da bildirim alır\n\nsubject.unsubscribe(observer1);\nsubject.notify('Goodbye!');  // Sadece observer2 alır",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Observer pattern, bir nesnenin durumu değiştiğinde bağımlı nesnelerin otomatik olarak bilgilendirilmesini sağlar.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda observer pattern için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "dp-4",
+          "title": "Module Pattern",
+          "duration": "9 dk",
+          "content": "Module pattern, ilgili kod parçalarını bir araya getirip encapsulation sağlar. Private ve public üyeler tanımlanabilir.\n\nIIFE (Immediately Invoked Function Expression) kullanarak private scope oluşturulur. Sadece döndürülen nesne dışarıya açılır, geri kalanı gizli kalır.\n\nES6 modülleri (import/export) modern JavaScript'te bu pattern'in yerini almıştır. Ancak konsept hala önemlidir ve birçok kütüphane bu yapıyı kullanır.",
+          "codeExample": "// Revealing Module Pattern\nconst Calculator = (() => {\n    // Private\n    let result = 0;\n\n    function log(message) {\n        console.log(`[Calculator] ${message}`);\n    }\n\n    // Public\n    function add(x) {\n        result += x;\n        log(`Added ${x}, result: ${result}`);\n        return this;\n    }\n\n    function subtract(x) {\n        result -= x;\n        log(`Subtracted ${x}, result: ${result}`);\n        return this;\n    }\n\n    function getResult() {\n        return result;\n    }\n\n    function reset() {\n        result = 0;\n        log('Reset');\n    }\n\n    // Public API\n    return {\n        add,\n        subtract,\n        getResult,\n        reset\n    };\n})();\n\n// Kullanım\nCalculator.add(5).add(3).subtract(2);\nconsole.log(Calculator.getResult());  // 6\n// Calculator.result  // undefined (private)\n// Calculator.log()   // undefined (private)",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Module pattern, ilgili kod parçalarını bir araya getirip encapsulation sağlar.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda module pattern için hangi soruya cevap verebildiğini yaz."
+          }
+        }
+      ],
+      "quiz": true,
+      "study": {
+        "difficulty": "İleri",
+        "estimatedTime": "47 dk",
+        "prerequisites": [
+          "Temel bilgisayar kullanımı"
+        ],
+        "learningGoals": [
+          "Design Patterns için core concept ve terminology'i ayırabilmek",
+          "Pattern, API veya tool seçimini örnekler üzerinden yapabilmek",
+          "Küçük bir senaryoda doğru approach'u seçebilmek"
+        ],
+        "summary": "Singleton, Factory, Observer gibi yaygın tasarım kalıplarını ve kullanım alanlarını öğreniyoruz.",
+        "whyItMatters": "Programlama modülünde design patterns başlığı, core workflow içindeki kritik parçalardan biridir."
+      }
+    },
+    {
+      "id": "testing",
+      "title": "Testing ve Debugging",
+      "description": "Unit testing, integration testing, TDD yaklaşımı ve debugging teknikleri.",
+      "progress": 0,
+      "lessons": [
+        {
+          "id": "test-1",
+          "title": "Unit Testing Temelleri",
+          "duration": "11 dk",
+          "content": "Unit test, kodun en küçük parçalarını (fonksiyon, metod) izole şekilde test eder. Her test bir davranışı doğrular ve bağımsız çalışmalıdır.\n\nTest yapısı genellikle AAA pattern'i takip eder: Arrange (hazırlık), Act (işlem), Assert (doğrulama). Test isimleri açıklayıcı olmalı ve ne test edildiğini belirtmelidir.\n\nJest, Mocha, Vitest gibi test framework'leri kullanılır. İyi testler hızlı, tekrarlanabilir, bağımsız ve anlaşılırdır.",
+          "codeExample": "// Jest ile unit test\nfunction add(a, b) {\n    return a + b;\n}\n\nfunction divide(a, b) {\n    if (b === 0) throw new Error('Cannot divide by zero');\n    return a / b;\n}\n\n// Test dosyası\ndescribe('Math functions', () => {\n    test('add should return sum of two numbers', () => {\n        expect(add(2, 3)).toBe(5);\n        expect(add(-1, 1)).toBe(0);\n    });\n\n    test('divide should return quotient', () => {\n        expect(divide(10, 2)).toBe(5);\n    });\n\n    test('divide should throw error for zero divisor', () => {\n        expect(() => divide(10, 0)).toThrow('Cannot divide by zero');\n    });\n});\n\n// Test coverage\n// npm test -- --coverage",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Unit test, kodun en küçük parçalarını (fonksiyon, metod) izole şekilde test eder.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda unit testing temelleri için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "test-2",
+          "title": "Mocking ve Stubbing",
+          "duration": "10 dk",
+          "content": "Mock, gerçek nesnenin davranışını taklit eden sahte nesnedir. Dış bağımlılıkları (API, database) izole etmek için kullanılır.\n\nStub, önceden tanımlanmış yanıtlar döndüren basit mock'tur. Spy ise gerçek fonksiyonu çağırır ama çağrıları kaydeder.\n\nMocking, testleri hızlandırır, dış servislere bağımlılığı kaldırır ve edge case'leri test etmeyi kolaylaştırır.",
+          "codeExample": "// Jest mock örneği\nconst api = {\n    fetchUser: async (id) => {\n        const response = await fetch(`/api/users/${id}`);\n        return response.json();\n    }\n};\n\n// Test\ntest('fetchUser should return user data', async () => {\n    // Mock fetch\n    global.fetch = jest.fn(() =>\n        Promise.resolve({\n            json: () => Promise.resolve({ id: 1, name: 'Ali' })\n        })\n    );\n\n    const user = await api.fetchUser(1);\n\n    expect(user).toEqual({ id: 1, name: 'Ali' });\n    expect(fetch).toHaveBeenCalledWith('/api/users/1');\n});\n\n// Spy örneği\ntest('should call logger', () => {\n    const logger = { log: jest.fn() };\n\n    function doSomething(logger) {\n        logger.log('Action performed');\n    }\n\n    doSomething(logger);\n\n    expect(logger.log).toHaveBeenCalledWith('Action performed');\n    expect(logger.log).toHaveBeenCalledTimes(1);\n});",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Mock, gerçek nesnenin davranışını taklit eden sahte nesnedir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda mocking ve stubbing için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "test-3",
+          "title": "TDD (Test-Driven Development)",
+          "duration": "12 dk",
+          "content": "TDD, önce test yazıp sonra kodu yazan bir geliştirme yaklaşımıdır. Red-Green-Refactor döngüsü takip edilir.\n\nRed: Başarısız bir test yaz. Green: Testi geçecek minimum kodu yaz. Refactor: Kodu iyileştir, testler hala geçmeli.\n\nTDD, daha iyi tasarım, daha az bug ve yüksek test coverage sağlar. Kod yazmadan önce gereksinimleri netleştirir.",
+          "codeExample": "// TDD örneği: String calculator\n\n// 1. RED - Test yaz (başarısız)\ntest('empty string should return 0', () => {\n    expect(add('')).toBe(0);\n});\n\n// 2. GREEN - Minimum kod\nfunction add(numbers) {\n    return 0;\n}\n\n// 3. RED - Yeni test\ntest('single number should return that number', () => {\n    expect(add('5')).toBe(5);\n});\n\n// 4. GREEN - Kodu genişlet\nfunction add(numbers) {\n    if (numbers === '') return 0;\n    return parseInt(numbers);\n}\n\n// 5. RED - Daha karmaşık test\ntest('two numbers should return sum', () => {\n    expect(add('1,2')).toBe(3);\n});\n\n// 6. GREEN - İmplementasyon\nfunction add(numbers) {\n    if (numbers === '') return 0;\n    const nums = numbers.split(',').map(Number);\n    return nums.reduce((sum, n) => sum + n, 0);\n}\n\n// 7. REFACTOR - Kodu temizle\nfunction add(numbers) {\n    if (!numbers) return 0;\n    return numbers\n        .split(',')\n        .map(Number)\n        .reduce((sum, n) => sum + n, 0);\n}",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "TDD, önce test yazıp sonra kodu yazan bir geliştirme yaklaşımıdır.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda tdd (test-driven development) için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "test-4",
+          "title": "Debugging Teknikleri",
+          "duration": "10 dk",
+          "content": "Debugging, kodda hata bulma ve düzeltme sürecidir. Console.log en basit ama etkili yöntemdir. Ancak debugger daha güçlü araçlar sunar.\n\nBreakpoint'ler kodun belirli noktalarında durmasını sağlar. Step over, step into, step out ile kod satır satır takip edilir. Watch expressions değişkenleri izler.\n\nChrome DevTools, VS Code debugger gibi araçlar call stack, scope, network isteklerini gösterir. Source maps ile minified kod debug edilebilir.",
+          "codeExample": "// Console debugging\nfunction calculateTotal(items) {\n    console.log('Items:', items);  // Girdiyi kontrol et\n\n    let total = 0;\n    for (let item of items) {\n        console.log('Processing:', item);  // Her adımı izle\n        total += item.price * item.quantity;\n    }\n\n    console.log('Total:', total);  // Sonucu kontrol et\n    return total;\n}\n\n// Debugger statement\nfunction complexFunction(data) {\n    debugger;  // Burada dur\n    const result = data.map(x => x * 2);\n    return result;\n}\n\n// Conditional breakpoint (DevTools'da)\nfor (let i = 0; i < 100; i++) {\n    // Breakpoint condition: i === 50\n    doSomething(i);\n}\n\n// Error handling\ntry {\n    riskyOperation();\n} catch (error) {\n    console.error('Error:', error);\n    console.trace();  // Stack trace\n}",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Debugging, kodda hata bulma ve düzeltme sürecidir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda debugging teknikleri için hangi soruya cevap verebildiğini yaz."
+          }
+        }
+      ],
+      "quiz": true,
+      "study": {
+        "difficulty": "İleri",
+        "estimatedTime": "48 dk",
+        "prerequisites": [
+          "Temel bilgisayar kullanımı"
+        ],
+        "learningGoals": [
+          "Testing ve Debugging için core concept ve terminology'i ayırabilmek",
+          "Pattern, API veya tool seçimini örnekler üzerinden yapabilmek",
+          "Küçük bir senaryoda doğru approach'u seçebilmek"
+        ],
+        "summary": "Unit testing, integration testing, TDD yaklaşımı ve debugging teknikleri.",
+        "whyItMatters": "Programlama modülünde testing ve debugging başlığı, core workflow içindeki kritik parçalardan biridir."
+      }
+    }
+  ],
+  "guide": {
+    "displayName": "Programlama",
+    "summary": "Variable, control flow, function ve core syntax temellerini oturtan başlangıç modülü.",
+    "level": "Başlangıç",
+    "estimatedTime": "8-10 saat",
+    "prerequisites": [
+      "Temel bilgisayar kullanımı"
+    ],
+    "learningGoals": [
+      "Veri tiplerini ve değişkenleri ayırt etmek",
+      "If, loop ve fonksiyon akışını kurmak",
+      "Küçük programları bağımsız bloklara bölmek"
+    ]
+  }
+}

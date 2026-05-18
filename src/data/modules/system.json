@@ -1,0 +1,395 @@
+{
+  "category": "SYSTEM",
+  "icon": "⚙",
+  "topics": [
+    {
+      "id": "os-basics",
+      "title": "İşletim Sistemi Temelleri",
+      "description": "İşletim sisteminin görevleri, kernel, user space ve sistem çağrıları.",
+      "progress": 0,
+      "lessons": [
+        {
+          "id": "os-1",
+          "title": "İşletim Sistemi Nedir?",
+          "duration": "10 dk",
+          "content": "İşletim sistemi, donanım ile uygulama yazılımları arasında köprü görevi gören sistem yazılımıdır. Kaynakları yönetir, güvenlik sağlar ve kullanıcı arayüzü sunar.\n\nTemel görevleri: process yönetimi, bellek yönetimi, dosya sistemi yönetimi, I/O yönetimi, güvenlik ve ağ yönetimi. Her biri karmaşık alt sistemlerdir.\n\nKernel, OS'un çekirdeğidir ve donanıma doğrudan erişir. User space'te uygulamalar çalışır ve sistem çağrıları ile kernel'a erişir.",
+          "codeExample": "// Sistem çağrısı örneği (C)\n#include <unistd.h>\n#include <fcntl.h>\n\nint main() {\n    // open() sistem çağrısı\n    int fd = open(\"/tmp/test.txt\", O_RDONLY);\n\n    if (fd == -1) {\n        perror(\"open failed\");\n        return 1;\n    }\n\n    char buffer[100];\n    // read() sistem çağrısı\n    ssize_t bytes = read(fd, buffer, sizeof(buffer));\n\n    // write() sistem çağrısı (stdout)\n    write(STDOUT_FILENO, buffer, bytes);\n\n    // close() sistem çağrısı\n    close(fd);\n\n    return 0;\n}",
+          "codeLanguage": "c",
+          "study": {
+            "takeaway": "İşletim sistemi, donanım ile uygulama yazılımları arasında köprü görevi gören sistem yazılımıdır.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda i̇şletim sistemi nedir? için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "os-2",
+          "title": "Kernel ve User Space",
+          "duration": "9 dk",
+          "content": "Kernel space, işletim sisteminin çalıştığı privileged mod'dur. Tüm donanıma ve belleğe erişebilir. Kernel panic, kernel'da oluşan kritik hatalardır.\n\nUser space, uygulamaların çalıştığı kısıtlı mod'dur. Donanıma doğrudan erişemez, sistem çağrıları kullanmalıdır. Bu izolasyon güvenlik ve stabilite sağlar.\n\nContext switch, kernel ve user space arasında geçiş yaparken oluşur. Bu işlem maliyetlidir çünkü CPU register'ları kaydedilip yüklenir.",
+          "codeExample": "// Kernel vs User space (Linux)\n\n// User space program\n#include <stdio.h>\n\nint main() {\n    // printf() user space fonksiyonu\n    // Arka planda write() sistem çağrısı yapar\n    printf(\"Hello from user space\\n\");\n    return 0;\n}\n\n// Kernel module örneği\n#include <linux/module.h>\n#include <linux/kernel.h>\n\nint init_module(void) {\n    // Kernel space'te çalışır\n    printk(KERN_INFO \"Hello from kernel space\\n\");\n    return 0;\n}\n\nvoid cleanup_module(void) {\n    printk(KERN_INFO \"Goodbye from kernel\\n\");\n}",
+          "codeLanguage": "c",
+          "study": {
+            "takeaway": "Kernel space, işletim sisteminin çalıştığı privileged mod'dur.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda kernel ve user space için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "os-3",
+          "title": "Sistem Çağrıları",
+          "duration": "11 dk",
+          "content": "Sistem çağrıları, user space programların kernel servislerine erişmesini sağlayan arayüzdür. Her OS'un kendi sistem çağrı seti vardır.\n\nLinux'ta 300'den fazla sistem çağrısı vardır: open, read, write, fork, exec, mmap, socket vb. Her biri bir numara ile tanımlanır.\n\nSistem çağrısı yapmak pahalıdır: user mode'dan kernel mode'a geçiş, parametre kopyalama, işlem, geri dönüş. Bu yüzden buffering ve batching kullanılır.",
+          "codeExample": "// Sistem çağrısı performansı\n#include <sys/time.h>\n#include <unistd.h>\n#include <stdio.h>\n\nvoid measure_syscall() {\n    struct timeval start, end;\n\n    gettimeofday(&start, NULL);\n\n    // 1 milyon kez getpid() çağır\n    for (int i = 0; i < 1000000; i++) {\n        getpid();  // Basit sistem çağrısı\n    }\n\n    gettimeofday(&end, NULL);\n\n    long seconds = end.tv_sec - start.tv_sec;\n    long micros = end.tv_usec - start.tv_usec;\n    long elapsed = seconds * 1000000 + micros;\n\n    printf(\"1M syscalls: %ld microseconds\\n\", elapsed);\n    printf(\"Per syscall: %.2f nanoseconds\\n\",\n           (elapsed * 1000.0) / 1000000);\n}\n\nint main() {\n    measure_syscall();\n    return 0;\n}",
+          "codeLanguage": "c",
+          "study": {
+            "takeaway": "Sistem çağrıları, user space programların kernel servislerine erişmesini sağlayan arayüzdür.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda sistem çağrıları için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "os-4",
+          "title": "Interrupts ve Exceptions",
+          "duration": "10 dk",
+          "content": "Interrupt, donanımın CPU'ya gönderdiği asenkron sinyaldir. Klavye tuşu, disk I/O tamamlanması, timer gibi olaylar interrupt üretir.\n\nException, program çalışırken oluşan senkron hatalardır: division by zero, page fault, invalid instruction. CPU exception handler'ı çağırır.\n\nInterrupt handler (ISR), interrupt'ı işleyen kernel fonksiyonudur. Hızlı olmalıdır çünkü diğer interrupt'ları bloklar. Ağır işler deferred work'e bırakılır.",
+          "codeExample": "// Interrupt handling (pseudo-code)\n\n// Hardware interrupt\nvoid keyboard_interrupt_handler() {\n    // 1. Save CPU state\n    save_registers();\n\n    // 2. Read keyboard data\n    char key = inb(KEYBOARD_PORT);\n\n    // 3. Add to buffer\n    keyboard_buffer[buffer_index++] = key;\n\n    // 4. Signal waiting process\n    wake_up_process(waiting_process);\n\n    // 5. Restore CPU state\n    restore_registers();\n\n    // 6. Return from interrupt\n    iret();\n}\n\n// Exception handling\nvoid page_fault_handler(void *address) {\n    // Page fault exception\n    if (is_valid_address(address)) {\n        // Load page from disk\n        load_page(address);\n    } else {\n        // Segmentation fault\n        kill_process(current_process);\n    }\n}",
+          "codeLanguage": "c",
+          "study": {
+            "takeaway": "Interrupt, donanımın CPU'ya gönderdiği asenkron sinyaldir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda interrupts ve exceptions için hangi soruya cevap verebildiğini yaz."
+          }
+        }
+      ],
+      "quiz": true,
+      "study": {
+        "difficulty": "Orta",
+        "estimatedTime": "45 dk",
+        "prerequisites": [
+          "Terminal kullanımı"
+        ],
+        "learningGoals": [
+          "İşletim Sistemi Temelleri için core concept ve terminology'i ayırabilmek",
+          "Pattern, API veya tool seçimini örnekler üzerinden yapabilmek",
+          "Küçük bir senaryoda doğru approach'u seçebilmek"
+        ],
+        "summary": "İşletim sisteminin görevleri, kernel, user space ve sistem çağrıları.",
+        "whyItMatters": "Sistem modülünde i̇şletim sistemi temelleri başlığı, core workflow içindeki kritik parçalardan biridir."
+      }
+    },
+    {
+      "id": "processes",
+      "title": "Process ve Thread Yönetimi",
+      "description": "Process yaşam döngüsü, thread modelleri, context switching ve scheduling.",
+      "progress": 0,
+      "lessons": [
+        {
+          "id": "proc-1",
+          "title": "Process Yaşam Döngüsü",
+          "duration": "11 dk",
+          "content": "Process, çalışan bir programın örneğidir. Her process'in kendi address space'i, file descriptor'ları ve kaynakları vardır.\n\nProcess durumları: New (oluşturuldu), Ready (CPU bekliyor), Running (çalışıyor), Waiting (I/O bekliyor), Terminated (sonlandı). Scheduler bu geçişleri yönetir.\n\nfork() yeni process oluşturur (child), exec() process'in kodunu değiştirir, wait() child'ın bitmesini bekler. Bu Unix process modelinin temelidir.",
+          "codeExample": "// Process oluşturma (Linux)\n#include <stdio.h>\n#include <unistd.h>\n#include <sys/wait.h>\n\nint main() {\n    pid_t pid = fork();\n\n    if (pid == -1) {\n        perror(\"fork failed\");\n        return 1;\n    }\n\n    if (pid == 0) {\n        // Child process\n        printf(\"Child PID: %d\\n\", getpid());\n        printf(\"Parent PID: %d\\n\", getppid());\n\n        // Yeni program çalıştır\n        execl(\"/bin/ls\", \"ls\", \"-l\", NULL);\n\n        // exec başarısızsa buraya gelir\n        perror(\"exec failed\");\n        return 1;\n    } else {\n        // Parent process\n        printf(\"Parent PID: %d, Child PID: %d\\n\",\n               getpid(), pid);\n\n        // Child'ın bitmesini bekle\n        int status;\n        waitpid(pid, &status, 0);\n\n        printf(\"Child exited with status %d\\n\",\n               WEXITSTATUS(status));\n    }\n\n    return 0;\n}",
+          "codeLanguage": "c",
+          "study": {
+            "takeaway": "Process, çalışan bir programın örneğidir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda process yaşam döngüsü için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "proc-2",
+          "title": "Threads ve Concurrency",
+          "duration": "12 dk",
+          "content": "Thread, process içinde çalışan hafif execution unit'idir. Aynı process'teki thread'ler address space'i paylaşır ama kendi stack'leri vardır.\n\nThread oluşturmak process'ten çok daha hızlıdır. Context switch maliyeti düşüktür. Ancak shared memory race condition'lara yol açabilir.\n\nPOSIX threads (pthreads) Linux'ta standart thread API'sidir. Mutex, semaphore, condition variable gibi senkronizasyon primitifleri sunar.",
+          "codeExample": "// POSIX threads örneği\n#include <pthread.h>\n#include <stdio.h>\n\nvoid* thread_function(void* arg) {\n    int id = *(int*)arg;\n    printf(\"Thread %d running\\n\", id);\n\n    // Simüle edilmiş iş\n    for (int i = 0; i < 5; i++) {\n        printf(\"Thread %d: %d\\n\", id, i);\n        sleep(1);\n    }\n\n    return NULL;\n}\n\nint main() {\n    pthread_t threads[3];\n    int ids[3] = {1, 2, 3};\n\n    // Thread'leri oluştur\n    for (int i = 0; i < 3; i++) {\n        pthread_create(&threads[i], NULL,\n                      thread_function, &ids[i]);\n    }\n\n    // Thread'lerin bitmesini bekle\n    for (int i = 0; i < 3; i++) {\n        pthread_join(threads[i], NULL);\n    }\n\n    printf(\"All threads completed\\n\");\n    return 0;\n}",
+          "codeLanguage": "c",
+          "study": {
+            "takeaway": "Thread, process içinde çalışan hafif execution unit'idir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda threads ve concurrency için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "proc-3",
+          "title": "Mutex ve Synchronization",
+          "duration": "10 dk",
+          "content": "Mutex (mutual exclusion), critical section'a aynı anda sadece bir thread'in girmesini sağlar. Lock/unlock ile kullanılır.\n\nDeadlock, iki thread'in birbirinin tuttuğu kaynağı beklemesidir. Önlemek için: lock ordering, timeout, deadlock detection kullanılır.\n\nSemaphore, sayaç tabanlı senkronizasyon mekanizmasıdır. Binary semaphore mutex gibi, counting semaphore kaynak havuzu için kullanılır.",
+          "codeExample": "// Mutex kullanımı\n#include <pthread.h>\n#include <stdio.h>\n\nint counter = 0;\npthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;\n\nvoid* increment(void* arg) {\n    for (int i = 0; i < 100000; i++) {\n        pthread_mutex_lock(&mutex);\n        counter++;  // Critical section\n        pthread_mutex_unlock(&mutex);\n    }\n    return NULL;\n}\n\nint main() {\n    pthread_t t1, t2;\n\n    pthread_create(&t1, NULL, increment, NULL);\n    pthread_create(&t2, NULL, increment, NULL);\n\n    pthread_join(t1, NULL);\n    pthread_join(t2, NULL);\n\n    printf(\"Counter: %d\\n\", counter);  // 200000\n\n    pthread_mutex_destroy(&mutex);\n    return 0;\n}\n\n// Mutex olmadan race condition olur:\n// Counter: 187432 (her çalıştırmada farklı)",
+          "codeLanguage": "c",
+          "study": {
+            "takeaway": "Mutex (mutual exclusion), critical section'a aynı anda sadece bir thread'in girmesini sağlar.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda mutex ve synchronization için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "proc-4",
+          "title": "CPU Scheduling",
+          "duration": "13 dk",
+          "content": "Scheduler, hangi process/thread'in CPU'da çalışacağına karar verir. Amaç: throughput maksimize, latency minimize, fairness sağla.\n\nScheduling algoritmaları: FCFS (First Come First Served), SJF (Shortest Job First), Round Robin, Priority Scheduling, Multi-Level Queue.\n\nLinux CFS (Completely Fair Scheduler) kullanır. Her process'e adil CPU zamanı verir. Nice value ile öncelik ayarlanabilir (-20 en yüksek, 19 en düşük).",
+          "codeExample": "// Process priority ayarlama\n#include <sys/resource.h>\n#include <unistd.h>\n#include <stdio.h>\n\nint main() {\n    // Mevcut priority'yi al\n    int priority = getpriority(PRIO_PROCESS, 0);\n    printf(\"Current priority: %d\\n\", priority);\n\n    // Priority'yi düşür (daha az CPU)\n    setpriority(PRIO_PROCESS, 0, 10);\n\n    // CPU-intensive iş\n    long sum = 0;\n    for (long i = 0; i < 1000000000; i++) {\n        sum += i;\n    }\n\n    printf(\"Sum: %ld\\n\", sum);\n    return 0;\n}\n\n// Shell'den nice kullanımı:\n// nice -n 10 ./program  # Düşük öncelik\n// nice -n -10 ./program # Yüksek öncelik (root gerekir)\n\n// Çalışan process'in priority'sini değiştir:\n// renice -n 5 -p 1234",
+          "codeLanguage": "c",
+          "study": {
+            "takeaway": "Scheduler, hangi process/thread'in CPU'da çalışacağına karar verir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda cpu scheduling için hangi soruya cevap verebildiğini yaz."
+          }
+        }
+      ],
+      "quiz": true,
+      "study": {
+        "difficulty": "Orta",
+        "estimatedTime": "51 dk",
+        "prerequisites": [
+          "Terminal kullanımı"
+        ],
+        "learningGoals": [
+          "Process ve Thread Yönetimi için core concept ve terminology'i ayırabilmek",
+          "Pattern, API veya tool seçimini örnekler üzerinden yapabilmek",
+          "Küçük bir senaryoda doğru approach'u seçebilmek"
+        ],
+        "summary": "Process yaşam döngüsü, thread modelleri, context switching ve scheduling.",
+        "whyItMatters": "Sistem modülünde process ve thread yönetimi başlığı, core workflow içindeki kritik parçalardan biridir."
+      }
+    },
+    {
+      "id": "memory",
+      "title": "Bellek Yönetimi",
+      "description": "Virtual memory, paging, segmentation ve memory allocation stratejileri.",
+      "progress": 0,
+      "lessons": [
+        {
+          "id": "mem-1",
+          "title": "Virtual Memory",
+          "duration": "12 dk",
+          "content": "Virtual memory, her process'e kendi özel address space'i varmış gibi gösterir. Fiziksel RAM'den daha büyük bellek kullanımına izin verir.\n\nMMU (Memory Management Unit), virtual adresleri fiziksel adreslere çevirir. Page table bu mapping'i tutar. TLB (Translation Lookaside Buffer) sık kullanılan çevirileri cache'ler.\n\n64-bit sistemlerde virtual address space teorik olarak 16 exabyte'tır. Pratikte işletim sistemi limitleri vardır (Linux'ta process başına ~128TB).",
+          "codeExample": "// Virtual memory layout (Linux)\n#include <stdio.h>\n#include <stdlib.h>\n#include <unistd.h>\n\nint global_var = 42;  // Data segment\nint uninitialized;    // BSS segment\n\nvoid print_addresses() {\n    int stack_var = 10;  // Stack\n    int *heap_var = malloc(sizeof(int));  // Heap\n    *heap_var = 20;\n\n    printf(\"Text (code):   %p\\n\", (void*)print_addresses);\n    printf(\"Global data:   %p\\n\", (void*)&global_var);\n    printf(\"BSS:           %p\\n\", (void*)&uninitialized);\n    printf(\"Heap:          %p\\n\", (void*)heap_var);\n    printf(\"Stack:         %p\\n\", (void*)&stack_var);\n\n    free(heap_var);\n}\n\nint main() {\n    print_addresses();\n\n    // /proc/self/maps ile memory map'i gör\n    system(\"cat /proc/self/maps\");\n\n    return 0;\n}",
+          "codeLanguage": "c",
+          "study": {
+            "takeaway": "Virtual memory, her process'e kendi özel address space'i varmış gibi gösterir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda virtual memory için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "mem-2",
+          "title": "Paging ve Page Faults",
+          "duration": "11 dk",
+          "content": "Paging, belleği sabit boyutlu sayfalara (genellikle 4KB) böler. Her sayfa fiziksel frame'lere map edilir. Bu, fragmentation'ı azaltır.\n\nPage fault, erişilen sayfanın RAM'de olmaması durumudur. Minor page fault: sayfa disk'te yok, sadece allocate edilmeli. Major page fault: disk'ten yüklenmeli.\n\nDemand paging, sayfaları sadece gerektiğinde yükler. Copy-on-write, fork() sonrası sayfaları paylaşır, yazma olunca kopyalar. Bu optimizasyonlar performansı artırır.",
+          "codeExample": "// Page fault istatistikleri\n#include <sys/resource.h>\n#include <stdio.h>\n#include <stdlib.h>\n\nvoid cause_page_faults() {\n    // Büyük bellek allocate et\n    size_t size = 100 * 1024 * 1024;  // 100 MB\n    char *memory = malloc(size);\n\n    struct rusage usage_before, usage_after;\n    getrusage(RUSAGE_SELF, &usage_before);\n\n    // Belleğe eriş (page fault'lar oluşur)\n    for (size_t i = 0; i < size; i += 4096) {\n        memory[i] = 1;  // Her sayfaya dokunarak yükle\n    }\n\n    getrusage(RUSAGE_SELF, &usage_after);\n\n    long minor_faults = usage_after.ru_minflt -\n                       usage_before.ru_minflt;\n    long major_faults = usage_after.ru_majflt -\n                       usage_before.ru_majflt;\n\n    printf(\"Minor page faults: %ld\\n\", minor_faults);\n    printf(\"Major page faults: %ld\\n\", major_faults);\n\n    free(memory);\n}",
+          "codeLanguage": "c",
+          "study": {
+            "takeaway": "Paging, belleği sabit boyutlu sayfalara (genellikle 4KB) böler.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda paging ve page faults için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "mem-3",
+          "title": "Heap Allocation",
+          "duration": "10 dk",
+          "content": "Heap, dinamik bellek tahsisi için kullanılan alandır. malloc(), calloc(), realloc() ile tahsis edilir, free() ile serbest bırakılır.\n\nMemory allocator (glibc'de ptmalloc2), free block'ları yönetir. Küçük tahsisler için bins, büyükler için mmap kullanır. Fragmentation'ı minimize etmeye çalışır.\n\nMemory leak, tahsis edilen belleğin free edilmemesidir. Valgrind gibi araçlar leak'leri tespit eder. RAII (C++) veya garbage collection (Java, Go) bu sorunu otomatikleştirir.",
+          "codeExample": "// Heap allocation ve leak detection\n#include <stdlib.h>\n#include <stdio.h>\n\nvoid memory_leak_example() {\n    int *ptr = malloc(100 * sizeof(int));\n    // free(ptr);  // Unutuldu - memory leak!\n}\n\nvoid correct_usage() {\n    int *ptr = malloc(100 * sizeof(int));\n    if (ptr == NULL) {\n        fprintf(stderr, \"Allocation failed\\n\");\n        return;\n    }\n\n    // Belleği kullan\n    for (int i = 0; i < 100; i++) {\n        ptr[i] = i;\n    }\n\n    free(ptr);  // Doğru kullanım\n}\n\nint main() {\n    memory_leak_example();\n    correct_usage();\n    return 0;\n}\n\n// Valgrind ile test:\n// valgrind --leak-check=full ./program\n//\n// Çıktı:\n// 400 bytes in 1 blocks are definitely lost\n// (memory_leak_example'dan)",
+          "codeLanguage": "c",
+          "study": {
+            "takeaway": "Heap, dinamik bellek tahsisi için kullanılan alandır.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda heap allocation için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "mem-4",
+          "title": "Memory-Mapped Files",
+          "duration": "9 dk",
+          "content": "mmap(), dosyayı process'in address space'ine map eder. Dosya içeriği bellek gibi erişilebilir hale gelir. Büyük dosyalar için verimlidir.\n\nShared memory, process'ler arası iletişim için kullanılır. Birden fazla process aynı fiziksel belleği paylaşır. En hızlı IPC yöntemidir.\n\nMemory-mapped I/O, donanım register'larına bellek adresleri üzerinden erişimi sağlar. Kernel driver'lar bu yöntemi kullanır.",
+          "codeExample": "// Memory-mapped file örneği\n#include <sys/mman.h>\n#include <sys/stat.h>\n#include <fcntl.h>\n#include <stdio.h>\n#include <unistd.h>\n\nint main() {\n    // Dosyayı aç\n    int fd = open(\"data.txt\", O_RDWR);\n    if (fd == -1) {\n        perror(\"open\");\n        return 1;\n    }\n\n    // Dosya boyutunu al\n    struct stat sb;\n    fstat(fd, &sb);\n\n    // Dosyayı map et\n    char *mapped = mmap(NULL, sb.st_size,\n                       PROT_READ | PROT_WRITE,\n                       MAP_SHARED, fd, 0);\n\n    if (mapped == MAP_FAILED) {\n        perror(\"mmap\");\n        close(fd);\n        return 1;\n    }\n\n    // Bellek gibi eriş\n    printf(\"First char: %c\\n\", mapped[0]);\n    mapped[0] = 'X';  // Dosyayı değiştir\n\n    // Unmap\n    munmap(mapped, sb.st_size);\n    close(fd);\n\n    return 0;\n}",
+          "codeLanguage": "c",
+          "study": {
+            "takeaway": "mmap(), dosyayı process'in address space'ine map eder.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda memory-mapped files için hangi soruya cevap verebildiğini yaz."
+          }
+        }
+      ],
+      "quiz": true,
+      "study": {
+        "difficulty": "İleri",
+        "estimatedTime": "47 dk",
+        "prerequisites": [
+          "Terminal kullanımı"
+        ],
+        "learningGoals": [
+          "Bellek Yönetimi için core concept ve terminology'i ayırabilmek",
+          "Pattern, API veya tool seçimini örnekler üzerinden yapabilmek",
+          "Küçük bir senaryoda doğru approach'u seçebilmek"
+        ],
+        "summary": "Virtual memory, paging, segmentation ve memory allocation stratejileri.",
+        "whyItMatters": "Sistem modülünde bellek yönetimi başlığı, core workflow içindeki kritik parçalardan biridir."
+      }
+    },
+    {
+      "id": "filesystems",
+      "title": "Dosya Sistemleri",
+      "description": "Dosya sistemi yapısı, inode, directory, hard/soft links ve dosya izinleri.",
+      "progress": 0,
+      "lessons": [
+        {
+          "id": "fs-1",
+          "title": "Dosya Sistemi Yapısı",
+          "duration": "11 dk",
+          "content": "Dosya sistemi, verilerin disk üzerinde nasıl organize edildiğini belirler. ext4, NTFS, APFS, ZFS gibi farklı dosya sistemleri vardır.\n\nİnode, dosya metadata'sını tutar: boyut, izinler, timestamps, disk block'larının adresleri. Dosya adı directory'de tutulur, inode numarasına işaret eder.\n\nSuperblock, dosya sisteminin genel bilgilerini içerir: boyut, block sayısı, free block listesi. Bozulursa dosya sistemi mount edilemez.",
+          "codeExample": "// İnode bilgilerini görüntüleme\n#include <sys/stat.h>\n#include <stdio.h>\n#include <time.h>\n\nvoid print_file_info(const char *path) {\n    struct stat st;\n\n    if (stat(path, &st) == -1) {\n        perror(\"stat\");\n        return;\n    }\n\n    printf(\"File: %s\\n\", path);\n    printf(\"Inode: %lu\\n\", st.st_ino);\n    printf(\"Size: %ld bytes\\n\", st.st_size);\n    printf(\"Blocks: %ld\\n\", st.st_blocks);\n    printf(\"Block size: %ld\\n\", st.st_blksize);\n    printf(\"Links: %lu\\n\", st.st_nlink);\n    printf(\"Mode: %o\\n\", st.st_mode & 0777);\n\n    printf(\"Access time: %s\", ctime(&st.st_atime));\n    printf(\"Modify time: %s\", ctime(&st.st_mtime));\n    printf(\"Change time: %s\", ctime(&st.st_ctime));\n}\n\nint main() {\n    print_file_info(\"/etc/passwd\");\n    return 0;\n}",
+          "codeLanguage": "c",
+          "study": {
+            "takeaway": "Dosya sistemi, verilerin disk üzerinde nasıl organize edildiğini belirler.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda dosya sistemi yapısı için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "fs-2",
+          "title": "Hard ve Soft Links",
+          "duration": "9 dk",
+          "content": "Hard link, aynı inode'u işaret eden başka bir directory entry'dir. Dosya silinse bile hard link varsa veri kalır. Link count 0 olunca veri silinir.\n\nSoft link (symbolic link), başka bir dosyanın path'ini içeren özel dosyadır. Orijinal dosya silinirse soft link kırılır (dangling link).\n\nHard link sadece aynı dosya sisteminde ve dosyalar için çalışır. Soft link her yerde ve directory'ler için de kullanılabilir.",
+          "codeExample": "// Link oluşturma\n#include <unistd.h>\n#include <stdio.h>\n\nint main() {\n    // Hard link oluştur\n    if (link(\"original.txt\", \"hardlink.txt\") == -1) {\n        perror(\"hard link failed\");\n    }\n\n    // Symbolic link oluştur\n    if (symlink(\"original.txt\", \"softlink.txt\") == -1) {\n        perror(\"symbolic link failed\");\n    }\n\n    // Link bilgisini oku\n    char buffer[256];\n    ssize_t len = readlink(\"softlink.txt\", buffer, sizeof(buffer)-1);\n    if (len != -1) {\n        buffer[len] = '\\0';\n        printf(\"Soft link points to: %s\\n\", buffer);\n    }\n\n    return 0;\n}\n\n// Shell'den:\n// ln original.txt hardlink.txt      # Hard link\n// ln -s original.txt softlink.txt   # Soft link\n// ls -li  # İnode numaralarını göster",
+          "codeLanguage": "c",
+          "study": {
+            "takeaway": "Hard link, aynı inode'u işaret eden başka bir directory entry'dir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda hard ve soft links için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "fs-3",
+          "title": "Dosya İzinleri",
+          "duration": "10 dk",
+          "content": "Unix dosya izinleri üç grup için tanımlanır: owner (u), group (g), others (o). Her grup için read (r), write (w), execute (x) izinleri vardır.\n\nİzinler octal notation ile gösterilir: 755 = rwxr-xr-x. İlk digit owner, ikinci group, üçüncü others içindir.\n\nSetuid/setgid bit'leri, programın owner/group yetkisiyle çalışmasını sağlar. Sticky bit, directory'de sadece owner'ın dosya silebilmesini sağlar (/tmp).",
+          "codeExample": "// Dosya izinlerini değiştirme\n#include <sys/stat.h>\n#include <stdio.h>\n\nint main() {\n    // chmod 755 file.txt\n    if (chmod(\"file.txt\", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) == -1) {\n        perror(\"chmod failed\");\n        return 1;\n    }\n\n    // İzinleri kontrol et\n    struct stat st;\n    if (stat(\"file.txt\", &st) == 0) {\n        printf(\"Permissions: \");\n        printf((S_ISDIR(st.st_mode)) ? \"d\" : \"-\");\n        printf((st.st_mode & S_IRUSR) ? \"r\" : \"-\");\n        printf((st.st_mode & S_IWUSR) ? \"w\" : \"-\");\n        printf((st.st_mode & S_IXUSR) ? \"x\" : \"-\");\n        printf((st.st_mode & S_IRGRP) ? \"r\" : \"-\");\n        printf((st.st_mode & S_IWGRP) ? \"w\" : \"-\");\n        printf((st.st_mode & S_IXGRP) ? \"x\" : \"-\");\n        printf((st.st_mode & S_IROTH) ? \"r\" : \"-\");\n        printf((st.st_mode & S_IWOTH) ? \"w\" : \"-\");\n        printf((st.st_mode & S_IXOTH) ? \"x\" : \"-\");\n        printf(\"\\n\");\n    }\n\n    return 0;\n}",
+          "codeLanguage": "c",
+          "study": {
+            "takeaway": "Unix dosya izinleri üç grup için tanımlanır: owner (u), group (g), others (o).",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda dosya i̇zinleri için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "fs-4",
+          "title": "Buffering ve Caching",
+          "duration": "12 dk",
+          "content": "Disk I/O çok yavaştır (milisaniyeler), bu yüzden OS agresif caching yapar. Page cache, dosya içeriğini RAM'de tutar. Dirty pages, henüz diske yazılmamış değişiklikleri içerir.\n\nWrite-back caching, yazmaları geciktirir ve batch'ler. Write-through ise hemen diske yazar. fsync() dirty buffer'ları zorla diske yazar.\n\nBuffer cache, block device I/O'sunu cache'ler. Modern Linux'ta page cache ile birleştirilmiştir. /proc/meminfo'da cache miktarını görebilirsiniz.",
+          "codeExample": "// Disk I/O ve caching\n#include <fcntl.h>\n#include <unistd.h>\n#include <stdio.h>\n#include <time.h>\n\nvoid measure_io(const char *path, int use_sync) {\n    int flags = O_WRONLY | O_CREAT | O_TRUNC;\n    if (use_sync) {\n        flags |= O_SYNC;  // Her yazma hemen diske\n    }\n\n    int fd = open(path, flags, 0644);\n    if (fd == -1) {\n        perror(\"open\");\n        return;\n    }\n\n    clock_t start = clock();\n\n    // 1000 kez 4KB yaz\n    char buffer[4096] = {0};\n    for (int i = 0; i < 1000; i++) {\n        write(fd, buffer, sizeof(buffer));\n    }\n\n    if (!use_sync) {\n        fsync(fd);  // Manuel sync\n    }\n\n    clock_t end = clock();\n    double elapsed = (double)(end - start) / CLOCKS_PER_SEC;\n\n    printf(\"%s: %.3f seconds\\n\",\n           use_sync ? \"O_SYNC\" : \"Buffered\", elapsed);\n\n    close(fd);\n}\n\nint main() {\n    measure_io(\"/tmp/buffered.dat\", 0);\n    measure_io(\"/tmp/sync.dat\", 1);\n    return 0;\n}",
+          "codeLanguage": "c",
+          "study": {
+            "takeaway": "Disk I/O çok yavaştır (milisaniyeler), bu yüzden OS agresif caching yapar.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda buffering ve caching için hangi soruya cevap verebildiğini yaz."
+          }
+        }
+      ],
+      "quiz": true,
+      "study": {
+        "difficulty": "İleri",
+        "estimatedTime": "47 dk",
+        "prerequisites": [
+          "Terminal kullanımı"
+        ],
+        "learningGoals": [
+          "Dosya Sistemleri için core concept ve terminology'i ayırabilmek",
+          "Pattern, API veya tool seçimini örnekler üzerinden yapabilmek",
+          "Küçük bir senaryoda doğru approach'u seçebilmek"
+        ],
+        "summary": "Dosya sistemi yapısı, inode, directory, hard/soft links ve dosya izinleri.",
+        "whyItMatters": "Sistem modülünde dosya sistemleri başlığı, core workflow içindeki kritik parçalardan biridir."
+      }
+    },
+    {
+      "id": "shell",
+      "title": "Shell Scripting",
+      "description": "Bash scripting, pipes, redirection ve shell programlama teknikleri.",
+      "progress": 0,
+      "lessons": [
+        {
+          "id": "shell-1",
+          "title": "Bash Temelleri",
+          "duration": "10 dk",
+          "content": "Shell, kullanıcı ile kernel arasında arayüz sağlayan programdır. Bash (Bourne Again Shell), Linux'ta en yaygın shell'dir.\n\nShell script, komutların bir dosyada toplanmasıdır. Shebang (#!/bin/bash) hangi interpreter'ın kullanılacağını belirtir. chmod +x ile çalıştırılabilir yapılır.\n\nDeğişkenler, kontrol yapıları, fonksiyonlar ve komut substitution ile güçlü scriptler yazılabilir.",
+          "codeExample": "#!/bin/bash\n# Basit bash script örneği\n\n# Değişkenler\nNAME=\"Ahmet\"\nAGE=25\n\n# Echo ile yazdırma\necho \"Merhaba, $NAME!\"\necho \"Yaşınız: $AGE\"\n\n# Komut substitution\nCURRENT_DIR=$(pwd)\necho \"Bulunduğunuz dizin: $CURRENT_DIR\"\n\n# Koşullu ifade\nif [ $AGE -ge 18 ]; then\n    echo \"Reşitsiniz\"\nelse\n    echo \"Reşit değilsiniz\"\nfi\n\n# Döngü\nfor i in {1..5}; do\n    echo \"Sayı: $i\"\ndone\n\n# Fonksiyon\ngreet() {\n    local name=$1\n    echo \"Merhaba, $name!\"\n}\n\ngreet \"Ayşe\"\n\n# Çıkış kodu\nexit 0",
+          "codeLanguage": "bash",
+          "study": {
+            "takeaway": "Shell, kullanıcı ile kernel arasında arayüz sağlayan programdır.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda bash temelleri için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "shell-2",
+          "title": "Pipes ve Redirection",
+          "duration": "11 dk",
+          "content": "Pipe (|), bir komutun çıktısını diğerinin girdisine bağlar. Unix felsefesinin temelidir: küçük araçları birleştir.\n\nRedirection, stdin/stdout/stderr'i yönlendirir. > dosyaya yaz (üzerine), >> dosyaya ekle, < dosyadan oku, 2> stderr'i yönlendir.\n\nHere document (<<) ve here string (<<<) ile multi-line input verilebilir. Process substitution (<()) komut çıktısını dosya gibi kullanır.",
+          "codeExample": "#!/bin/bash\n\n# Pipe örnekleri\nls -l | grep \".txt\" | wc -l  # .txt dosya sayısı\ncat file.txt | sort | uniq   # Sıralı unique satırlar\n\n# Redirection\necho \"Hello\" > output.txt    # Üzerine yaz\necho \"World\" >> output.txt   # Ekle\ncat < input.txt               # Dosyadan oku\n\n# Stderr redirection\ncommand 2> errors.txt         # Sadece hataları\ncommand > output.txt 2>&1     # Hem stdout hem stderr\ncommand &> all.txt            # Kısa yol\n\n# Here document\ncat << EOF\nBu bir\nçok satırlı\nmetin\nEOF\n\n# Process substitution\ndiff <(ls dir1) <(ls dir2)    # İki dizini karşılaştır\n\n# Tee - hem dosyaya hem ekrana\nls -l | tee output.txt | grep \".txt\"",
+          "codeLanguage": "bash",
+          "study": {
+            "takeaway": "Pipe (|), bir komutun çıktısını diğerinin girdisine bağlar.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda pipes ve redirection için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "shell-3",
+          "title": "Text Processing",
+          "duration": "12 dk",
+          "content": "grep, sed, awk Unix'in güçlü text processing araçlarıdır. Logları analiz etmek, dosyaları dönüştürmek için kullanılır.\n\ngrep pattern matching yapar. sed (stream editor) metin değiştirme ve dönüştürme yapar. awk programlama dili gibidir, sütun bazlı işlemler için idealdir.\n\nRegular expression'lar bu araçların gücünü artırır. Karmaşık pattern'leri eşleştirip işleyebilirsiniz.",
+          "codeExample": "#!/bin/bash\n\n# grep örnekleri\ngrep \"error\" logfile.txt              # \"error\" içeren satırlar\ngrep -i \"error\" logfile.txt           # Case-insensitive\ngrep -r \"TODO\" .                      # Recursive arama\ngrep -E \"[0-9]{3}-[0-9]{4}\" file.txt # Regex\n\n# sed örnekleri\nsed 's/old/new/' file.txt             # İlk eşleşmeyi değiştir\nsed 's/old/new/g' file.txt            # Tüm eşleşmeleri\nsed -i 's/old/new/g' file.txt         # In-place değiştir\nsed -n '10,20p' file.txt              # 10-20 satırları yazdır\nsed '/pattern/d' file.txt             # Pattern içeren satırları sil\n\n# awk örnekleri\nawk '{print $1}' file.txt             # İlk sütunu yazdır\nawk -F: '{print $1, $3}' /etc/passwd  # : delimiter ile\nawk '$3 > 100' file.txt               # 3. sütun > 100 olanlar\nawk '{sum += $1} END {print sum}' file.txt  # Toplam\n\n# Kombine kullanım\ncat access.log | grep \"404\" | awk '{print $1}' | sort | uniq -c",
+          "codeLanguage": "bash",
+          "study": {
+            "takeaway": "grep, sed, awk Unix'in güçlü text processing araçlarıdır.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda text processing için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "shell-4",
+          "title": "Script Best Practices",
+          "duration": "9 dk",
+          "content": "İyi shell script'leri okunabilir, hata yönetimi yapar ve güvenlidir. set -e ile hata durumunda dur, set -u ile tanımsız değişkenleri yakala.\n\nDeğişkenleri her zaman quote'la (\"$var\"), boşluk içeren değerler için gerekli. [[ ]] kullan, [ ] yerine (daha güvenli).\n\nShellcheck gibi araçlar yaygın hataları yakalar. Scriptleri test et, edge case'leri düşün. Dokümantasyon ekle.",
+          "codeExample": "#!/bin/bash\n# Best practices örneği\n\n# Strict mode\nset -euo pipefail\nIFS=$'\\n\\t'\n\n# Sabitler\nreadonly SCRIPT_DIR=\"$(cd \"$(dirname \"${BASH_SOURCE[0]}\")\" && pwd)\"\nreadonly LOG_FILE=\"/var/log/myscript.log\"\n\n# Hata yönetimi\nerror_exit() {\n    echo \"ERROR: $1\" >&2\n    exit 1\n}\n\n# Logging\nlog() {\n    echo \"[$(date +'%Y-%m-%d %H:%M:%S')] $*\" | tee -a \"$LOG_FILE\"\n}\n\n# Parametre kontrolü\nif [ $# -lt 1 ]; then\n    error_exit \"Usage: $0 <filename>\"\nfi\n\nFILENAME=\"$1\"\n\n# Dosya varlık kontrolü\nif [ ! -f \"$FILENAME\" ]; then\n    error_exit \"File not found: $FILENAME\"\nfi\n\n# İşlem\nlog \"Processing $FILENAME\"\nwc -l \"$FILENAME\" || error_exit \"Failed to count lines\"\n\nlog \"Done\"\nexit 0",
+          "codeLanguage": "bash",
+          "study": {
+            "takeaway": "İyi shell script'leri okunabilir, hata yönetimi yapar ve güvenlidir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda script best practices için hangi soruya cevap verebildiğini yaz."
+          }
+        }
+      ],
+      "quiz": true,
+      "study": {
+        "difficulty": "İleri",
+        "estimatedTime": "47 dk",
+        "prerequisites": [
+          "Terminal kullanımı"
+        ],
+        "learningGoals": [
+          "Shell Scripting için core concept ve terminology'i ayırabilmek",
+          "Pattern, API veya tool seçimini örnekler üzerinden yapabilmek",
+          "Küçük bir senaryoda doğru approach'u seçebilmek"
+        ],
+        "summary": "Bash scripting, pipes, redirection ve shell programlama teknikleri.",
+        "whyItMatters": "Sistem modülünde shell scripting başlığı, core workflow içindeki kritik parçalardan biridir."
+      }
+    }
+  ],
+  "guide": {
+    "displayName": "Sistem",
+    "summary": "Shell, process, filesystem ve syscall akışını birlikte okutan modül.",
+    "level": "Orta",
+    "estimatedTime": "10-12 saat",
+    "prerequisites": [
+      "Terminal kullanımı"
+    ],
+    "learningGoals": [
+      "Process ve service mantığını okumak",
+      "Dosya sistemi ve shell akışını yönetmek",
+      "Linux araçlarıyla teşhis yapmak"
+    ]
+  }
+}

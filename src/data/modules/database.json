@@ -1,0 +1,219 @@
+{
+  "category": "DATABASE",
+  "icon": "🗄",
+  "topics": [
+    {
+      "id": "sql-basics",
+      "title": "SQL Temelleri",
+      "description": "SELECT, INSERT, UPDATE, DELETE ve temel SQL sorguları.",
+      "progress": 0,
+      "lessons": [
+        {
+          "id": "sql-1",
+          "title": "SELECT ve Filtreleme",
+          "duration": "10 dk",
+          "content": "SELECT, veritabanından veri çekmek için kullanılır. WHERE ile filtreleme, ORDER BY ile sıralama yapılır.\n\nWILDCARD operatörleri: % (herhangi bir karakter dizisi), _ (tek karakter). LIKE ile pattern matching yapılır.\n\nIN operatörü birden fazla değer kontrolü, BETWEEN aralık kontrolü için kullanılır.",
+          "codeExample": "-- Tüm sütunları seç\nSELECT * FROM users;\n\n-- Belirli sütunlar\nSELECT name, email FROM users;\n\n-- Filtreleme\nSELECT * FROM users WHERE age >= 18;\n\n-- LIKE ile arama\nSELECT * FROM users WHERE name LIKE 'A%';  -- A ile başlayanlar\nSELECT * FROM users WHERE email LIKE '%@gmail.com';  -- Gmail kullanıcıları\n\n-- IN operatörü\nSELECT * FROM users WHERE city IN ('İstanbul', 'Ankara', 'İzmir');\n\n-- BETWEEN\nSELECT * FROM products WHERE price BETWEEN 100 AND 500;\n\n-- Sıralama\nSELECT * FROM users ORDER BY created_at DESC;\n\n-- Limit\nSELECT * FROM users ORDER BY id DESC LIMIT 10;",
+          "codeLanguage": "sql",
+          "study": {
+            "takeaway": "SELECT, veritabanından veri çekmek için kullanılır.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda select ve filtreleme için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "sql-2",
+          "title": "JOIN İşlemleri",
+          "duration": "12 dk",
+          "content": "JOIN, birden fazla tabloyu birleştirerek veri çeker. INNER JOIN, LEFT JOIN, RIGHT JOIN, FULL JOIN türleri vardır.\n\nINNER JOIN sadece eşleşen kayıtları döndürür. LEFT JOIN sol tablonun tüm kayıtlarını, RIGHT JOIN sağ tablonun tüm kayıtlarını döndürür.\n\nForeign key ilişkileri JOIN işlemlerinin temelidir. İyi tasarlanmış ilişkiler performansı artırır.",
+          "codeExample": "-- INNER JOIN\nSELECT users.name, orders.total\nFROM users\nINNER JOIN orders ON users.id = orders.user_id;\n\n-- LEFT JOIN (tüm kullanıcılar, sipariş olsun olmasın)\nSELECT users.name, orders.total\nFROM users\nLEFT JOIN orders ON users.id = orders.user_id;\n\n-- Çoklu JOIN\nSELECT \n    users.name,\n    orders.order_date,\n    products.name AS product_name\nFROM users\nINNER JOIN orders ON users.id = orders.user_id\nINNER JOIN order_items ON orders.id = order_items.order_id\nINNER JOIN products ON order_items.product_id = products.id;\n\n-- Self JOIN (aynı tablo)\nSELECT \n    e.name AS employee,\n    m.name AS manager\nFROM employees e\nLEFT JOIN employees m ON e.manager_id = m.id;",
+          "codeLanguage": "sql",
+          "study": {
+            "takeaway": "JOIN, birden fazla tabloyu birleştirerek veri çeker.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda join i̇şlemleri için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "sql-3",
+          "title": "Aggregate Functions",
+          "duration": "11 dk",
+          "content": "Aggregate fonksiyonlar, birden fazla satırdan tek bir sonuç üretir. COUNT, SUM, AVG, MIN, MAX yaygın kullanılır.\n\nGROUP BY ile gruplama yapılır. HAVING, gruplar üzerinde filtreleme sağlar (WHERE gruplamadan önce çalışır).\n\nDISTINCT, tekrarlı değerleri kaldırır. COUNT(DISTINCT column) benzersiz değer sayısını verir.",
+          "codeExample": "-- COUNT\nSELECT COUNT(*) FROM users;  -- Toplam kullanıcı\nSELECT COUNT(DISTINCT city) FROM users;  -- Benzersiz şehir sayısı\n\n-- SUM, AVG\nSELECT SUM(total) AS revenue FROM orders;\nSELECT AVG(price) AS avg_price FROM products;\n\n-- MIN, MAX\nSELECT MIN(price), MAX(price) FROM products;\n\n-- GROUP BY\nSELECT city, COUNT(*) AS user_count\nFROM users\nGROUP BY city\nORDER BY user_count DESC;\n\n-- HAVING (grup filtreleme)\nSELECT city, COUNT(*) AS user_count\nFROM users\nGROUP BY city\nHAVING COUNT(*) > 100;\n\n-- Çoklu gruplama\nSELECT \n    YEAR(order_date) AS year,\n    MONTH(order_date) AS month,\n    SUM(total) AS revenue\nFROM orders\nGROUP BY YEAR(order_date), MONTH(order_date);",
+          "codeLanguage": "sql",
+          "study": {
+            "takeaway": "Aggregate fonksiyonlar, birden fazla satırdan tek bir sonuç üretir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda aggregate functions için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "sql-4",
+          "title": "Subqueries ve CTE",
+          "duration": "13 dk",
+          "content": "Subquery, başka bir sorgunun içinde çalışan sorgudur. WHERE, FROM, SELECT kısımlarında kullanılabilir.\n\nCTE (Common Table Expression), WITH anahtar kelimesi ile tanımlanır. Karmaşık sorguları daha okunabilir yapar.\n\nCorrelated subquery, dış sorguya bağımlıdır ve her satır için çalışır. Non-correlated subquery bir kez çalışır.",
+          "codeExample": "-- Subquery in WHERE\nSELECT name FROM users\nWHERE id IN (SELECT user_id FROM orders WHERE total > 1000);\n\n-- Subquery in FROM\nSELECT AVG(order_count) FROM (\n    SELECT user_id, COUNT(*) AS order_count\n    FROM orders\n    GROUP BY user_id\n) AS user_orders;\n\n-- Correlated subquery\nSELECT name, salary FROM employees e1\nWHERE salary > (\n    SELECT AVG(salary) \n    FROM employees e2 \n    WHERE e1.department_id = e2.department_id\n);\n\n-- CTE (WITH)\nWITH high_value_customers AS (\n    SELECT user_id, SUM(total) AS lifetime_value\n    FROM orders\n    GROUP BY user_id\n    HAVING SUM(total) > 5000\n)\nSELECT users.name, high_value_customers.lifetime_value\nFROM users\nINNER JOIN high_value_customers ON users.id = high_value_customers.user_id;\n\n-- Recursive CTE (organizasyon hiyerarşisi)\nWITH RECURSIVE org_chart AS (\n    SELECT id, name, manager_id, 1 AS level\n    FROM employees\n    WHERE manager_id IS NULL\n    \n    UNION ALL\n    \n    SELECT e.id, e.name, e.manager_id, oc.level + 1\n    FROM employees e\n    INNER JOIN org_chart oc ON e.manager_id = oc.id\n)\nSELECT * FROM org_chart;",
+          "codeLanguage": "sql",
+          "study": {
+            "takeaway": "Subquery, başka bir sorgunun içinde çalışan sorgudur.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda subqueries ve cte için hangi soruya cevap verebildiğini yaz."
+          }
+        }
+      ],
+      "quiz": true,
+      "study": {
+        "difficulty": "Orta",
+        "estimatedTime": "51 dk",
+        "prerequisites": [
+          "Temel SQL okuryazarlığı"
+        ],
+        "learningGoals": [
+          "SQL Temelleri için core concept ve terminology'i ayırabilmek",
+          "Pattern, API veya tool seçimini örnekler üzerinden yapabilmek",
+          "Küçük bir senaryoda doğru approach'u seçebilmek"
+        ],
+        "summary": "SELECT, INSERT, UPDATE, DELETE ve temel SQL sorguları.",
+        "whyItMatters": "Veritabanı modülünde sql temelleri başlığı, core workflow içindeki kritik parçalardan biridir."
+      }
+    },
+    {
+      "id": "database-design",
+      "title": "Veritabanı Tasarımı",
+      "description": "Normalizasyon, indexleme ve veritabanı optimizasyonu.",
+      "progress": 0,
+      "lessons": [
+        {
+          "id": "design-1",
+          "title": "Normalizasyon",
+          "duration": "12 dk",
+          "content": "Normalizasyon, veri tekrarını azaltır ve tutarlılığı artırır. 1NF, 2NF, 3NF, BCNF normal formları vardır.\n\n1NF: Her hücre atomic (bölünemez) değer içermeli. 2NF: 1NF + partial dependency yok. 3NF: 2NF + transitive dependency yok.\n\nDenormalizasyon, performans için bilinçli olarak tekrar eklenmesidir. Read-heavy sistemlerde kullanılır.",
+          "codeExample": "-- Normalizasyon öncesi (kötü)\nCREATE TABLE orders (\n    id INT PRIMARY KEY,\n    customer_name VARCHAR(100),\n    customer_email VARCHAR(100),\n    customer_phone VARCHAR(20),\n    product_name VARCHAR(100),\n    product_price DECIMAL(10,2),\n    quantity INT\n);\n-- Sorun: Müşteri ve ürün bilgileri tekrar ediyor\n\n-- Normalizasyon sonrası (iyi)\nCREATE TABLE customers (\n    id INT PRIMARY KEY,\n    name VARCHAR(100),\n    email VARCHAR(100),\n    phone VARCHAR(20)\n);\n\nCREATE TABLE products (\n    id INT PRIMARY KEY,\n    name VARCHAR(100),\n    price DECIMAL(10,2)\n);\n\nCREATE TABLE orders (\n    id INT PRIMARY KEY,\n    customer_id INT,\n    order_date TIMESTAMP,\n    FOREIGN KEY (customer_id) REFERENCES customers(id)\n);\n\nCREATE TABLE order_items (\n    id INT PRIMARY KEY,\n    order_id INT,\n    product_id INT,\n    quantity INT,\n    FOREIGN KEY (order_id) REFERENCES orders(id),\n    FOREIGN KEY (product_id) REFERENCES products(id)\n);",
+          "codeLanguage": "sql",
+          "study": {
+            "takeaway": "Normalizasyon, veri tekrarını azaltır ve tutarlılığı artırır.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda normalizasyon için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "design-2",
+          "title": "İndexleme",
+          "duration": "11 dk",
+          "content": "Index, sorgu performansını artıran veri yapısıdır. B-tree en yaygın index tipidir. Arama O(log n) karmaşıklığındadır.\n\nPrimary key otomatik index oluşturur. Foreign key'ler için manuel index eklemek gerekir. Composite index, birden fazla sütunu içerir.\n\nIndex yazma işlemlerini yavaşlatır. Sadece sık sorgulanan sütunlara index ekleyin.",
+          "codeExample": "-- Index oluşturma\nCREATE INDEX idx_users_email ON users(email);\n\n-- Composite index\nCREATE INDEX idx_orders_user_date ON orders(user_id, order_date);\n\n-- Unique index\nCREATE UNIQUE INDEX idx_users_username ON users(username);\n\n-- Partial index (PostgreSQL)\nCREATE INDEX idx_active_users ON users(email) WHERE is_active = true;\n\n-- Full-text index (MySQL)\nCREATE FULLTEXT INDEX idx_posts_content ON posts(title, content);\n\n-- Index kullanımını kontrol et\nEXPLAIN SELECT * FROM users WHERE email = 'test@example.com';\n\n-- Index listesi\nSHOW INDEX FROM users;\n\n-- Index silme\nDROP INDEX idx_users_email ON users;\n\n-- Index rebuild (fragmentation sonrası)\nALTER TABLE users ENGINE=InnoDB;",
+          "codeLanguage": "sql",
+          "study": {
+            "takeaway": "Index, sorgu performansını artıran veri yapısıdır.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda i̇ndexleme için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "design-3",
+          "title": "Transactions ve ACID",
+          "duration": "13 dk",
+          "content": "Transaction, bir grup işlemi tek bir birim olarak yönetir. Ya hepsi başarılı olur ya hiçbiri (atomicity).\n\nACID: Atomicity (bölünmezlik), Consistency (tutarlılık), Isolation (izolasyon), Durability (kalıcılık).\n\nIsolation level'ları: READ UNCOMMITTED, READ COMMITTED, REPEATABLE READ, SERIALIZABLE. Yüksek level daha güvenli ama daha yavaş.",
+          "codeExample": "-- Transaction başlat\nSTART TRANSACTION;\n\n-- Para transferi örneği\nUPDATE accounts SET balance = balance - 100 WHERE id = 1;\nUPDATE accounts SET balance = balance + 100 WHERE id = 2;\n\n-- Başarılıysa kaydet\nCOMMIT;\n\n-- Hata varsa geri al\nROLLBACK;\n\n-- Savepoint kullanımı\nSTART TRANSACTION;\nINSERT INTO orders (user_id, total) VALUES (1, 100);\nSAVEPOINT sp1;\nINSERT INTO order_items (order_id, product_id) VALUES (1, 5);\nROLLBACK TO sp1;  -- Sadece order_items geri alındı\nCOMMIT;\n\n-- Isolation level ayarlama\nSET TRANSACTION ISOLATION LEVEL READ COMMITTED;\n\n-- Deadlock örneği\n-- Transaction 1:\nSTART TRANSACTION;\nUPDATE accounts SET balance = balance - 10 WHERE id = 1;\n-- Transaction 2 bekliyor...\nUPDATE accounts SET balance = balance + 10 WHERE id = 2;\nCOMMIT;\n\n-- Transaction 2:\nSTART TRANSACTION;\nUPDATE accounts SET balance = balance - 10 WHERE id = 2;\nUPDATE accounts SET balance = balance + 10 WHERE id = 1;  -- Deadlock!\nCOMMIT;",
+          "codeLanguage": "sql",
+          "study": {
+            "takeaway": "Transaction, bir grup işlemi tek bir birim olarak yönetir.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda transactions ve acid için hangi soruya cevap verebildiğini yaz."
+          }
+        }
+      ],
+      "quiz": true,
+      "study": {
+        "difficulty": "Orta",
+        "estimatedTime": "41 dk",
+        "prerequisites": [
+          "Temel SQL okuryazarlığı"
+        ],
+        "learningGoals": [
+          "Veritabanı Tasarımı için core concept ve terminology'i ayırabilmek",
+          "Pattern, API veya tool seçimini örnekler üzerinden yapabilmek",
+          "Küçük bir senaryoda doğru approach'u seçebilmek"
+        ],
+        "summary": "Normalizasyon, indexleme ve veritabanı optimizasyonu.",
+        "whyItMatters": "Veritabanı modülünde veritabanı tasarımı başlığı, core workflow içindeki kritik parçalardan biridir."
+      }
+    },
+    {
+      "id": "nosql",
+      "title": "NoSQL Veritabanları",
+      "description": "MongoDB, Redis, document store ve key-value store sistemleri.",
+      "progress": 0,
+      "lessons": [
+        {
+          "id": "nosql-1",
+          "title": "MongoDB Temelleri",
+          "duration": "11 dk",
+          "content": "MongoDB, document-oriented NoSQL veritabanıdır. JSON benzeri BSON formatında veri saklar. Schema-less yapıdadır.\n\nCollection (tablo), document (satır) içerir. Her document bir _id field'ına sahiptir. Nested document ve array destekler.\n\nMongoDB, horizontal scaling (sharding) için tasarlanmıştır. Replica set ile high availability sağlar.",
+          "codeExample": "// MongoDB bağlantısı (Node.js)\nconst { MongoClient } = require('mongodb');\n\nconst client = new MongoClient('mongodb://localhost:27017');\nawait client.connect();\n\nconst db = client.db('myapp');\nconst users = db.collection('users');\n\n// Insert\nawait users.insertOne({\n    name: 'Ahmet',\n    email: 'ahmet@example.com',\n    age: 25,\n    tags: ['developer', 'nodejs'],\n    address: {\n        city: 'İstanbul',\n        country: 'Turkey'\n    }\n});\n\n// Find\nconst user = await users.findOne({ email: 'ahmet@example.com' });\n\n// Query\nconst developers = await users.find({\n    tags: 'developer',\n    age: { $gte: 20 }\n}).toArray();\n\n// Update\nawait users.updateOne(\n    { email: 'ahmet@example.com' },\n    { $set: { age: 26 }, $push: { tags: 'mongodb' } }\n);\n\n// Delete\nawait users.deleteOne({ email: 'ahmet@example.com' });\n\n// Aggregation\nconst result = await users.aggregate([\n    { $match: { age: { $gte: 18 } } },\n    { $group: { _id: '$city', count: { $sum: 1 } } },\n    { $sort: { count: -1 } }\n]).toArray();",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "MongoDB, document-oriented NoSQL veritabanıdır.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda mongodb temelleri için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "nosql-2",
+          "title": "Redis ve Caching",
+          "duration": "10 dk",
+          "content": "Redis, in-memory key-value store'dur. Çok hızlıdır (mikrosaniye latency). Cache, session storage, pub/sub için kullanılır.\n\nString, List, Set, Sorted Set, Hash veri tipleri destekler. TTL (Time To Live) ile otomatik expiration ayarlanabilir.\n\nPersistence: RDB (snapshot) ve AOF (append-only file) seçenekleri vardır. Replication ve clustering destekler.",
+          "codeExample": "// Redis bağlantısı (Node.js)\nconst redis = require('redis');\nconst client = redis.createClient();\n\nawait client.connect();\n\n// String operations\nawait client.set('user:1:name', 'Ahmet');\nconst name = await client.get('user:1:name');\n\n// Expiration (10 saniye)\nawait client.setEx('session:abc123', 10, 'user_data');\n\n// Increment\nawait client.incr('page:views');\n\n// Hash (object)\nawait client.hSet('user:1', {\n    name: 'Ahmet',\n    email: 'ahmet@example.com',\n    age: '25'\n});\nconst user = await client.hGetAll('user:1');\n\n// List (queue)\nawait client.lPush('queue:jobs', 'job1');\nawait client.lPush('queue:jobs', 'job2');\nconst job = await client.rPop('queue:jobs');\n\n// Set (unique values)\nawait client.sAdd('tags', 'nodejs');\nawait client.sAdd('tags', 'redis');\nconst tags = await client.sMembers('tags');\n\n// Pub/Sub\nawait client.subscribe('notifications', (message) => {\n    console.log('Received:', message);\n});\n\nawait client.publish('notifications', 'New order!');\n\n// Cache pattern\nasync function getUser(id) {\n    const cached = await client.get(`user:${id}`);\n    if (cached) return JSON.parse(cached);\n    \n    const user = await db.users.findById(id);\n    await client.setEx(`user:${id}`, 3600, JSON.stringify(user));\n    return user;\n}",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "Redis, in-memory key-value store'dur.",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda redis ve caching için hangi soruya cevap verebildiğini yaz."
+          }
+        },
+        {
+          "id": "nosql-3",
+          "title": "CAP Teoremi",
+          "duration": "12 dk",
+          "content": "CAP teoremi: Consistency (tutarlılık), Availability (erişilebilirlik), Partition tolerance (bölünme toleransı). Dağıtık sistemlerde en fazla 2'si sağlanabilir.\n\nCP sistemler (MongoDB, HBase): Tutarlılık öncelikli, network bölünmesinde bazı node'lar erişilemez olabilir.\n\nAP sistemler (Cassandra, DynamoDB): Erişilebilirlik öncelikli, eventual consistency sağlar.\n\nBASE: Basically Available, Soft state, Eventually consistent. NoSQL'in ACID'e alternatifi.",
+          "codeExample": "// Eventual Consistency örneği\n\n// Write to primary\nawait primaryDB.users.insertOne({ name: 'Ahmet' });\n\n// Read from replica (hemen sonra)\nconst user = await replicaDB.users.findOne({ name: 'Ahmet' });\n// user null olabilir (henüz replicate olmadı)\n\n// Biraz bekle\nawait new Promise(resolve => setTimeout(resolve, 100));\nconst user2 = await replicaDB.users.findOne({ name: 'Ahmet' });\n// user2 artık bulunur (eventually consistent)\n\n// Strong Consistency (MongoDB)\nconst user3 = await db.users.findOne(\n    { name: 'Ahmet' },\n    { readConcern: { level: 'majority' } }\n);\n// Garantili tutarlı veri\n\n// Cassandra - Tunable Consistency\n// Write: QUORUM (çoğunluk onayı)\n// Read: ONE (tek node'dan oku)\n// Trade-off: Hız vs Tutarlılık",
+          "codeLanguage": "javascript",
+          "study": {
+            "takeaway": "CAP teoremi: Consistency (tutarlılık), Availability (erişilebilirlik), Partition tolerance (bölünme toleransı).",
+            "exercise": "Kodu kendi environment'ında çalıştır ve output'u not al.",
+            "checkpoint": "Bu lesson sonunda cap teoremi için hangi soruya cevap verebildiğini yaz."
+          }
+        }
+      ],
+      "quiz": true,
+      "study": {
+        "difficulty": "İleri",
+        "estimatedTime": "38 dk",
+        "prerequisites": [
+          "Temel SQL okuryazarlığı"
+        ],
+        "learningGoals": [
+          "NoSQL Veritabanları için core concept ve terminology'i ayırabilmek",
+          "Pattern, API veya tool seçimini örnekler üzerinden yapabilmek",
+          "Küçük bir senaryoda doğru approach'u seçebilmek"
+        ],
+        "summary": "MongoDB, Redis, document store ve key-value store sistemleri.",
+        "whyItMatters": "Veritabanı modülünde nosql veritabanları başlığı, core workflow içindeki kritik parçalardan biridir."
+      }
+    }
+  ],
+  "guide": {
+    "displayName": "Veritabanı",
+    "summary": "Query, index, transaction ve data modeling üzerine pratik bir giriş.",
+    "level": "Orta",
+    "estimatedTime": "8-10 saat",
+    "prerequisites": [
+      "Temel SQL okuryazarlığı"
+    ],
+    "learningGoals": [
+      "Sorgu planını okuyabilmek",
+      "İndeks ve transaction davranışını anlamak",
+      "Veri tutarlılığı ile performansı dengelemek"
+    ]
+  }
+}
