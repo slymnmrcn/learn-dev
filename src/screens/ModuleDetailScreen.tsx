@@ -1,10 +1,20 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
-import { Container as ThemedContainer, Text, ScreenHeader, Badge, ProgressBar } from '../components/Themed';
+import { Alert, ScrollView, StyleSheet, View } from 'react-native';
+import type { StackScreenProps } from '@react-navigation/stack';
+import {
+  Container as ThemedContainer,
+  Text,
+  ScreenHeader,
+  Badge,
+  ProgressBar,
+} from '../components/Themed';
 import { MetricGrid, PressableCard, SectionHeader } from '../components/StudyUI';
 import { theme as AppTheme } from '../theme';
+import type { LearnStackParamList } from '../types';
 
-export const ModuleDetailScreen = ({ route, navigation }: any) => {
+type ModuleDetailScreenProps = StackScreenProps<LearnStackParamList, 'TopicDetail'>;
+
+export const ModuleDetailScreen = ({ route, navigation }: ModuleDetailScreenProps) => {
   const { topicTitle, topic } = route.params;
 
   return (
@@ -46,7 +56,9 @@ export const ModuleDetailScreen = ({ route, navigation }: any) => {
               <Text variant="label" color="textMuted" style={{ fontSize: 10 }}>
                 KONU İLERLEMESİ
               </Text>
-              <Text variant="mono" color="primary" style={{ fontSize: 10 }}>{topic.progress}%</Text>
+              <Text variant="mono" color="primary" style={{ fontSize: 10 }}>
+                {topic.progress}%
+              </Text>
             </View>
             <ProgressBar progress={topic.progress} height={6} />
           </View>
@@ -55,7 +67,9 @@ export const ModuleDetailScreen = ({ route, navigation }: any) => {
         <View style={styles.descriptionCard}>
           <View style={styles.descriptionHeader}>
             <View style={styles.descriptionDot} />
-            <Text variant="label" color="primary" style={{ fontSize: 11, letterSpacing: 1 }}>Açıklama</Text>
+            <Text variant="label" color="primary" style={{ fontSize: 11, letterSpacing: 1 }}>
+              Açıklama
+            </Text>
           </View>
           <Text color="textMuted" style={{ lineHeight: 22, fontSize: 14 }}>
             {topic.description}
@@ -82,7 +96,7 @@ export const ModuleDetailScreen = ({ route, navigation }: any) => {
           </View>
 
           <View style={styles.goalList}>
-            {topic.study.learningGoals.map((goal: string) => (
+            {topic.study.learningGoals.map((goal) => (
               <View key={goal} style={styles.goalRow}>
                 <View style={styles.goalDot} />
                 <Text color="textMuted" style={styles.goalText}>
@@ -95,14 +109,16 @@ export const ModuleDetailScreen = ({ route, navigation }: any) => {
 
         <SectionHeader title="Dersler" subtitle="Okuma sırası" />
 
-        {topic.lessons.map((lesson: any, index: number) => {
+        {topic.lessons.map((lesson, index) => {
           return (
             <PressableCard
               key={lesson.id}
-              onPress={() => navigation.navigate('LessonContent', {
-                topicTitle: topic.title,
-                lesson: lesson
-              })}
+              onPress={() =>
+                navigation.navigate('LessonDetail', {
+                  topicTitle: topic.title,
+                  lesson: lesson,
+                })
+              }
               style={styles.lessonItem}
             >
               <View style={styles.lessonIndex}>
@@ -112,9 +128,12 @@ export const ModuleDetailScreen = ({ route, navigation }: any) => {
                   </Text>
                 </View>
               </View>
-              
+
               <View style={styles.lessonInfo}>
-                <Text variant="heading" style={{ fontSize: 15, marginBottom: 6, letterSpacing: 0.5 }}>
+                <Text
+                  variant="heading"
+                  style={{ fontSize: 15, marginBottom: 6, letterSpacing: 0.5 }}
+                >
                   {lesson.title}
                 </Text>
                 {lesson.duration && (
@@ -128,7 +147,9 @@ export const ModuleDetailScreen = ({ route, navigation }: any) => {
               </View>
 
               <View style={styles.arrowButton}>
-                <Text color="primary" style={{ fontSize: 16 }}>→</Text>
+                <Text color="primary" style={{ fontSize: 16 }}>
+                  →
+                </Text>
               </View>
             </PressableCard>
           );
@@ -136,6 +157,12 @@ export const ModuleDetailScreen = ({ route, navigation }: any) => {
 
         {topic.quiz && (
           <PressableCard
+            onPress={() =>
+              Alert.alert(
+                'Quiz zamanı',
+                'Bu konu için quiz işareti var, ancak quiz ekranı henüz tanımlı değil.',
+              )
+            }
             style={styles.quizCard}
           >
             <View style={styles.quizIcon}>
@@ -150,7 +177,9 @@ export const ModuleDetailScreen = ({ route, navigation }: any) => {
               </Text>
             </View>
             <View style={[styles.arrowButton, { borderColor: AppTheme.colors.secondary }]}>
-              <Text color="secondary" style={{ fontSize: 16 }}>→</Text>
+              <Text color="secondary" style={{ fontSize: 16 }}>
+                →
+              </Text>
             </View>
           </PressableCard>
         )}

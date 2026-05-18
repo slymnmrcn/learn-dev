@@ -1,17 +1,27 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { Container as ThemedContainer, Text, ScreenHeader, Badge, ProgressBar } from '../components/Themed';
+import type { StackScreenProps } from '@react-navigation/stack';
+import {
+  Container as ThemedContainer,
+  Text,
+  ScreenHeader,
+  Badge,
+  ProgressBar,
+} from '../components/Themed';
 import { MetricGrid, PressableCard, SectionHeader } from '../components/StudyUI';
 import { theme as AppTheme } from '../theme';
+import type { LearnStackParamList } from '../types';
 
-export const ModuleTopicsScreen = ({ route, navigation }: any) => {
+type ModuleTopicsScreenProps = StackScreenProps<LearnStackParamList, 'ModuleTopics'>;
+
+export const ModuleTopicsScreen = ({ route, navigation }: ModuleTopicsScreenProps) => {
   const { module } = route.params;
 
   const moduleProgress = Math.round(
-    module.topics.reduce((acc: number, t: any) => acc + t.progress, 0) / module.topics.length
+    module.topics.reduce((acc, t) => acc + t.progress, 0) / module.topics.length,
   );
-  const completedTopics = module.topics.filter((t: any) => t.progress === 100).length;
-  const totalLessons = module.topics.reduce((acc: number, t: any) => acc + t.lessons.length, 0);
+  const completedTopics = module.topics.filter((t) => t.progress === 100).length;
+  const totalLessons = module.topics.reduce((acc, t) => acc + t.lessons.length, 0);
 
   return (
     <ThemedContainer style={{ paddingHorizontal: AppTheme.spacing.md }}>
@@ -77,7 +87,7 @@ export const ModuleTopicsScreen = ({ route, navigation }: any) => {
             <Text variant="label" color="textMuted" style={styles.guideBlockLabel}>
               BU MODÜLÜN ÇIKTILARI
             </Text>
-            {module.guide.learningGoals.map((goal: string, index: number) => (
+            {module.guide.learningGoals.map((goal) => (
               <View key={goal} style={styles.goalRow}>
                 <View style={styles.goalDot} />
                 <Text color="textMuted" style={styles.goalText}>
@@ -93,21 +103,25 @@ export const ModuleTopicsScreen = ({ route, navigation }: any) => {
             <Text variant="label" color="textMuted" style={{ fontSize: 10 }}>
               MODÜL İLERLEME
             </Text>
-            <Text variant="mono" color="primary" style={{ fontSize: 10 }}>{moduleProgress}%</Text>
+            <Text variant="mono" color="primary" style={{ fontSize: 10 }}>
+              {moduleProgress}%
+            </Text>
           </View>
-            <ProgressBar progress={moduleProgress} height={6} />
+          <ProgressBar progress={moduleProgress} height={6} />
         </View>
 
         <SectionHeader title="Konular" subtitle="Adım adım ilerle" />
 
-        {module.topics.map((topic: any, index: number) => {
+        {module.topics.map((topic, index) => {
           return (
             <PressableCard
               key={topic.id}
-              onPress={() => navigation.navigate('Lesson', {
-                topicTitle: topic.title,
-                topic: topic
-              })}
+              onPress={() =>
+                navigation.navigate('TopicDetail', {
+                  topicTitle: topic.title,
+                  topic: topic,
+                })
+              }
               style={styles.topicItem}
             >
               <View style={styles.topicIndex}>
@@ -117,7 +131,7 @@ export const ModuleTopicsScreen = ({ route, navigation }: any) => {
                   </Text>
                 </View>
               </View>
-              
+
               <View style={styles.topicContent}>
                 <Text variant="heading" style={styles.topicTitle}>
                   {topic.title}
@@ -125,7 +139,7 @@ export const ModuleTopicsScreen = ({ route, navigation }: any) => {
                 <Text color="textMuted" style={styles.topicSummary} numberOfLines={2}>
                   {topic.study.summary}
                 </Text>
-                
+
                 <View style={styles.topicMeta}>
                   <Badge label={topic.study.difficulty} color="textMuted" />
                   <View style={{ width: 8 }} />
@@ -133,9 +147,9 @@ export const ModuleTopicsScreen = ({ route, navigation }: any) => {
                   <View style={{ width: 8 }} />
                   <Badge label={`${topic.lessons.length} ders`} color="textMuted" />
                   <View style={{ width: 8 }} />
-                  <Badge 
-                    label={`${topic.progress}%`} 
-                    color={topic.progress === 100 ? 'success' : 'primary'} 
+                  <Badge
+                    label={`${topic.progress}%`}
+                    color={topic.progress === 100 ? 'success' : 'primary'}
                     variant={topic.progress === 100 ? 'filled' : 'outline'}
                   />
                 </View>
@@ -146,7 +160,9 @@ export const ModuleTopicsScreen = ({ route, navigation }: any) => {
               </View>
 
               <View style={styles.arrowButton}>
-                <Text color="primary" style={{ fontSize: 16 }}>→</Text>
+                <Text color="primary" style={{ fontSize: 16 }}>
+                  →
+                </Text>
               </View>
             </PressableCard>
           );

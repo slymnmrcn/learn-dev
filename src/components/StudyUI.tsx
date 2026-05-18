@@ -1,9 +1,12 @@
 import React from 'react';
 import {
   Animated,
+  type GestureResponderEvent,
   StyleSheet,
+  type StyleProp,
   TouchableOpacity,
   View,
+  type ViewStyle,
   type TouchableOpacityProps,
 } from 'react-native';
 import { theme } from '../theme';
@@ -46,7 +49,7 @@ type MetricItem = {
 
 type MetricGridProps = {
   items: MetricItem[];
-  style?: any;
+  style?: StyleProp<ViewStyle>;
 };
 
 export const MetricGrid = ({ items, style }: MetricGridProps) => (
@@ -54,14 +57,9 @@ export const MetricGrid = ({ items, style }: MetricGridProps) => (
     {items.map((item, index) => (
       <View
         key={`${item.label}-${index}`}
-        style={[
-          styles.metricTile,
-          index > 0 && styles.metricTileDivider,
-        ]}
+        style={[styles.metricTile, index > 0 && styles.metricTileDivider]}
       >
-        {item.icon ? (
-          <Text style={styles.metricIcon}>{item.icon}</Text>
-        ) : null}
+        {item.icon ? <Text style={styles.metricIcon}>{item.icon}</Text> : null}
         <Text variant="label" color="textMuted" style={styles.metricLabel}>
           {item.label}
         </Text>
@@ -79,7 +77,7 @@ export const MetricGrid = ({ items, style }: MetricGridProps) => (
 );
 
 type PressableCardProps = TouchableOpacityProps & {
-  style?: any;
+  style?: StyleProp<ViewStyle>;
   scaleTo?: number;
 };
 
@@ -93,7 +91,7 @@ export const PressableCard = ({
 }: PressableCardProps) => {
   const scaleAnim = React.useRef(new Animated.Value(1)).current;
 
-  const handlePressIn = (event: any) => {
+  const handlePressIn = (event: GestureResponderEvent) => {
     Animated.spring(scaleAnim, {
       toValue: scaleTo,
       useNativeDriver: true,
@@ -101,7 +99,7 @@ export const PressableCard = ({
     onPressIn?.(event);
   };
 
-  const handlePressOut = (event: any) => {
+  const handlePressOut = (event: GestureResponderEvent) => {
     Animated.spring(scaleAnim, {
       toValue: 1,
       friction: 3,

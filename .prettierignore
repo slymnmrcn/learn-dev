@@ -1,0 +1,7 @@
+node_modules
+.expo
+dist
+coverage
+.vscode
+src/data/*.json
+src/data/modules/*.json

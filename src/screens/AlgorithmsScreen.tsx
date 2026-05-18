@@ -1,16 +1,25 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Animated, ScrollView, StyleSheet, View } from 'react-native';
-import { Container as ThemedContainer, Text, CodeBlock, ScreenHeader, Badge } from '../components/Themed';
+import {
+  Container as ThemedContainer,
+  Text,
+  CodeBlock,
+  ScreenHeader,
+  Badge,
+} from '../components/Themed';
 import { MetricGrid, PressableCard, SectionHeader } from '../components/StudyUI';
 import { theme as AppTheme } from '../theme';
 import algorithmsData from '../data/algorithms.json';
+import type { AlgorithmItem, AlgorithmsData } from '../types';
+
+const typedAlgorithmsData = algorithmsData as AlgorithmsData;
 
 const AlgorithmItemCard = ({
   item,
   isExpanded,
   onToggle,
 }: {
-  item: any;
+  item: AlgorithmItem;
   isExpanded: boolean;
   onToggle: () => void;
 }) => {
@@ -44,7 +53,9 @@ const AlgorithmItemCard = ({
         </View>
         <Animated.View style={{ transform: [{ rotate: rotation }] }}>
           <View style={styles.expandButton}>
-            <Text color="primary" style={{ fontSize: 14 }}>▼</Text>
+            <Text color="primary" style={{ fontSize: 14 }}>
+              ▼
+            </Text>
           </View>
         </Animated.View>
       </View>
@@ -82,14 +93,14 @@ export const AlgorithmsScreen = () => {
             {
               icon: '⚡',
               label: 'TOPLAM',
-              value: algorithmsData.algorithms.reduce((acc, g) => acc + g.items.length, 0),
+              value: typedAlgorithmsData.algorithms.reduce((acc, g) => acc + g.items.length, 0),
               caption: 'algoritma',
               color: 'primary',
             },
             {
               icon: '📚',
               label: 'KATEGORİ',
-              value: algorithmsData.algorithms.length,
+              value: typedAlgorithmsData.algorithms.length,
               caption: 'grup',
               color: 'secondary',
             },
@@ -98,7 +109,7 @@ export const AlgorithmsScreen = () => {
 
         <SectionHeader title="Gruplar" subtitle="Kısa referans" />
 
-        {algorithmsData.algorithms.map((group) => (
+        {typedAlgorithmsData.algorithms.map((group) => (
           <View key={group.id} style={{ marginBottom: AppTheme.spacing.xl }}>
             <View style={styles.groupHeader}>
               <View style={styles.groupDot} />

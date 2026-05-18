@@ -4,6 +4,9 @@ import { Container as ThemedContainer, Text, ScreenHeader, Badge } from '../comp
 import { MetricGrid, SectionHeader } from '../components/StudyUI';
 import { theme as AppTheme } from '../theme';
 import timelineData from '../data/timeline.json';
+import type { TimelineItem } from '../types';
+
+const typedTimelineData = timelineData as TimelineItem[];
 
 const TimelineRow = ({
   item,
@@ -11,7 +14,7 @@ const TimelineRow = ({
   isLast,
   onToggle,
 }: {
-  item: any;
+  item: TimelineItem;
   isExpanded: boolean;
   isLast: boolean;
   onToggle: () => void;
@@ -65,13 +68,10 @@ const TimelineRow = ({
           onPressIn={handlePressIn}
           onPressOut={handlePressOut}
           onPress={onToggle}
-          style={[
-            styles.card,
-            isExpanded && { borderColor: item.color, ...AppTheme.shadows.md },
-          ]}
+          style={[styles.card, isExpanded && { borderColor: item.color, ...AppTheme.shadows.md }]}
         >
           <View style={styles.cardHeader}>
-            <Badge label={item.tag} color={item.color as any} variant="filled" />
+            <Badge label={item.tag} color={item.color} variant="filled" />
             <Animated.View style={{ transform: [{ rotate: rotation }] }}>
               <View style={[styles.expandButton, { borderColor: item.color }]}>
                 <Text style={{ fontSize: 12, color: item.color }}>▼</Text>
@@ -79,7 +79,10 @@ const TimelineRow = ({
             </Animated.View>
           </View>
 
-          <Text variant="heading" style={{ fontSize: 17, marginTop: 12, marginBottom: 6, letterSpacing: 0.5 }}>
+          <Text
+            variant="heading"
+            style={{ fontSize: 17, marginTop: 12, marginBottom: 6, letterSpacing: 0.5 }}
+          >
             {item.title}
           </Text>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -100,7 +103,10 @@ const TimelineRow = ({
               <View style={[styles.impactBox, { borderLeftColor: item.color }]}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
                   <Text style={{ fontSize: 16, marginRight: 6 }}>💡</Text>
-                  <Text variant="label" style={{ color: item.color, fontSize: 11, letterSpacing: 1 }}>
+                  <Text
+                    variant="label"
+                    style={{ color: item.color, fontSize: 11, letterSpacing: 1 }}
+                  >
                     Etkisi
                   </Text>
                 </View>
@@ -118,8 +124,8 @@ const TimelineRow = ({
 
 export const TimelineScreen = () => {
   const [expanded, setExpanded] = useState<string | null>(null);
-  const startYear = Number(timelineData[0].year);
-  const endYear = Number(timelineData[timelineData.length - 1].year);
+  const startYear = Number(typedTimelineData[0].year);
+  const endYear = Number(typedTimelineData[typedTimelineData.length - 1].year);
 
   return (
     <ThemedContainer style={{ paddingHorizontal: AppTheme.spacing.md }}>
@@ -132,7 +138,7 @@ export const TimelineScreen = () => {
             {
               icon: '📅',
               label: 'OLAY',
-              value: timelineData.length,
+              value: typedTimelineData.length,
               caption: 'kayıt',
               color: 'primary',
             },
@@ -149,12 +155,12 @@ export const TimelineScreen = () => {
         <SectionHeader title="Zaman çizgisi" subtitle="Dönüm noktaları" />
 
         <View style={styles.timeline}>
-          {timelineData.map((item, index) => (
+          {typedTimelineData.map((item, index) => (
             <TimelineRow
               key={item.id}
               item={item}
               isExpanded={expanded === item.id}
-              isLast={index === timelineData.length - 1}
+              isLast={index === typedTimelineData.length - 1}
               onToggle={() => setExpanded(expanded === item.id ? null : item.id)}
             />
           ))}

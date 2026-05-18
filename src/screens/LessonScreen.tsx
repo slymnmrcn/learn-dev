@@ -1,10 +1,21 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { Container as ThemedContainer, Text, CodeBlock, Button, OutlineButton, ScreenHeader } from '../components/Themed';
+import type { StackScreenProps } from '@react-navigation/stack';
+import {
+  Container as ThemedContainer,
+  Text,
+  CodeBlock,
+  Button,
+  OutlineButton,
+  ScreenHeader,
+} from '../components/Themed';
 import { MetricGrid, SectionHeader } from '../components/StudyUI';
 import { theme as AppTheme } from '../theme';
+import type { LearnStackParamList } from '../types';
 
-export const LessonScreen = ({ route, navigation }: any) => {
+type LessonScreenProps = StackScreenProps<LearnStackParamList, 'LessonDetail'>;
+
+export const LessonScreen = ({ route, navigation }: LessonScreenProps) => {
   const { topicTitle, lesson } = route.params;
 
   return (
@@ -19,32 +30,42 @@ export const LessonScreen = ({ route, navigation }: any) => {
         <MetricGrid
           style={{ marginBottom: AppTheme.spacing.lg }}
           items={[
-            ...(lesson.duration ? [{
-              label: 'SÜRE',
-              value: lesson.duration,
-              caption: 'okuma',
-              color: 'primary' as const,
-            }] : []),
+            ...(lesson.duration
+              ? [
+                  {
+                    label: 'SÜRE',
+                    value: lesson.duration,
+                    caption: 'okuma',
+                    color: 'primary' as const,
+                  },
+                ]
+              : []),
             {
               label: 'DERS',
               value: `#${String(lesson.id).split('-').pop()}`,
               caption: 'kimlik',
               color: 'textMuted' as const,
             },
-            ...(lesson.codeLanguage ? [{
-              label: 'DİL',
-              value: lesson.codeLanguage.toUpperCase(),
-              caption: 'kod örneği',
-              color: 'secondary' as const,
-            }] : []),
+            ...(lesson.codeLanguage
+              ? [
+                  {
+                    label: 'DİL',
+                    value: lesson.codeLanguage.toUpperCase(),
+                    caption: 'kod örneği',
+                    color: 'secondary' as const,
+                  },
+                ]
+              : []),
           ]}
         />
 
         <SectionHeader title="Ders İçeriği" subtitle="Özet akış" />
 
         <View style={styles.contentCard}>
-          {lesson.content.split('\n\n').map((paragraph: string, i: number) => (
-            <Text key={i} style={styles.paragraph}>{paragraph}</Text>
+          {lesson.content.split('\n\n').map((paragraph, i) => (
+            <Text key={i} style={styles.paragraph}>
+              {paragraph}
+            </Text>
           ))}
         </View>
 
@@ -94,9 +115,11 @@ export const LessonScreen = ({ route, navigation }: any) => {
           <View style={styles.keyPointsCard}>
             <View style={styles.keyPointsHeader}>
               <Text style={{ fontSize: 20, marginRight: 8 }}>💡</Text>
-              <Text variant="heading" style={{ fontSize: 16 }}>Önemli noktalar</Text>
+              <Text variant="heading" style={{ fontSize: 16 }}>
+                Önemli noktalar
+              </Text>
             </View>
-            {lesson.keyPoints.map((point: string, i: number) => (
+            {lesson.keyPoints.map((point, i) => (
               <View key={i} style={styles.keyPoint}>
                 <View style={styles.keyPointBullet} />
                 <Text style={styles.keyPointText}>{point}</Text>
@@ -106,11 +129,7 @@ export const LessonScreen = ({ route, navigation }: any) => {
         )}
 
         <View style={styles.footer}>
-          <OutlineButton
-            title="Geri"
-            onPress={() => navigation.goBack()}
-            style={{ flex: 1 }}
-          />
+          <OutlineButton title="Geri" onPress={() => navigation.goBack()} style={{ flex: 1 }} />
           <View style={{ width: AppTheme.spacing.md }} />
           <Button
             title="İlerle"

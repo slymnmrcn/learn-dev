@@ -10,24 +10,27 @@ import { AlgorithmsScreen } from '../screens/AlgorithmsScreen';
 import { TimelineScreen } from '../screens/TimelineScreen';
 import { ReferenceScreen } from '../screens/ReferenceScreen';
 import { theme } from '../theme';
+import type { BottomTabParamList, LearnStackParamList } from '../types';
 
-const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator<BottomTabParamList>();
+const Stack = createStackNavigator<LearnStackParamList>();
 
 // Learn tab'ı kendi stack'ine sahip
 const LearnStack = () => (
-  <Stack.Navigator screenOptions={{ headerShown: false, cardStyle: { backgroundColor: theme.colors.background } }}>
+  <Stack.Navigator
+    screenOptions={{ headerShown: false, cardStyle: { backgroundColor: theme.colors.background } }}
+  >
     <Stack.Screen name="Dashboard" component={DashboardScreen} />
-    <Stack.Screen name="ModuleDetail" component={ModuleTopicsScreen} />
-    <Stack.Screen name="Lesson" component={ModuleDetailScreen} />
-    <Stack.Screen name="LessonContent" component={LessonScreen} />
+    <Stack.Screen name="ModuleTopics" component={ModuleTopicsScreen} />
+    <Stack.Screen name="TopicDetail" component={ModuleDetailScreen} />
+    <Stack.Screen name="LessonDetail" component={LessonScreen} />
   </Stack.Navigator>
 );
 
 const TAB_ICON: Record<string, string> = {
   Öğren: '◈',
   Algoritmalar: '⚡',
-  Tarih: '◷',
+  Tarih: '⏳',
   Kılavuz: '⌨',
 };
 
@@ -37,10 +40,12 @@ export const RootNavigator = () => {
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarIcon: ({ focused }) => (
-          <Text style={{ 
-            fontSize: 20, 
-            color: focused ? theme.colors.primary : theme.colors.textMuted 
-          }}>
+          <Text
+            style={{
+              fontSize: 20,
+              color: focused ? theme.colors.primary : theme.colors.textMuted,
+            }}
+          >
             {TAB_ICON[route.name]}
           </Text>
         ),

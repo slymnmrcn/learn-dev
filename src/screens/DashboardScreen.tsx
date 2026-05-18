@@ -1,23 +1,33 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import type { StackScreenProps } from '@react-navigation/stack';
 import { Container as ThemedContainer, Text, ProgressBar, Badge } from '../components/Themed';
 import { MetricGrid, PressableCard, SectionHeader } from '../components/StudyUI';
 import { theme as AppTheme } from '../theme';
 import { allModules, userData } from '../data';
+import type { LearnStackParamList } from '../types';
 
-export const DashboardScreen = ({ navigation }: any) => {
-  const totalLessons = allModules.reduce((acc, m) =>
-    acc + m.topics.reduce((tacc: number, t: any) => tacc + t.lessons.length, 0), 0);
-  const completedTopics = allModules.reduce((acc, m) =>
-    acc + m.topics.filter((t: any) => t.progress === 100).length, 0);
+type DashboardScreenProps = StackScreenProps<LearnStackParamList, 'Dashboard'>;
+
+export const DashboardScreen = ({ navigation }: DashboardScreenProps) => {
+  const insets = useSafeAreaInsets();
+  const totalLessons = allModules.reduce(
+    (acc, m) => acc + m.topics.reduce((tacc, t) => tacc + t.lessons.length, 0),
+    0,
+  );
+  const completedTopics = allModules.reduce(
+    (acc, m) => acc + m.topics.filter((t) => t.progress === 100).length,
+    0,
+  );
   const totalTopics = allModules.reduce((acc, m) => acc + m.topics.length, 0);
   const overallProgress = Math.round(
-    allModules.reduce((acc, m) =>
-      acc + m.topics.reduce((tacc: number, t: any) => tacc + t.progress, 0), 0) / totalTopics
+    allModules.reduce((acc, m) => acc + m.topics.reduce((tacc, t) => tacc + t.progress, 0), 0) /
+      totalTopics,
   );
 
   return (
-    <ThemedContainer style={{ paddingTop: 60 }}>
+    <ThemedContainer style={{ paddingTop: insets.top + AppTheme.spacing.lg }}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
           <View style={styles.statusBadge}>
@@ -38,7 +48,9 @@ export const DashboardScreen = ({ navigation }: any) => {
               <Text variant="label" color="textMuted" style={styles.progressLabel}>
                 TOPLAM İLERLEME
               </Text>
-              <Text variant="mono" color="primary" style={{ fontSize: 11 }}>{overallProgress}%</Text>
+              <Text variant="mono" color="primary" style={{ fontSize: 11 }}>
+                {overallProgress}%
+              </Text>
             </View>
             <ProgressBar progress={overallProgress} height={6} />
           </View>
@@ -75,17 +87,15 @@ export const DashboardScreen = ({ navigation }: any) => {
 
         {allModules.map((module, moduleIndex) => {
           const moduleProgress = Math.round(
-            module.topics.reduce((acc: number, t: any) => acc + t.progress, 0) / module.topics.length
+            module.topics.reduce((acc, t) => acc + t.progress, 0) / module.topics.length,
           );
-          const totalLessonsInModule = module.topics.reduce((acc: number, t: any) => acc + t.lessons.length, 0);
+          const totalLessonsInModule = module.topics.reduce((acc, t) => acc + t.lessons.length, 0);
 
           return (
             <PressableCard
               key={module.category}
-              onPress={() => navigation.navigate('ModuleDetail', { module })}
-              style={[
-                styles.moduleCard,
-              ]}
+              onPress={() => navigation.navigate('ModuleTopics', { module })}
+              style={[styles.moduleCard]}
             >
               <View style={styles.moduleIcon}>
                 <Text style={{ fontSize: 32 }}>
@@ -94,15 +104,14 @@ export const DashboardScreen = ({ navigation }: any) => {
               </View>
 
               <View style={{ flex: 1 }}>
-                <Text variant="heading" style={{ fontSize: 18, marginBottom: 8, letterSpacing: 0.5 }}>
+                <Text
+                  variant="heading"
+                  style={{ fontSize: 18, marginBottom: 8, letterSpacing: 0.5 }}
+                >
                   {module.guide.displayName}
                 </Text>
 
-                <Text
-                  color="textMuted"
-                  style={styles.moduleSummary}
-                  numberOfLines={2}
-                >
+                <Text color="textMuted" style={styles.moduleSummary} numberOfLines={2}>
                   {module.guide.summary}
                 </Text>
 
@@ -122,7 +131,9 @@ export const DashboardScreen = ({ navigation }: any) => {
               </View>
 
               <View style={styles.arrowButton}>
-                <Text color="primary" style={{ fontSize: 18 }}>→</Text>
+                <Text color="primary" style={{ fontSize: 18 }}>
+                  →
+                </Text>
               </View>
             </PressableCard>
           );

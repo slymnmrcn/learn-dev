@@ -9,7 +9,7 @@
           "complexity": "O(n²)",
           "space": "O(1)",
           "description": "Her geçişte komşu elemanları karşılaştırıp yerlerini değiştirir. En yavaş sıralama algoritmasıdır, sadece öğrenme amaçlı kullanılır. Küçük ve neredeyse sıralı dizilerde makul çalışır.",
-          "code": "func bubbleSort(arr []int) {\n\tn := len(arr)\n\tfor i := 0; i &lt; n-1; i++ {\n\t\tfor j := 0; j &lt; n-i-1; j++ {\n\t\t\tif arr[j] &gt; arr[j+1] {\n\t\t\t\tarr[j], arr[j+1] = arr[j+1], arr[j]\n\t\t\t}\n\t\t}\n\t}\n}",
+          "code": "func bubbleSort(arr []int) {\n\tn := len(arr)\n\tfor i := 0; i < n-1; i++ {\n\t\tfor j := 0; j < n-i-1; j++ {\n\t\t\tif arr[j] > arr[j+1] {\n\t\t\t\tarr[j], arr[j+1] = arr[j+1], arr[j]\n\t\t\t}\n\t\t}\n\t}\n}",
           "language": "go"
         },
         {
@@ -17,15 +17,15 @@
           "complexity": "O(n²)",
           "space": "O(1)",
           "description": "Her geçişte dizinin geri kalanında minimum elemanı bulur ve mevcut pozisyona taşır. Bubble Sort'tan farkı: her geçişte tam olarak bir swap yapar. Swap maliyeti yüksek durumlarda tercih edilebilir.",
-          "code": "func selectionSort(arr []int) {\n\tn := len(arr)\n\tfor i := 0; i &lt; n-1; i++ {\n\t\tminIdx := i\n\t\tfor j := i + 1; j &lt; n; j++ {\n\t\t\tif arr[j] &lt; arr[minIdx] {\n\t\t\t\tminIdx = j\n\t\t\t}\n\t\t}\n\t\tarr[i], arr[minIdx] = arr[minIdx], arr[i]\n\t}\n}",
+          "code": "func selectionSort(arr []int) {\n\tn := len(arr)\n\tfor i := 0; i < n-1; i++ {\n\t\tminIdx := i\n\t\tfor j := i + 1; j < n; j++ {\n\t\t\tif arr[j] < arr[minIdx] {\n\t\t\t\tminIdx = j\n\t\t\t}\n\t\t}\n\t\tarr[i], arr[minIdx] = arr[minIdx], arr[i]\n\t}\n}",
           "language": "go"
         },
         {
           "name": "Insertion Sort",
           "complexity": "O(n²) worst / O(n) best",
           "space": "O(1)",
-          "description": "Elemanları sırayla alır, doğru konuma ekler. Neredeyse sıralı dizilerde O(n)'e yaklaşır. Küçük n için QuickSort'tan hızlıdır — bu yüzden IntroSort gibi hibrit algoritmalarda n&lt;16 eşiğinde kullanılır.",
-          "code": "function insertionSort(arr: number[]): number[] {\n  for (let i = 1; i &lt; arr.length; i++) {\n    const key = arr[i];\n    let j = i - 1;\n    while (j &gt;= 0 &amp;&amp; arr[j] &gt; key) {\n      arr[j + 1] = arr[j];\n      j--;\n    }\n    arr[j + 1] = key;\n  }\n  return arr;\n}",
+          "description": "Elemanları sırayla alır, doğru konuma ekler. Neredeyse sıralı dizilerde O(n)'e yaklaşır. Küçük n için QuickSort'tan hızlıdır — bu yüzden IntroSort gibi hibrit algoritmalarda n<16 eşiğinde kullanılır.",
+          "code": "function insertionSort(arr: number[]): number[] {\n  for (let i = 1; i < arr.length; i++) {\n    const key = arr[i];\n    let j = i - 1;\n    while (j >= 0 && arr[j] > key) {\n      arr[j + 1] = arr[j];\n      j--;\n    }\n    arr[j + 1] = key;\n  }\n  return arr;\n}",
           "language": "typescript"
         },
         {
@@ -33,7 +33,7 @@
           "complexity": "O(n log n) avg / O(n²) worst",
           "space": "O(log n)",
           "description": "Pivot eleman seçilir, küçükler sola büyükler sağa dizilir, özyinelemeli uygulanır. Pratikte en hızlı algoritmalardan biridir. Go'nun yerleşik sort paketi introsort kullanır (quicksort + heapsort hybrid).",
-          "code": "func quickSort(arr []int, low, high int) {\n\tif low &lt; high {\n\t\tpivot := partition(arr, low, high)\n\t\tquickSort(arr, low, pivot-1)\n\t\tquickSort(arr, pivot+1, high)\n\t}\n}\n\nfunc partition(arr []int, low, high int) int {\n\tpivot := arr[high]\n\ti := low - 1\n\tfor j := low; j &lt; high; j++ {\n\t\tif arr[j] &lt;= pivot {\n\t\t\ti++\n\t\t\tarr[i], arr[j] = arr[j], arr[i]\n\t\t}\n\t}\n\tarr[i+1], arr[high] = arr[high], arr[i+1]\n\treturn i + 1\n}",
+          "code": "func quickSort(arr []int, low, high int) {\n\tif low < high {\n\t\tpivot := partition(arr, low, high)\n\t\tquickSort(arr, low, pivot-1)\n\t\tquickSort(arr, pivot+1, high)\n\t}\n}\n\nfunc partition(arr []int, low, high int) int {\n\tpivot := arr[high]\n\ti := low - 1\n\tfor j := low; j < high; j++ {\n\t\tif arr[j] <= pivot {\n\t\t\ti++\n\t\t\tarr[i], arr[j] = arr[j], arr[i]\n\t\t}\n\t}\n\tarr[i+1], arr[high] = arr[high], arr[i+1]\n\treturn i + 1\n}",
           "language": "go"
         },
         {
@@ -41,7 +41,7 @@
           "complexity": "O(n log n)",
           "space": "O(n)",
           "description": "Diziyi ikiye böler, her yarıyı ayrı sıralar, sonra birleştirir. Stable sort'tur — eşit elemanların sırası değişmez. Linked list sıralaması için idealdir çünkü random access gerektirmez.",
-          "code": "func mergeSort(arr []int) []int {\n\tif len(arr) &lt;= 1 {\n\t\treturn arr\n\t}\n\tmid := len(arr) / 2\n\tleft := mergeSort(arr[:mid])\n\tright := mergeSort(arr[mid:])\n\treturn merge(left, right)\n}\n\nfunc merge(l, r []int) []int {\n\tresult := []int{}\n\tfor len(l) &gt; 0 &amp;&amp; len(r) &gt; 0 {\n\t\tif l[0] &lt;= r[0] {\n\t\t\tresult = append(result, l[0])\n\t\t\tl = l[1:]\n\t\t} else {\n\t\t\tresult = append(result, r[0])\n\t\t\tr = r[1:]\n\t\t}\n\t}\n\treturn append(result, append(l, r...)...)\n}",
+          "code": "func mergeSort(arr []int) []int {\n\tif len(arr) <= 1 {\n\t\treturn arr\n\t}\n\tmid := len(arr) / 2\n\tleft := mergeSort(arr[:mid])\n\tright := mergeSort(arr[mid:])\n\treturn merge(left, right)\n}\n\nfunc merge(l, r []int) []int {\n\tresult := []int{}\n\tfor len(l) > 0 && len(r) > 0 {\n\t\tif l[0] <= r[0] {\n\t\t\tresult = append(result, l[0])\n\t\t\tl = l[1:]\n\t\t} else {\n\t\t\tresult = append(result, r[0])\n\t\t\tr = r[1:]\n\t\t}\n\t}\n\treturn append(result, append(l, r...)...)\n}",
           "language": "go"
         },
         {
@@ -49,7 +49,7 @@
           "complexity": "O(n log n)",
           "space": "O(1)",
           "description": "Max-heap kurarak en büyük elemanı sürekli başa taşır ve sona yerleştirir. In-place'dir ama stable değildir. Cache performansı zayıf olduğu için pratikte QuickSort kadar hızlı değildir.",
-          "code": "public static void HeapSort(int[] arr) {\n    int n = arr.Length;\n    for (int i = n / 2 - 1; i &gt;= 0; i--)\n        Heapify(arr, n, i);\n    for (int i = n - 1; i &gt; 0; i--) {\n        (arr[0], arr[i]) = (arr[i], arr[0]);\n        Heapify(arr, i, 0);\n    }\n}\n\nstatic void Heapify(int[] arr, int n, int i) {\n    int largest = i, l = 2*i+1, r = 2*i+2;\n    if (l &lt; n &amp;&amp; arr[l] &gt; arr[largest]) largest = l;\n    if (r &lt; n &amp;&amp; arr[r] &gt; arr[largest]) largest = r;\n    if (largest != i) {\n        (arr[i], arr[largest]) = (arr[largest], arr[i]);\n        Heapify(arr, n, largest);\n    }\n}",
+          "code": "public static void HeapSort(int[] arr) {\n    int n = arr.Length;\n    for (int i = n / 2 - 1; i >= 0; i--)\n        Heapify(arr, n, i);\n    for (int i = n - 1; i > 0; i--) {\n        (arr[0], arr[i]) = (arr[i], arr[0]);\n        Heapify(arr, i, 0);\n    }\n}\n\nstatic void Heapify(int[] arr, int n, int i) {\n    int largest = i, l = 2*i+1, r = 2*i+2;\n    if (l < n && arr[l] > arr[largest]) largest = l;\n    if (r < n && arr[r] > arr[largest]) largest = r;\n    if (largest != i) {\n        (arr[i], arr[largest]) = (arr[largest], arr[i]);\n        Heapify(arr, n, largest);\n    }\n}",
           "language": "csharp"
         },
         {
@@ -57,7 +57,7 @@
           "complexity": "O(n + k)",
           "space": "O(k)",
           "description": "Karşılaştırma yapmaz; sayım dizisi kullanır. k = değer aralığı. Küçük k için çok hızlıdır. Negatif sayılar için offset gerekir. Radix Sort'un temelini oluşturur.",
-          "code": "func countingSort(arr []int, maxVal int) []int {\n\tcount := make([]int, maxVal+1)\n\tfor _, v := range arr {\n\t\tcount[v]++\n\t}\n\tresult := []int{}\n\tfor i, c := range count {\n\t\tfor c &gt; 0 {\n\t\t\tresult = append(result, i)\n\t\t\tc--\n\t\t}\n\t}\n\treturn result\n}",
+          "code": "func countingSort(arr []int, maxVal int) []int {\n\tcount := make([]int, maxVal+1)\n\tfor _, v := range arr {\n\t\tcount[v]++\n\t}\n\tresult := []int{}\n\tfor i, c := range count {\n\t\tfor c > 0 {\n\t\t\tresult = append(result, i)\n\t\t\tc--\n\t\t}\n\t}\n\treturn result\n}",
           "language": "go"
         },
         {
@@ -65,7 +65,7 @@
           "complexity": "O(d × (n + k))",
           "space": "O(n + k)",
           "description": "Sayıları basamak basamak sıralar (LSD veya MSD). d = basamak sayısı, k = taban (genellikle 10). Büyük n ile sabit uzunluklu tam sayılarda O(n log n) algoritmalarını geçebilir.",
-          "code": "public static void RadixSort(int[] arr) {\n    int max = arr.Max();\n    for (int exp = 1; max / exp &gt; 0; exp *= 10)\n        CountByDigit(arr, exp);\n}\n\nstatic void CountByDigit(int[] arr, int exp) {\n    int n = arr.Length;\n    int[] output = new int[n];\n    int[] count = new int[10];\n    foreach (var v in arr) count[(v / exp) % 10]++;\n    for (int i = 1; i &lt; 10; i++) count[i] += count[i - 1];\n    for (int i = n - 1; i &gt;= 0; i--) {\n        int digit = (arr[i] / exp) % 10;\n        output[--count[digit]] = arr[i];\n    }\n    Array.Copy(output, arr, n);\n}",
+          "code": "public static void RadixSort(int[] arr) {\n    int max = arr.Max();\n    for (int exp = 1; max / exp > 0; exp *= 10)\n        CountByDigit(arr, exp);\n}\n\nstatic void CountByDigit(int[] arr, int exp) {\n    int n = arr.Length;\n    int[] output = new int[n];\n    int[] count = new int[10];\n    foreach (var v in arr) count[(v / exp) % 10]++;\n    for (int i = 1; i < 10; i++) count[i] += count[i - 1];\n    for (int i = n - 1; i >= 0; i--) {\n        int digit = (arr[i] / exp) % 10;\n        output[--count[digit]] = arr[i];\n    }\n    Array.Copy(output, arr, n);\n}",
           "language": "csharp"
         }
       ]
@@ -87,7 +87,7 @@
           "complexity": "O(log n)",
           "space": "O(1)",
           "description": "Sıralı dizide ortayı bulur, hedefe göre yarıyı eler. Her adımda arama alanını ikiye böler. Sadece sıralı dizilerde çalışır. 1 milyar elemanlı dizide en fazla 30 karşılaştırma yeterlidir.",
-          "code": "func binarySearch(arr []int, target int) int {\n\tleft, right := 0, len(arr)-1\n\tfor left &lt;= right {\n\t\tmid := left + (right-left)/2\n\t\tif arr[mid] == target {\n\t\t\treturn mid\n\t\t} else if arr[mid] &lt; target {\n\t\t\tleft = mid + 1\n\t\t} else {\n\t\t\tright = mid - 1\n\t\t}\n\t}\n\treturn -1\n}",
+          "code": "func binarySearch(arr []int, target int) int {\n\tleft, right := 0, len(arr)-1\n\tfor left <= right {\n\t\tmid := left + (right-left)/2\n\t\tif arr[mid] == target {\n\t\t\treturn mid\n\t\t} else if arr[mid] < target {\n\t\t\tleft = mid + 1\n\t\t} else {\n\t\t\tright = mid - 1\n\t\t}\n\t}\n\treturn -1\n}",
           "language": "go"
         },
         {
@@ -95,7 +95,7 @@
           "complexity": "O(√n)",
           "space": "O(1)",
           "description": "Sıralı dizide √n adım atlayarak blok bulur, sonra linear search yapar. Binary Search'ten yavaş ama geri atlama pahalıysa (disk/tape) tercih edilir.",
-          "code": "function jumpSearch(arr: number[], target: number): number {\n  const n = arr.length;\n  const step = Math.floor(Math.sqrt(n));\n  let prev = 0, curr = step;\n  while (curr &lt; n &amp;&amp; arr[curr] &lt;= target) {\n    prev = curr;\n    curr += step;\n  }\n  for (let i = prev; i &lt; Math.min(curr, n); i++) {\n    if (arr[i] === target) return i;\n  }\n  return -1;\n}",
+          "code": "function jumpSearch(arr: number[], target: number): number {\n  const n = arr.length;\n  const step = Math.floor(Math.sqrt(n));\n  let prev = 0, curr = step;\n  while (curr < n && arr[curr] <= target) {\n    prev = curr;\n    curr += step;\n  }\n  for (let i = prev; i < Math.min(curr, n); i++) {\n    if (arr[i] === target) return i;\n  }\n  return -1;\n}",
           "language": "typescript"
         },
         {
@@ -103,7 +103,7 @@
           "complexity": "O(log log n) avg / O(n) worst",
           "space": "O(1)",
           "description": "Binary Search'in akıllı versiyonu: ortayı değil, değerin muhtemelen bulunacağı konumu tahmin eder. Değerler düzgün dağılmışsa çok hızlıdır. Dağılım bozuksa Binary Search'ten yavaş olabilir.",
-          "code": "func interpolationSearch(arr []int, target int) int {\n\tlow, high := 0, len(arr)-1\n\tfor low &lt;= high &amp;&amp; target &gt;= arr[low] &amp;&amp; target &lt;= arr[high] {\n\t\tpos := low + (target-arr[low])*(high-low)/(arr[high]-arr[low])\n\t\tif arr[pos] == target {\n\t\t\treturn pos\n\t\t} else if arr[pos] &lt; target {\n\t\t\tlow = pos + 1\n\t\t} else {\n\t\t\thigh = pos - 1\n\t\t}\n\t}\n\treturn -1\n}",
+          "code": "func interpolationSearch(arr []int, target int) int {\n\tlow, high := 0, len(arr)-1\n\tfor low <= high && target >= arr[low] && target <= arr[high] {\n\t\tpos := low + (target-arr[low])*(high-low)/(arr[high]-arr[low])\n\t\tif arr[pos] == target {\n\t\t\treturn pos\n\t\t} else if arr[pos] < target {\n\t\t\tlow = pos + 1\n\t\t} else {\n\t\t\thigh = pos - 1\n\t\t}\n\t}\n\treturn -1\n}",
           "language": "go"
         }
       ]
@@ -125,7 +125,7 @@
           "complexity": "Enqueue/Dequeue: O(1)",
           "space": "O(n)",
           "description": "FIFO (First In First Out) yapısı. BFS, task queue, print spooler, işlemci scheduling gibi durumlarda kullanılır. Circular buffer ile sabit bellek kullanımı sağlanabilir.",
-          "code": "public class Queue&lt;T&gt; {\n    private LinkedList&lt;T&gt; _list = new();\n    public void Enqueue(T item) =&gt; _list.AddLast(item);\n    public T Dequeue() {\n        if (_list.Count == 0) throw new InvalidOperationException();\n        var val = _list.First!.Value;\n        _list.RemoveFirst();\n        return val;\n    }\n    public T Peek() =&gt; _list.First!.Value;\n    public int Count =&gt; _list.Count;\n}",
+          "code": "public class Queue<T> {\n    private LinkedList<T> _list = new();\n    public void Enqueue(T item) => _list.AddLast(item);\n    public T Dequeue() {\n        if (_list.Count == 0) throw new InvalidOperationException();\n        var val = _list.First!.Value;\n        _list.RemoveFirst();\n        return val;\n    }\n    public T Peek() => _list.First!.Value;\n    public int Count => _list.Count;\n}",
           "language": "csharp"
         },
         {
@@ -133,7 +133,7 @@
           "complexity": "Insert/Delete: O(1) head, O(n) arbitrary",
           "space": "O(n)",
           "description": "Düğümler pointer ile birbirine bağlıdır. Dinamik boyutludur. Ortadan ekleme/silme hızlıdır ama random access O(n)'dir. Doubly linked list iki yönde gezilmeye izin verir.",
-          "code": "type Node struct {\n\tVal  int\n\tNext *Node\n}\n\ntype LinkedList struct {\n\tHead *Node\n}\n\nfunc (l *LinkedList) Prepend(val int) {\n\tl.Head = &amp;Node{Val: val, Next: l.Head}\n}\n\nfunc (l *LinkedList) Delete(val int) {\n\tif l.Head == nil {\n\t\treturn\n\t}\n\tif l.Head.Val == val {\n\t\tl.Head = l.Head.Next\n\t\treturn\n\t}\n\tcurr := l.Head\n\tfor curr.Next != nil {\n\t\tif curr.Next.Val == val {\n\t\t\tcurr.Next = curr.Next.Next\n\t\t\treturn\n\t\t}\n\t\tcurr = curr.Next\n\t}\n}",
+          "code": "type Node struct {\n\tVal  int\n\tNext *Node\n}\n\ntype LinkedList struct {\n\tHead *Node\n}\n\nfunc (l *LinkedList) Prepend(val int) {\n\tl.Head = &Node{Val: val, Next: l.Head}\n}\n\nfunc (l *LinkedList) Delete(val int) {\n\tif l.Head == nil {\n\t\treturn\n\t}\n\tif l.Head.Val == val {\n\t\tl.Head = l.Head.Next\n\t\treturn\n\t}\n\tcurr := l.Head\n\tfor curr.Next != nil {\n\t\tif curr.Next.Val == val {\n\t\t\tcurr.Next = curr.Next.Next\n\t\t\treturn\n\t\t}\n\t\tcurr = curr.Next\n\t}\n}",
           "language": "go"
         },
         {
@@ -149,7 +149,7 @@
           "complexity": "Search/Insert/Delete: O(log n) avg / O(n) worst",
           "space": "O(n)",
           "description": "Her düğümün sol alt ağacı daha küçük, sağ alt ağacı daha büyük değerleri tutar. Dengesiz büyüdüğünde linked list'e dönüşür (O(n)). AVL ve Red-Black Tree bu sorunu otomatik dengeleme ile çözer.",
-          "code": "public class BSTNode {\n    public int Val;\n    public BSTNode? Left, Right;\n    public BSTNode(int val) =&gt; Val = val;\n}\n\npublic class BST {\n    private BSTNode? _root;\n\n    public void Insert(int val) =&gt; _root = Insert(_root, val);\n\n    private BSTNode Insert(BSTNode? node, int val) {\n        if (node == null) return new BSTNode(val);\n        if (val &lt; node.Val) node.Left = Insert(node.Left, val);\n        else if (val &gt; node.Val) node.Right = Insert(node.Right, val);\n        return node;\n    }\n\n    public bool Search(int val) =&gt; Search(_root, val);\n\n    private bool Search(BSTNode? node, int val) {\n        if (node == null) return false;\n        if (val == node.Val) return true;\n        return val &lt; node.Val ? Search(node.Left, val) : Search(node.Right, val);\n    }\n}",
+          "code": "public class BSTNode {\n    public int Val;\n    public BSTNode? Left, Right;\n    public BSTNode(int val) => Val = val;\n}\n\npublic class BST {\n    private BSTNode? _root;\n\n    public void Insert(int val) => _root = Insert(_root, val);\n\n    private BSTNode Insert(BSTNode? node, int val) {\n        if (node == null) return new BSTNode(val);\n        if (val < node.Val) node.Left = Insert(node.Left, val);\n        else if (val > node.Val) node.Right = Insert(node.Right, val);\n        return node;\n    }\n\n    public bool Search(int val) => Search(_root, val);\n\n    private bool Search(BSTNode? node, int val) {\n        if (node == null) return false;\n        if (val == node.Val) return true;\n        return val < node.Val ? Search(node.Left, val) : Search(node.Right, val);\n    }\n}",
           "language": "csharp"
         },
         {
@@ -157,7 +157,7 @@
           "complexity": "Insert: O(log n), ExtractMin: O(log n), Peek: O(1)",
           "space": "O(n)",
           "description": "Dizi ile temsil edilen tam ikili ağaç. Min-heap'te root her zaman minimum değerdir. Priority queue implementasyonu için temeldir. Dijkstra ve A* algoritmaları heap kullanır.",
-          "code": "type MinHeap struct {\n\tdata []int\n}\n\nfunc (h *MinHeap) Push(val int) {\n\th.data = append(h.data, val)\n\ti := len(h.data) - 1\n\tfor i &gt; 0 {\n\t\tparent := (i - 1) / 2\n\t\tif h.data[parent] &lt;= h.data[i] {\n\t\t\tbreak\n\t\t}\n\t\th.data[parent], h.data[i] = h.data[i], h.data[parent]\n\t\ti = parent\n\t}\n}\n\nfunc (h *MinHeap) Pop() int {\n\tmin := h.data[0]\n\tn := len(h.data) - 1\n\th.data[0] = h.data[n]\n\th.data = h.data[:n]\n\ti := 0\n\tfor {\n\t\tl, r, smallest := 2*i+1, 2*i+2, i\n\t\tif l &lt; n &amp;&amp; h.data[l] &lt; h.data[smallest] {\n\t\t\tsmallest = l\n\t\t}\n\t\tif r &lt; n &amp;&amp; h.data[r] &lt; h.data[smallest] {\n\t\t\tsmallest = r\n\t\t}\n\t\tif smallest == i {\n\t\t\tbreak\n\t\t}\n\t\th.data[i], h.data[smallest] = h.data[smallest], h.data[i]\n\t\ti = smallest\n\t}\n\treturn min\n}",
+          "code": "type MinHeap struct {\n\tdata []int\n}\n\nfunc (h *MinHeap) Push(val int) {\n\th.data = append(h.data, val)\n\ti := len(h.data) - 1\n\tfor i > 0 {\n\t\tparent := (i - 1) / 2\n\t\tif h.data[parent] <= h.data[i] {\n\t\t\tbreak\n\t\t}\n\t\th.data[parent], h.data[i] = h.data[i], h.data[parent]\n\t\ti = parent\n\t}\n}\n\nfunc (h *MinHeap) Pop() int {\n\tmin := h.data[0]\n\tn := len(h.data) - 1\n\th.data[0] = h.data[n]\n\th.data = h.data[:n]\n\ti := 0\n\tfor {\n\t\tl, r, smallest := 2*i+1, 2*i+2, i\n\t\tif l < n && h.data[l] < h.data[smallest] {\n\t\t\tsmallest = l\n\t\t}\n\t\tif r < n && h.data[r] < h.data[smallest] {\n\t\t\tsmallest = r\n\t\t}\n\t\tif smallest == i {\n\t\t\tbreak\n\t\t}\n\t\th.data[i], h.data[smallest] = h.data[smallest], h.data[i]\n\t\ti = smallest\n\t}\n\treturn min\n}",
           "language": "go"
         },
         {
@@ -165,7 +165,7 @@
           "complexity": "Insert/Search: O(m) — m = kelime uzunluğu",
           "space": "O(ALPHABET_SIZE × n × m)",
           "description": "Karakter bazlı ağaç yapısı. Autocomplete, spell checker, IP routing (prefix matching), DNA sekans araması gibi uygulamalarda kullanılır. Hash map'e göre prefix sorgularında çok üstündür.",
-          "code": "type TrieNode struct {\n\tchildren map[rune]*TrieNode\n\tisEnd    bool\n}\n\ntype Trie struct {\n\troot *TrieNode\n}\n\nfunc NewTrie() *Trie {\n\treturn &amp;Trie{root: &amp;TrieNode{children: make(map[rune]*TrieNode)}}\n}\n\nfunc (t *Trie) Insert(word string) {\n\tnode := t.root\n\tfor _, ch := range word {\n\t\tif _, ok := node.children[ch]; !ok {\n\t\t\tnode.children[ch] = &amp;TrieNode{children: make(map[rune]*TrieNode)}\n\t\t}\n\t\tnode = node.children[ch]\n\t}\n\tnode.isEnd = true\n}\n\nfunc (t *Trie) Search(word string) bool {\n\tnode := t.root\n\tfor _, ch := range word {\n\t\tif _, ok := node.children[ch]; !ok {\n\t\t\treturn false\n\t\t}\n\t\tnode = node.children[ch]\n\t}\n\treturn node.isEnd\n}\n\nfunc (t *Trie) StartsWith(prefix string) bool {\n\tnode := t.root\n\tfor _, ch := range prefix {\n\t\tif _, ok := node.children[ch]; !ok {\n\t\t\treturn false\n\t\t}\n\t\tnode = node.children[ch]\n\t}\n\treturn true\n}",
+          "code": "type TrieNode struct {\n\tchildren map[rune]*TrieNode\n\tisEnd    bool\n}\n\ntype Trie struct {\n\troot *TrieNode\n}\n\nfunc NewTrie() *Trie {\n\treturn &Trie{root: &TrieNode{children: make(map[rune]*TrieNode)}}\n}\n\nfunc (t *Trie) Insert(word string) {\n\tnode := t.root\n\tfor _, ch := range word {\n\t\tif _, ok := node.children[ch]; !ok {\n\t\t\tnode.children[ch] = &TrieNode{children: make(map[rune]*TrieNode)}\n\t\t}\n\t\tnode = node.children[ch]\n\t}\n\tnode.isEnd = true\n}\n\nfunc (t *Trie) Search(word string) bool {\n\tnode := t.root\n\tfor _, ch := range word {\n\t\tif _, ok := node.children[ch]; !ok {\n\t\t\treturn false\n\t\t}\n\t\tnode = node.children[ch]\n\t}\n\treturn node.isEnd\n}\n\nfunc (t *Trie) StartsWith(prefix string) bool {\n\tnode := t.root\n\tfor _, ch := range prefix {\n\t\tif _, ok := node.children[ch]; !ok {\n\t\t\treturn false\n\t\t}\n\t\tnode = node.children[ch]\n\t}\n\treturn true\n}",
           "language": "go"
         }
       ]
@@ -179,7 +179,7 @@
           "complexity": "O(n)",
           "space": "O(h) — h = ağaç yüksekliği",
           "description": "BST'de inorder gezinme sıralı çıktı verir. Matematiksel ifadeleri değerlendirmek için kullanılır.",
-          "code": "func inorder(node *TreeNode, result *[]int) {\n\tif node == nil {\n\t\treturn\n\t}\n\tinorder(node.Left, result)\n\t*result = append(*result, node.Val)\n\tinorder(node.Right, result)\n}\n\n// İteratif versiyon (stack ile)\nfunc inorderIterative(root *TreeNode) []int {\n\tresult := []int{}\n\tstack := []*TreeNode{}\n\tcurr := root\n\tfor curr != nil || len(stack) &gt; 0 {\n\t\tfor curr != nil {\n\t\t\tstack = append(stack, curr)\n\t\t\tcurr = curr.Left\n\t\t}\n\t\tcurr = stack[len(stack)-1]\n\t\tstack = stack[:len(stack)-1]\n\t\tresult = append(result, curr.Val)\n\t\tcurr = curr.Right\n\t}\n\treturn result\n}",
+          "code": "func inorder(node *TreeNode, result *[]int) {\n\tif node == nil {\n\t\treturn\n\t}\n\tinorder(node.Left, result)\n\t*result = append(*result, node.Val)\n\tinorder(node.Right, result)\n}\n\n// İteratif versiyon (stack ile)\nfunc inorderIterative(root *TreeNode) []int {\n\tresult := []int{}\n\tstack := []*TreeNode{}\n\tcurr := root\n\tfor curr != nil || len(stack) > 0 {\n\t\tfor curr != nil {\n\t\t\tstack = append(stack, curr)\n\t\t\tcurr = curr.Left\n\t\t}\n\t\tcurr = stack[len(stack)-1]\n\t\tstack = stack[:len(stack)-1]\n\t\tresult = append(result, curr.Val)\n\t\tcurr = curr.Right\n\t}\n\treturn result\n}",
           "language": "go"
         },
         {
@@ -195,7 +195,7 @@
           "complexity": "O(n)",
           "space": "O(h)",
           "description": "Kökü en son ziyaret eder. Ağaç silme işlemlerinde (önce yapraklar silinmeli) ve postfix ifade değerlendirmesinde kullanılır.",
-          "code": "public List&lt;int&gt; PostorderTraversal(TreeNode root) {\n    var result = new List&lt;int&gt;();\n    var stack = new Stack&lt;TreeNode&gt;();\n    TreeNode? prev = null;\n    TreeNode? curr = root;\n    while (curr != null || stack.Count &gt; 0) {\n        while (curr != null) { stack.Push(curr); curr = curr.Left; }\n        curr = stack.Peek();\n        if (curr.Right == null || curr.Right == prev) {\n            result.Add(curr.Val);\n            stack.Pop();\n            prev = curr;\n            curr = null;\n        } else {\n            curr = curr.Right;\n        }\n    }\n    return result;\n}",
+          "code": "public List<int> PostorderTraversal(TreeNode root) {\n    var result = new List<int>();\n    var stack = new Stack<TreeNode>();\n    TreeNode? prev = null;\n    TreeNode? curr = root;\n    while (curr != null || stack.Count > 0) {\n        while (curr != null) { stack.Push(curr); curr = curr.Left; }\n        curr = stack.Peek();\n        if (curr.Right == null || curr.Right == prev) {\n            result.Add(curr.Val);\n            stack.Pop();\n            prev = curr;\n            curr = null;\n        } else {\n            curr = curr.Right;\n        }\n    }\n    return result;\n}",
           "language": "csharp"
         },
         {
@@ -203,7 +203,7 @@
           "complexity": "O(n)",
           "space": "O(w) — w = max genişlik",
           "description": "Ağacı seviye seviye gezinir. Queue kullanır. Ağacın genişliğini bulmak, en kısa yolu bulmak ve ağacı level bazlı serialize etmek için kullanılır.",
-          "code": "func levelOrder(root *TreeNode) [][]int {\n\tresult := [][]int{}\n\tif root == nil {\n\t\treturn result\n\t}\n\tqueue := []*TreeNode{root}\n\tfor len(queue) &gt; 0 {\n\t\tlevel := []int{}\n\t\tsize := len(queue)\n\t\tfor i := 0; i &lt; size; i++ {\n\t\t\tnode := queue[0]\n\t\t\tqueue = queue[1:]\n\t\t\tlevel = append(level, node.Val)\n\t\t\tif node.Left != nil {\n\t\t\t\tqueue = append(queue, node.Left)\n\t\t\t}\n\t\t\tif node.Right != nil {\n\t\t\t\tqueue = append(queue, node.Right)\n\t\t\t}\n\t\t}\n\t\tresult = append(result, level)\n\t}\n\treturn result\n}",
+          "code": "func levelOrder(root *TreeNode) [][]int {\n\tresult := [][]int{}\n\tif root == nil {\n\t\treturn result\n\t}\n\tqueue := []*TreeNode{root}\n\tfor len(queue) > 0 {\n\t\tlevel := []int{}\n\t\tsize := len(queue)\n\t\tfor i := 0; i < size; i++ {\n\t\t\tnode := queue[0]\n\t\t\tqueue = queue[1:]\n\t\t\tlevel = append(level, node.Val)\n\t\t\tif node.Left != nil {\n\t\t\t\tqueue = append(queue, node.Left)\n\t\t\t}\n\t\t\tif node.Right != nil {\n\t\t\t\tqueue = append(queue, node.Right)\n\t\t\t}\n\t\t}\n\t\tresult = append(result, level)\n\t}\n\treturn result\n}",
           "language": "go"
         }
       ]
@@ -217,7 +217,7 @@
           "complexity": "O(V + E)",
           "space": "O(V)",
           "description": "Grafı katman katman keşfeder. Kuyruk (queue) kullanır. En kısa yolu (ağırlıksız grafta) bulmak için idealdir. Web crawler'lar, sosyal ağ arkadaş önerileri, GPS navigasyon bu algoritmayı kullanır.",
-          "code": "func bfs(graph map[int][]int, start int) []int {\n\tvisited := make(map[int]bool)\n\tqueue := []int{start}\n\tresult := []int{}\n\tvisited[start] = true\n\n\tfor len(queue) &gt; 0 {\n\t\tnode := queue[0]\n\t\tqueue = queue[1:]\n\t\tresult = append(result, node)\n\n\t\tfor _, neighbor := range graph[node] {\n\t\t\tif !visited[neighbor] {\n\t\t\t\tvisited[neighbor] = true\n\t\t\t\tqueue = append(queue, neighbor)\n\t\t\t}\n\t\t}\n\t}\n\treturn result\n}",
+          "code": "func bfs(graph map[int][]int, start int) []int {\n\tvisited := make(map[int]bool)\n\tqueue := []int{start}\n\tresult := []int{}\n\tvisited[start] = true\n\n\tfor len(queue) > 0 {\n\t\tnode := queue[0]\n\t\tqueue = queue[1:]\n\t\tresult = append(result, node)\n\n\t\tfor _, neighbor := range graph[node] {\n\t\t\tif !visited[neighbor] {\n\t\t\t\tvisited[neighbor] = true\n\t\t\t\tqueue = append(queue, neighbor)\n\t\t\t}\n\t\t}\n\t}\n\treturn result\n}",
           "language": "go"
         },
         {
@@ -233,7 +233,7 @@
           "complexity": "O((V + E) log V)",
           "space": "O(V)",
           "description": "Ağırlıklı grafta tek kaynaktan en kısa yolları bulur. Negatif ağırlıklarla çalışmaz. GPS navigasyon, ağ routing protokolleri (OSPF), oyun AI pathfinding'de kullanılır.",
-          "code": "public Dictionary&lt;int, int&gt; Dijkstra(Dictionary&lt;int, List&lt;(int, int)&gt;&gt; graph, int start) {\n    var dist = new Dictionary&lt;int, int&gt;();\n    var pq = new PriorityQueue&lt;int, int&gt;();\n    foreach (var node in graph.Keys) dist[node] = int.MaxValue;\n    dist[start] = 0;\n    pq.Enqueue(start, 0);\n    while (pq.Count &gt; 0) {\n        var curr = pq.Dequeue();\n        foreach (var (neighbor, weight) in graph[curr]) {\n            int newDist = dist[curr] + weight;\n            if (newDist &lt; dist[neighbor]) {\n                dist[neighbor] = newDist;\n                pq.Enqueue(neighbor, newDist);\n            }\n        }\n    }\n    return dist;\n}",
+          "code": "public Dictionary<int, int> Dijkstra(Dictionary<int, List<(int, int)>> graph, int start) {\n    var dist = new Dictionary<int, int>();\n    var pq = new PriorityQueue<int, int>();\n    foreach (var node in graph.Keys) dist[node] = int.MaxValue;\n    dist[start] = 0;\n    pq.Enqueue(start, 0);\n    while (pq.Count > 0) {\n        var curr = pq.Dequeue();\n        foreach (var (neighbor, weight) in graph[curr]) {\n            int newDist = dist[curr] + weight;\n            if (newDist < dist[neighbor]) {\n                dist[neighbor] = newDist;\n                pq.Enqueue(neighbor, newDist);\n            }\n        }\n    }\n    return dist;\n}",
           "language": "csharp"
         },
         {
@@ -241,7 +241,7 @@
           "complexity": "O(V × E)",
           "space": "O(V)",
           "description": "Negatif ağırlıklı grafta en kısa yolları bulur. Negatif döngüleri (negative cycle) tespit edebilir. Dijkstra'dan yavaştır ama daha genel çalışır. Finansal arbitraj tespitinde kullanılır.",
-          "code": "func bellmanFord(edges [][3]int, n, src int) ([]int, bool) {\n\tdist := make([]int, n)\n\tfor i := range dist {\n\t\tdist[i] = 1&lt;&lt;31 - 1\n\t}\n\tdist[src] = 0\n\tfor i := 0; i &lt; n-1; i++ {\n\t\tfor _, e := range edges {\n\t\t\tu, v, w := e[0], e[1], e[2]\n\t\t\tif dist[u] != 1&lt;&lt;31-1 &amp;&amp; dist[u]+w &lt; dist[v] {\n\t\t\t\tdist[v] = dist[u] + w\n\t\t\t}\n\t\t}\n\t}\n\tfor _, e := range edges {\n\t\tif dist[e[0]]+e[2] &lt; dist[e[1]] {\n\t\t\treturn nil, true // negatif döngü var\n\t\t}\n\t}\n\treturn dist, false\n}",
+          "code": "func bellmanFord(edges [][3]int, n, src int) ([]int, bool) {\n\tdist := make([]int, n)\n\tfor i := range dist {\n\t\tdist[i] = 1<<31 - 1\n\t}\n\tdist[src] = 0\n\tfor i := 0; i < n-1; i++ {\n\t\tfor _, e := range edges {\n\t\t\tu, v, w := e[0], e[1], e[2]\n\t\t\tif dist[u] != 1<<31-1 && dist[u]+w < dist[v] {\n\t\t\t\tdist[v] = dist[u] + w\n\t\t\t}\n\t\t}\n\t}\n\tfor _, e := range edges {\n\t\tif dist[e[0]]+e[2] < dist[e[1]] {\n\t\t\treturn nil, true // negatif döngü var\n\t\t}\n\t}\n\treturn dist, false\n}",
           "language": "go"
         },
         {
@@ -249,7 +249,7 @@
           "complexity": "O(V³)",
           "space": "O(V²)",
           "description": "Tüm çiftler arasındaki en kısa yolları tek seferde hesaplar. Küçük ve yoğun graflarda kullanılır. Negatif döngü varsa köşegen negatife döner.",
-          "code": "public int[,] FloydWarshall(int[,] graph, int n) {\n    var dist = (int[,])graph.Clone();\n    for (int k = 0; k &lt; n; k++)\n        for (int i = 0; i &lt; n; i++)\n            for (int j = 0; j &lt; n; j++)\n                if (dist[i, k] != int.MaxValue &amp;&amp; dist[k, j] != int.MaxValue)\n                    dist[i, j] = Math.Min(dist[i, j], dist[i, k] + dist[k, j]);\n    return dist;\n}",
+          "code": "public int[,] FloydWarshall(int[,] graph, int n) {\n    var dist = (int[,])graph.Clone();\n    for (int k = 0; k < n; k++)\n        for (int i = 0; i < n; i++)\n            for (int j = 0; j < n; j++)\n                if (dist[i, k] != int.MaxValue && dist[k, j] != int.MaxValue)\n                    dist[i, j] = Math.Min(dist[i, j], dist[i, k] + dist[k, j]);\n    return dist;\n}",
           "language": "csharp"
         },
         {
@@ -257,7 +257,7 @@
           "complexity": "O(V + E)",
           "space": "O(V)",
           "description": "DAG (Directed Acyclic Graph) üzerinde bağımlılık sırasını belirler. Build sistemleri (make, gradle), görev planlayıcıları, paket bağımlılıkları bu algoritmayı kullanır. Cycle varsa tüm düğümler işlenemez.",
-          "code": "func topologicalSort(graph map[int][]int, n int) ([]int, bool) {\n\tinDegree := make([]int, n)\n\tfor _, neighbors := range graph {\n\t\tfor _, v := range neighbors {\n\t\t\tinDegree[v]++\n\t\t}\n\t}\n\tqueue := []int{}\n\tfor i, d := range inDegree {\n\t\tif d == 0 {\n\t\t\tqueue = append(queue, i)\n\t\t}\n\t}\n\tresult := []int{}\n\tfor len(queue) &gt; 0 {\n\t\tnode := queue[0]\n\t\tqueue = queue[1:]\n\t\tresult = append(result, node)\n\t\tfor _, neighbor := range graph[node] {\n\t\t\tinDegree[neighbor]--\n\t\t\tif inDegree[neighbor] == 0 {\n\t\t\t\tqueue = append(queue, neighbor)\n\t\t\t}\n\t\t}\n\t}\n\treturn result, len(result) == n\n}",
+          "code": "func topologicalSort(graph map[int][]int, n int) ([]int, bool) {\n\tinDegree := make([]int, n)\n\tfor _, neighbors := range graph {\n\t\tfor _, v := range neighbors {\n\t\t\tinDegree[v]++\n\t\t}\n\t}\n\tqueue := []int{}\n\tfor i, d := range inDegree {\n\t\tif d == 0 {\n\t\t\tqueue = append(queue, i)\n\t\t}\n\t}\n\tresult := []int{}\n\tfor len(queue) > 0 {\n\t\tnode := queue[0]\n\t\tqueue = queue[1:]\n\t\tresult = append(result, node)\n\t\tfor _, neighbor := range graph[node] {\n\t\t\tinDegree[neighbor]--\n\t\t\tif inDegree[neighbor] == 0 {\n\t\t\t\tqueue = append(queue, neighbor)\n\t\t\t}\n\t\t}\n\t}\n\treturn result, len(result) == n\n}",
           "language": "go"
         },
         {
@@ -265,7 +265,7 @@
           "complexity": "Find/Union: O(α(n)) — pratikte O(1)",
           "space": "O(n)",
           "description": "Bağlı bileşenleri takip eder. Path compression + union by rank ile neredeyse O(1) sağlar. Kruskal'ın MST algoritması, network connectivity, percolation theory'de kullanılır.",
-          "code": "type UnionFind struct {\n\tparent, rank []int\n}\n\nfunc NewUF(n int) *UnionFind {\n\tuf := &amp;UnionFind{parent: make([]int, n), rank: make([]int, n)}\n\tfor i := range uf.parent {\n\t\tuf.parent[i] = i\n\t}\n\treturn uf\n}\n\nfunc (uf *UnionFind) Find(x int) int {\n\tif uf.parent[x] != x {\n\t\tuf.parent[x] = uf.Find(uf.parent[x]) // path compression\n\t}\n\treturn uf.parent[x]\n}\n\nfunc (uf *UnionFind) Union(x, y int) bool {\n\tpx, py := uf.Find(x), uf.Find(y)\n\tif px == py {\n\t\treturn false\n\t}\n\tif uf.rank[px] &lt; uf.rank[py] {\n\t\tpx, py = py, px\n\t}\n\tuf.parent[py] = px\n\tif uf.rank[px] == uf.rank[py] {\n\t\tuf.rank[px]++\n\t}\n\treturn true\n}",
+          "code": "type UnionFind struct {\n\tparent, rank []int\n}\n\nfunc NewUF(n int) *UnionFind {\n\tuf := &UnionFind{parent: make([]int, n), rank: make([]int, n)}\n\tfor i := range uf.parent {\n\t\tuf.parent[i] = i\n\t}\n\treturn uf\n}\n\nfunc (uf *UnionFind) Find(x int) int {\n\tif uf.parent[x] != x {\n\t\tuf.parent[x] = uf.Find(uf.parent[x]) // path compression\n\t}\n\treturn uf.parent[x]\n}\n\nfunc (uf *UnionFind) Union(x, y int) bool {\n\tpx, py := uf.Find(x), uf.Find(y)\n\tif px == py {\n\t\treturn false\n\t}\n\tif uf.rank[px] < uf.rank[py] {\n\t\tpx, py = py, px\n\t}\n\tuf.parent[py] = px\n\tif uf.rank[px] == uf.rank[py] {\n\t\tuf.rank[px]++\n\t}\n\treturn true\n}",
           "language": "go"
         },
         {
@@ -273,7 +273,7 @@
           "complexity": "O(E log E)",
           "space": "O(V)",
           "description": "Minimum Spanning Tree bulur: tüm düğümleri bağlayan minimum ağırlıklı kenar kümesi. Union-Find ile cycle tespiti yapar. Ağ kablolama, elektrik şebekesi, su boru hattı optimizasyonunda kullanılır.",
-          "code": "func kruskal(n int, edges [][3]int) int {\n\tsort.Slice(edges, func(i, j int) bool {\n\t\treturn edges[i][2] &lt; edges[j][2]\n\t})\n\tuf := NewUF(n)\n\ttotalCost := 0\n\tfor _, e := range edges {\n\t\tif uf.Union(e[0], e[1]) {\n\t\t\ttotalCost += e[2]\n\t\t}\n\t}\n\treturn totalCost\n}",
+          "code": "func kruskal(n int, edges [][3]int) int {\n\tsort.Slice(edges, func(i, j int) bool {\n\t\treturn edges[i][2] < edges[j][2]\n\t})\n\tuf := NewUF(n)\n\ttotalCost := 0\n\tfor _, e := range edges {\n\t\tif uf.Union(e[0], e[1]) {\n\t\t\ttotalCost += e[2]\n\t\t}\n\t}\n\treturn totalCost\n}",
           "language": "go"
         }
       ]
@@ -287,7 +287,7 @@
           "complexity": "O(n)",
           "space": "O(n)",
           "description": "DP'nin temel örneği. Naif özyineleme O(2^n) iken memoization ile O(n)'e düşer. Alt problemlerin sonuçlarını cache'leyerek tekrar hesaplamayı önler.",
-          "code": "func fib(n int, memo map[int]int) int {\n\tif n &lt;= 1 {\n\t\treturn n\n\t}\n\tif v, ok := memo[n]; ok {\n\t\treturn v\n\t}\n\tmemo[n] = fib(n-1, memo) + fib(n-2, memo)\n\treturn memo[n]\n}",
+          "code": "func fib(n int, memo map[int]int) int {\n\tif n <= 1 {\n\t\treturn n\n\t}\n\tif v, ok := memo[n]; ok {\n\t\treturn v\n\t}\n\tmemo[n] = fib(n-1, memo) + fib(n-2, memo)\n\treturn memo[n]\n}",
           "language": "go"
         },
         {
@@ -295,7 +295,7 @@
           "complexity": "O(n × W)",
           "space": "O(n × W)",
           "description": "n eşyadan W kapasiteli çantaya maksimum değer sığdırma. Her eşya ya alınır ya alınmaz. Kaynak tahsisi, bütçe optimizasyonu, kargo yükleme problemlerinin temelidir.",
-          "code": "public int Knapsack(int[] weights, int[] values, int capacity) {\n    int n = weights.Length;\n    int[,] dp = new int[n + 1, capacity + 1];\n    for (int i = 1; i &lt;= n; i++)\n        for (int w = 0; w &lt;= capacity; w++) {\n            dp[i, w] = dp[i - 1, w];\n            if (weights[i - 1] &lt;= w)\n                dp[i, w] = Math.Max(dp[i, w], dp[i - 1, w - weights[i - 1]] + values[i - 1]);\n        }\n    return dp[n, capacity];\n}",
+          "code": "public int Knapsack(int[] weights, int[] values, int capacity) {\n    int n = weights.Length;\n    int[,] dp = new int[n + 1, capacity + 1];\n    for (int i = 1; i <= n; i++)\n        for (int w = 0; w <= capacity; w++) {\n            dp[i, w] = dp[i - 1, w];\n            if (weights[i - 1] <= w)\n                dp[i, w] = Math.Max(dp[i, w], dp[i - 1, w - weights[i - 1]] + values[i - 1]);\n        }\n    return dp[n, capacity];\n}",
           "language": "csharp"
         },
         {
@@ -303,7 +303,7 @@
           "complexity": "O(m × n)",
           "space": "O(m × n)",
           "description": "İki dizinin en uzun ortak alt dizisini bulur. Git diff, DNA sekans karşılaştırma, spell checker'larda kullanılır. Subsequence: karakterlerin sırası korunur ama ardışık olmak zorunda değildir.",
-          "code": "func lcs(s1, s2 string) int {\n\tm, n := len(s1), len(s2)\n\tdp := make([][]int, m+1)\n\tfor i := range dp {\n\t\tdp[i] = make([]int, n+1)\n\t}\n\tfor i := 1; i &lt;= m; i++ {\n\t\tfor j := 1; j &lt;= n; j++ {\n\t\t\tif s1[i-1] == s2[j-1] {\n\t\t\t\tdp[i][j] = dp[i-1][j-1] + 1\n\t\t\t} else {\n\t\t\t\tdp[i][j] = max(dp[i-1][j], dp[i][j-1])\n\t\t\t}\n\t\t}\n\t}\n\treturn dp[m][n]\n}",
+          "code": "func lcs(s1, s2 string) int {\n\tm, n := len(s1), len(s2)\n\tdp := make([][]int, m+1)\n\tfor i := range dp {\n\t\tdp[i] = make([]int, n+1)\n\t}\n\tfor i := 1; i <= m; i++ {\n\t\tfor j := 1; j <= n; j++ {\n\t\t\tif s1[i-1] == s2[j-1] {\n\t\t\t\tdp[i][j] = dp[i-1][j-1] + 1\n\t\t\t} else {\n\t\t\t\tdp[i][j] = max(dp[i-1][j], dp[i][j-1])\n\t\t\t}\n\t\t}\n\t}\n\treturn dp[m][n]\n}",
           "language": "go"
         },
         {
@@ -311,7 +311,7 @@
           "complexity": "O(n log n) — patience sorting ile",
           "space": "O(n)",
           "description": "Bir dizinin en uzun artan alt dizisinin uzunluğunu bulur. Stock trading stratejileri, box stacking, envelope nesting problemlerinde kullanılır.",
-          "code": "func lis(nums []int) int {\n\ttails := []int{}\n\tfor _, n := range nums {\n\t\tlo, hi := 0, len(tails)\n\t\tfor lo &lt; hi {\n\t\t\tmid := (lo + hi) / 2\n\t\t\tif tails[mid] &lt; n {\n\t\t\t\tlo = mid + 1\n\t\t\t} else {\n\t\t\t\thi = mid\n\t\t\t}\n\t\t}\n\t\tif lo == len(tails) {\n\t\t\ttails = append(tails, n)\n\t\t} else {\n\t\t\ttails[lo] = n\n\t\t}\n\t}\n\treturn len(tails)\n}",
+          "code": "func lis(nums []int) int {\n\ttails := []int{}\n\tfor _, n := range nums {\n\t\tlo, hi := 0, len(tails)\n\t\tfor lo < hi {\n\t\t\tmid := (lo + hi) / 2\n\t\t\tif tails[mid] < n {\n\t\t\t\tlo = mid + 1\n\t\t\t} else {\n\t\t\t\thi = mid\n\t\t\t}\n\t\t}\n\t\tif lo == len(tails) {\n\t\t\ttails = append(tails, n)\n\t\t} else {\n\t\t\ttails[lo] = n\n\t\t}\n\t}\n\treturn len(tails)\n}",
           "language": "go"
         },
         {
@@ -319,7 +319,7 @@
           "complexity": "O(amount × n)",
           "space": "O(amount)",
           "description": "Verilen bozuk para değerleriyle belirli bir miktarı oluşturmak için gereken minimum madeni para sayısı. Para üstü hesaplama, yazılım lisans maliyeti optimizasyonu gibi yerlerde kullanılır.",
-          "code": "function coinChange(coins: number[], amount: number): number {\n  const dp = new Array(amount + 1).fill(Infinity);\n  dp[0] = 0;\n  for (let i = 1; i &lt;= amount; i++) {\n    for (const coin of coins) {\n      if (coin &lt;= i) {\n        dp[i] = Math.min(dp[i], dp[i - coin] + 1);\n      }\n    }\n  }\n  return dp[amount] === Infinity ? -1 : dp[amount];\n}",
+          "code": "function coinChange(coins: number[], amount: number): number {\n  const dp = new Array(amount + 1).fill(Infinity);\n  dp[0] = 0;\n  for (let i = 1; i <= amount; i++) {\n    for (const coin of coins) {\n      if (coin <= i) {\n        dp[i] = Math.min(dp[i], dp[i - coin] + 1);\n      }\n    }\n  }\n  return dp[amount] === Infinity ? -1 : dp[amount];\n}",
           "language": "typescript"
         },
         {
@@ -327,7 +327,7 @@
           "complexity": "O(m × n)",
           "space": "O(m × n)",
           "description": "İki string arasındaki minimum düzenleme işlemi sayısı (ekleme, silme, değiştirme). Spell checker, DNA mutasyon analizi, fuzzy string matching, OCR düzeltme sistemlerinde kullanılır.",
-          "code": "public int EditDistance(string s1, string s2) {\n    int m = s1.Length, n = s2.Length;\n    var dp = new int[m + 1, n + 1];\n    for (int i = 0; i &lt;= m; i++) dp[i, 0] = i;\n    for (int j = 0; j &lt;= n; j++) dp[0, j] = j;\n    for (int i = 1; i &lt;= m; i++)\n        for (int j = 1; j &lt;= n; j++)\n            dp[i, j] = s1[i-1] == s2[j-1]\n                ? dp[i-1, j-1]\n                : 1 + Math.Min(dp[i-1, j], Math.Min(dp[i, j-1], dp[i-1, j-1]));\n    return dp[m, n];\n}",
+          "code": "public int EditDistance(string s1, string s2) {\n    int m = s1.Length, n = s2.Length;\n    var dp = new int[m + 1, n + 1];\n    for (int i = 0; i <= m; i++) dp[i, 0] = i;\n    for (int j = 0; j <= n; j++) dp[0, j] = j;\n    for (int i = 1; i <= m; i++)\n        for (int j = 1; j <= n; j++)\n            dp[i, j] = s1[i-1] == s2[j-1]\n                ? dp[i-1, j-1]\n                : 1 + Math.Min(dp[i-1, j], Math.Min(dp[i, j-1], dp[i-1, j-1]));\n    return dp[m, n];\n}",
           "language": "csharp"
         }
       ]
@@ -341,7 +341,7 @@
           "complexity": "O(n log n)",
           "space": "O(1)",
           "description": "Çakışmayan maksimum sayıda aktiviteyi seçer. Bitiş zamanına göre sıralayıp, bir öncekiyle çakışmayanı seç. Toplantı odası rezervasyonu, CPU task scheduling'de kullanılır.",
-          "code": "func activitySelection(start, end []int) int {\n\tn := len(start)\n\torder := make([]int, n)\n\tfor i := range order {\n\t\torder[i] = i\n\t}\n\tsort.Slice(order, func(i, j int) bool {\n\t\treturn end[order[i]] &lt; end[order[j]]\n\t})\n\tcount := 1\n\tlastEnd := end[order[0]]\n\tfor i := 1; i &lt; n; i++ {\n\t\tif start[order[i]] &gt;= lastEnd {\n\t\t\tcount++\n\t\t\tlastEnd = end[order[i]]\n\t\t}\n\t}\n\treturn count\n}",
+          "code": "func activitySelection(start, end []int) int {\n\tn := len(start)\n\torder := make([]int, n)\n\tfor i := range order {\n\t\torder[i] = i\n\t}\n\tsort.Slice(order, func(i, j int) bool {\n\t\treturn end[order[i]] < end[order[j]]\n\t})\n\tcount := 1\n\tlastEnd := end[order[0]]\n\tfor i := 1; i < n; i++ {\n\t\tif start[order[i]] >= lastEnd {\n\t\t\tcount++\n\t\t\tlastEnd = end[order[i]]\n\t\t}\n\t}\n\treturn count\n}",
           "language": "go"
         },
         {
@@ -349,7 +349,7 @@
           "complexity": "O(n log n)",
           "space": "O(n)",
           "description": "Sık kullanılan karakterlere daha kısa bit dizisi atar. Kayıpsız veri sıkıştırmanın temelidir. ZIP, JPEG (AC katsayıları), MP3 bu fikri kullanır. Optimal prefix code üretir.",
-          "code": "public class HuffmanNode {\n    public char? Symbol;\n    public int Freq;\n    public HuffmanNode? Left, Right;\n}\n\npublic HuffmanNode BuildTree(Dictionary&lt;char, int&gt; freq) {\n    var pq = new PriorityQueue&lt;HuffmanNode, int&gt;();\n    foreach (var (ch, f) in freq)\n        pq.Enqueue(new HuffmanNode { Symbol = ch, Freq = f }, f);\n    while (pq.Count &gt; 1) {\n        var l = pq.Dequeue();\n        var r = pq.Dequeue();\n        var parent = new HuffmanNode { Freq = l.Freq + r.Freq, Left = l, Right = r };\n        pq.Enqueue(parent, parent.Freq);\n    }\n    return pq.Dequeue();\n}",
+          "code": "public class HuffmanNode {\n    public char? Symbol;\n    public int Freq;\n    public HuffmanNode? Left, Right;\n}\n\npublic HuffmanNode BuildTree(Dictionary<char, int> freq) {\n    var pq = new PriorityQueue<HuffmanNode, int>();\n    foreach (var (ch, f) in freq)\n        pq.Enqueue(new HuffmanNode { Symbol = ch, Freq = f }, f);\n    while (pq.Count > 1) {\n        var l = pq.Dequeue();\n        var r = pq.Dequeue();\n        var parent = new HuffmanNode { Freq = l.Freq + r.Freq, Left = l, Right = r };\n        pq.Enqueue(parent, parent.Freq);\n    }\n    return pq.Dequeue();\n}",
           "language": "csharp"
         },
         {
@@ -357,7 +357,7 @@
           "complexity": "O(n log n)",
           "space": "O(1)",
           "description": "Eşyaları kırılabilir — bir kısmını alabilirsin. Değer/ağırlık oranına göre sırala, en iyisinden başla. 0/1 Knapsack'ten farklı olarak Greedy optimal çözüm verir.",
-          "code": "function fractionalKnapsack(weights: number[], values: number[], capacity: number): number {\n  const items = weights.map((w, i) =&gt; ({ w, v: values[i], ratio: values[i] / w }));\n  items.sort((a, b) =&gt; b.ratio - a.ratio);\n  let total = 0, remaining = capacity;\n  for (const item of items) {\n    if (remaining &lt;= 0) break;\n    const take = Math.min(item.w, remaining);\n    total += take * item.ratio;\n    remaining -= take;\n  }\n  return total;\n}",
+          "code": "function fractionalKnapsack(weights: number[], values: number[], capacity: number): number {\n  const items = weights.map((w, i) => ({ w, v: values[i], ratio: values[i] / w }));\n  items.sort((a, b) => b.ratio - a.ratio);\n  let total = 0, remaining = capacity;\n  for (const item of items) {\n    if (remaining <= 0) break;\n    const take = Math.min(item.w, remaining);\n    total += take * item.ratio;\n    remaining -= take;\n  }\n  return total;\n}",
           "language": "typescript"
         }
       ]
@@ -371,7 +371,7 @@
           "complexity": "O(n + m)",
           "space": "O(m)",
           "description": "String içinde pattern arar. Naif O(n×m) yerine failure function ile geri adım atmaz. Virüs imza tespiti, metin editörü arama, biyoinformatik sekans arama'da kullanılır.",
-          "code": "func kmp(text, pattern string) []int {\n\tn, m := len(text), len(pattern)\n\tlps := buildLPS(pattern)\n\tresult := []int{}\n\tj := 0\n\tfor i := 0; i &lt; n; {\n\t\tif text[i] == pattern[j] {\n\t\t\ti++; j++\n\t\t}\n\t\tif j == m {\n\t\t\tresult = append(result, i-j)\n\t\t\tj = lps[j-1]\n\t\t} else if i &lt; n &amp;&amp; text[i] != pattern[j] {\n\t\t\tif j != 0 {\n\t\t\t\tj = lps[j-1]\n\t\t\t} else {\n\t\t\t\ti++\n\t\t\t}\n\t\t}\n\t}\n\treturn result\n}\n\nfunc buildLPS(pattern string) []int {\n\tm := len(pattern)\n\tlps := make([]int, m)\n\tfor i, len := 1, 0; i &lt; m; {\n\t\tif pattern[i] == pattern[len] {\n\t\t\tlen++; lps[i] = len; i++\n\t\t} else if len != 0 {\n\t\t\tlen = lps[len-1]\n\t\t} else {\n\t\t\ti++\n\t\t}\n\t}\n\treturn lps\n}",
+          "code": "func kmp(text, pattern string) []int {\n\tn, m := len(text), len(pattern)\n\tlps := buildLPS(pattern)\n\tresult := []int{}\n\tj := 0\n\tfor i := 0; i < n; {\n\t\tif text[i] == pattern[j] {\n\t\t\ti++; j++\n\t\t}\n\t\tif j == m {\n\t\t\tresult = append(result, i-j)\n\t\t\tj = lps[j-1]\n\t\t} else if i < n && text[i] != pattern[j] {\n\t\t\tif j != 0 {\n\t\t\t\tj = lps[j-1]\n\t\t\t} else {\n\t\t\t\ti++\n\t\t\t}\n\t\t}\n\t}\n\treturn result\n}\n\nfunc buildLPS(pattern string) []int {\n\tm := len(pattern)\n\tlps := make([]int, m)\n\tfor i, len := 1, 0; i < m; {\n\t\tif pattern[i] == pattern[len] {\n\t\t\tlen++; lps[i] = len; i++\n\t\t} else if len != 0 {\n\t\t\tlen = lps[len-1]\n\t\t} else {\n\t\t\ti++\n\t\t}\n\t}\n\treturn lps\n}",
           "language": "go"
         },
         {
@@ -379,7 +379,7 @@
           "complexity": "O(n + m) avg / O(n×m) worst",
           "space": "O(1)",
           "description": "Rolling hash ile pattern arar. Çoklu pattern aramada KMP'den üstündür. Plagiarism detection, dosya benzerlik analizi, substring fingerprinting'de kullanılır.",
-          "code": "function rabinKarp(text: string, pattern: string): number[] {\n  const BASE = 31, MOD = 1e9 + 9;\n  const n = text.length, m = pattern.length;\n  const results: number[] = [];\n  let ph = 0, th = 0, power = 1;\n  for (let i = 0; i &lt; m - 1; i++) power = (power * BASE) % MOD;\n  for (let i = 0; i &lt; m; i++) {\n    ph = (ph * BASE + pattern.charCodeAt(i)) % MOD;\n    th = (th * BASE + text.charCodeAt(i)) % MOD;\n  }\n  for (let i = 0; i &lt;= n - m; i++) {\n    if (ph === th &amp;&amp; text.slice(i, i + m) === pattern) results.push(i);\n    if (i &lt; n - m) {\n      th = (BASE * (th - text.charCodeAt(i) * power) + text.charCodeAt(i + m)) % MOD;\n      if (th &lt; 0) th += MOD;\n    }\n  }\n  return results;\n}",
+          "code": "function rabinKarp(text: string, pattern: string): number[] {\n  const BASE = 31, MOD = 1e9 + 9;\n  const n = text.length, m = pattern.length;\n  const results: number[] = [];\n  let ph = 0, th = 0, power = 1;\n  for (let i = 0; i < m - 1; i++) power = (power * BASE) % MOD;\n  for (let i = 0; i < m; i++) {\n    ph = (ph * BASE + pattern.charCodeAt(i)) % MOD;\n    th = (th * BASE + text.charCodeAt(i)) % MOD;\n  }\n  for (let i = 0; i <= n - m; i++) {\n    if (ph === th && text.slice(i, i + m) === pattern) results.push(i);\n    if (i < n - m) {\n      th = (BASE * (th - text.charCodeAt(i) * power) + text.charCodeAt(i + m)) % MOD;\n      if (th < 0) th += MOD;\n    }\n  }\n  return results;\n}",
           "language": "typescript"
         },
         {
@@ -387,7 +387,7 @@
           "complexity": "O(n + m)",
           "space": "O(n + m)",
           "description": "Her pozisyon için en uzun prefix eşleşme uzunluğunu hesaplar. Pattern matching, string periyodunu bulma, DNA tekrar analizi'nde kullanılır. KMP'ye alternatiftir.",
-          "code": "func zAlgorithm(s string) []int {\n\tn := len(s)\n\tz := make([]int, n)\n\tl, r := 0, 0\n\tfor i := 1; i &lt; n; i++ {\n\t\tif i &lt; r {\n\t\t\tz[i] = min(r-i, z[i-l])\n\t\t}\n\t\tfor i+z[i] &lt; n &amp;&amp; s[z[i]] == s[i+z[i]] {\n\t\t\tz[i]++\n\t\t}\n\t\tif i+z[i] &gt; r {\n\t\t\tl, r = i, i+z[i]\n\t\t}\n\t}\n\treturn z\n}\n\nfunc searchWithZ(text, pattern string) []int {\n\ts := pattern + \"$\" + text\n\tz := zAlgorithm(s)\n\tm := len(pattern)\n\tresult := []int{}\n\tfor i := m + 1; i &lt; len(s); i++ {\n\t\tif z[i] == m {\n\t\t\tresult = append(result, i-m-1)\n\t\t}\n\t}\n\treturn result\n}",
+          "code": "func zAlgorithm(s string) []int {\n\tn := len(s)\n\tz := make([]int, n)\n\tl, r := 0, 0\n\tfor i := 1; i < n; i++ {\n\t\tif i < r {\n\t\t\tz[i] = min(r-i, z[i-l])\n\t\t}\n\t\tfor i+z[i] < n && s[z[i]] == s[i+z[i]] {\n\t\t\tz[i]++\n\t\t}\n\t\tif i+z[i] > r {\n\t\t\tl, r = i, i+z[i]\n\t\t}\n\t}\n\treturn z\n}\n\nfunc searchWithZ(text, pattern string) []int {\n\ts := pattern + \"$\" + text\n\tz := zAlgorithm(s)\n\tm := len(pattern)\n\tresult := []int{}\n\tfor i := m + 1; i < len(s); i++ {\n\t\tif z[i] == m {\n\t\t\tresult = append(result, i-m-1)\n\t\t}\n\t}\n\treturn result\n}",
           "language": "go"
         },
         {
@@ -395,21 +395,21 @@
           "complexity": "O(n)",
           "space": "O(n)",
           "description": "Bir string'deki tüm palindromluk alt dizeleri O(n)'de bulur. Naif yaklaşım O(n²)'dir. Biyoinformatik'te DNA palindrom yapılarını tespit etmek için kullanılır.",
-          "code": "public int[] Manacher(string s) {\n    string t = \"#\" + string.Join(\"#\", s.ToCharArray()) + \"#\";\n    int n = t.Length;\n    int[] p = new int[n];\n    int c = 0, r = 0;\n    for (int i = 0; i &lt; n; i++) {\n        int mirror = 2 * c - i;\n        if (i &lt; r) p[i] = Math.Min(r - i, p[mirror]);\n        while (i + p[i] + 1 &lt; n &amp;&amp; i - p[i] - 1 &gt;= 0 &amp;&amp; t[i + p[i] + 1] == t[i - p[i] - 1])\n            p[i]++;\n        if (i + p[i] &gt; r) { c = i; r = i + p[i]; }\n    }\n    return p;\n}",
+          "code": "public int[] Manacher(string s) {\n    string t = \"#\" + string.Join(\"#\", s.ToCharArray()) + \"#\";\n    int n = t.Length;\n    int[] p = new int[n];\n    int c = 0, r = 0;\n    for (int i = 0; i < n; i++) {\n        int mirror = 2 * c - i;\n        if (i < r) p[i] = Math.Min(r - i, p[mirror]);\n        while (i + p[i] + 1 < n && i - p[i] - 1 >= 0 && t[i + p[i] + 1] == t[i - p[i] - 1])\n            p[i]++;\n        if (i + p[i] > r) { c = i; r = i + p[i]; }\n    }\n    return p;\n}",
           "language": "csharp"
         }
       ]
     },
     {
       "id": "math",
-      "title": "Matematik &amp; Asal Sayı Algoritmaları",
+      "title": "Matematik & Asal Sayı Algoritmaları",
       "items": [
         {
           "name": "Sieve of Eratosthenes",
           "complexity": "O(n log log n)",
           "space": "O(n)",
           "description": "n'e kadar tüm asal sayıları bulur. MÖ 276'da Eratosthenes tarafından tanımlandı. Kriptografi (RSA anahtar üretimi), hash fonksiyonları, faktorizasyon ön işleminde kullanılır.",
-          "code": "func sieve(n int) []int {\n\tisPrime := make([]bool, n+1)\n\tfor i := 2; i &lt;= n; i++ {\n\t\tisPrime[i] = true\n\t}\n\tfor i := 2; i*i &lt;= n; i++ {\n\t\tif isPrime[i] {\n\t\t\tfor j := i * i; j &lt;= n; j += i {\n\t\t\t\tisPrime[j] = false\n\t\t\t}\n\t\t}\n\t}\n\tprimes := []int{}\n\tfor i := 2; i &lt;= n; i++ {\n\t\tif isPrime[i] {\n\t\t\tprimes = append(primes, i)\n\t\t}\n\t}\n\treturn primes\n}",
+          "code": "func sieve(n int) []int {\n\tisPrime := make([]bool, n+1)\n\tfor i := 2; i <= n; i++ {\n\t\tisPrime[i] = true\n\t}\n\tfor i := 2; i*i <= n; i++ {\n\t\tif isPrime[i] {\n\t\t\tfor j := i * i; j <= n; j += i {\n\t\t\t\tisPrime[j] = false\n\t\t\t}\n\t\t}\n\t}\n\tprimes := []int{}\n\tfor i := 2; i <= n; i++ {\n\t\tif isPrime[i] {\n\t\t\tprimes = append(primes, i)\n\t\t}\n\t}\n\treturn primes\n}",
           "language": "go"
         },
         {
@@ -417,11 +417,11 @@
           "complexity": "O(k log² n) — k = tekrar sayısı",
           "space": "O(1)",
           "description": "Büyük sayıların asal olup olmadığını olasılıksal olarak test eder. k tekrar için hata olasılığı 4^(-k). RSA'da 2048-bit asal üretiminde kullanılır. Deterministic versiyonu belirli tabanlarla garantilidir.",
-          "code": "public static bool MillerRabin(long n, int k = 10) {\n    if (n &lt; 2) return false;\n    if (n == 2 || n == 3) return true;\n    if (n % 2 == 0) return false;\n    long d = n - 1; int r = 0;\n    while (d % 2 == 0) { d /= 2; r++; }\n    var rng = new Random();\n    for (int i = 0; i &lt; k; i++) {\n        long a = 2 + (long)(rng.NextInt64() % (n - 3));\n        long x = ModPow(a, d, n);\n        if (x == 1 || x == n - 1) continue;\n        bool composite = true;\n        for (int j = 0; j &lt; r - 1; j++) {\n            x = ModPow(x, 2, n);\n            if (x == n - 1) { composite = false; break; }\n        }\n        if (composite) return false;\n    }\n    return true;\n}\n\nstatic long ModPow(long base, long exp, long mod) {\n    long result = 1; base %= mod;\n    while (exp &gt; 0) {\n        if ((exp &amp; 1) == 1) result = result * base % mod;\n        base = base * base % mod; exp &gt;&gt;= 1;\n    }\n    return result;\n}",
+          "code": "public static bool MillerRabin(long n, int k = 10) {\n    if (n < 2) return false;\n    if (n == 2 || n == 3) return true;\n    if (n % 2 == 0) return false;\n    long d = n - 1; int r = 0;\n    while (d % 2 == 0) { d /= 2; r++; }\n    var rng = new Random();\n    for (int i = 0; i < k; i++) {\n        long a = 2 + (long)(rng.NextInt64() % (n - 3));\n        long x = ModPow(a, d, n);\n        if (x == 1 || x == n - 1) continue;\n        bool composite = true;\n        for (int j = 0; j < r - 1; j++) {\n            x = ModPow(x, 2, n);\n            if (x == n - 1) { composite = false; break; }\n        }\n        if (composite) return false;\n    }\n    return true;\n}\n\nstatic long ModPow(long base, long exp, long mod) {\n    long result = 1; base %= mod;\n    while (exp > 0) {\n        if ((exp & 1) == 1) result = result * base % mod;\n        base = base * base % mod; exp >>= 1;\n    }\n    return result;\n}",
           "language": "csharp"
         },
         {
-          "name": "GCD &amp; LCM (Öklid)",
+          "name": "GCD & LCM (Öklid)",
           "complexity": "O(log min(a, b))",
           "space": "O(1)",
           "description": "En büyük ortak bölen (GCD) Öklid algoritması ile hesaplanır. MÖ 300'de tanımlandı, günümüzde kriptografi, kesir sadeleştirme, ritim periyodu hesaplamalarında kullanılır.",
@@ -433,7 +433,7 @@
           "complexity": "O(log n)",
           "space": "O(1)",
           "description": "a^n mod m hesaplar. RSA şifreleme/çözme, Diffie-Hellman anahtar değişimi, Fermat's little theorem uygulamalarında temel operasyondur. Binary exponentiation olarak da bilinir.",
-          "code": "func modPow(base, exp, mod int) int {\n\tresult := 1\n\tbase %= mod\n\tfor exp &gt; 0 {\n\t\tif exp%2 == 1 {\n\t\t\tresult = result * base % mod\n\t\t}\n\t\texp /= 2\n\t\tbase = base * base % mod\n\t}\n\treturn result\n}",
+          "code": "func modPow(base, exp, mod int) int {\n\tresult := 1\n\tbase %= mod\n\tfor exp > 0 {\n\t\tif exp%2 == 1 {\n\t\t\tresult = result * base % mod\n\t\t}\n\t\texp /= 2\n\t\tbase = base * base % mod\n\t}\n\treturn result\n}",
           "language": "go"
         },
         {
@@ -441,7 +441,7 @@
           "complexity": "O(√n)",
           "space": "O(log n)",
           "description": "Bir sayıyı asal çarpanlarına ayırır. RSA'nın güvenliği bu işlemin büyük sayılar için zor olmasına dayanır. Euler's totient, LCM hesaplama, kriptanaliz temeli.",
-          "code": "function primeFactors(n: number): Map&lt;number, number&gt; {\n  const factors = new Map&lt;number, number&gt;();\n  for (let p = 2; p * p &lt;= n; p++) {\n    while (n % p === 0) {\n      factors.set(p, (factors.get(p) ?? 0) + 1);\n      n = Math.floor(n / p);\n    }\n  }\n  if (n &gt; 1) factors.set(n, (factors.get(n) ?? 0) + 1);\n  return factors;\n}",
+          "code": "function primeFactors(n: number): Map<number, number> {\n  const factors = new Map<number, number>();\n  for (let p = 2; p * p <= n; p++) {\n    while (n % p === 0) {\n      factors.set(p, (factors.get(p) ?? 0) + 1);\n      n = Math.floor(n / p);\n    }\n  }\n  if (n > 1) factors.set(n, (factors.get(n) ?? 0) + 1);\n  return factors;\n}",
           "language": "typescript"
         },
         {
@@ -449,7 +449,7 @@
           "complexity": "O(√n)",
           "space": "O(1)",
           "description": "1'den n'e kadar n ile aralarında asal olan sayıların sayısı. RSA'da public/private exponent hesaplamada kritik rol oynar: φ(n) = (p-1)(q-1) formülü.",
-          "code": "func eulerTotient(n int) int {\n\tresult := n\n\tfor p := 2; p*p &lt;= n; p++ {\n\t\tif n%p == 0 {\n\t\t\tfor n%p == 0 {\n\t\t\t\tn /= p\n\t\t\t}\n\t\t\tresult -= result / p\n\t\t}\n\t}\n\tif n &gt; 1 {\n\t\tresult -= result / n\n\t}\n\treturn result\n}",
+          "code": "func eulerTotient(n int) int {\n\tresult := n\n\tfor p := 2; p*p <= n; p++ {\n\t\tif n%p == 0 {\n\t\t\tfor n%p == 0 {\n\t\t\t\tn /= p\n\t\t\t}\n\t\t\tresult -= result / p\n\t\t}\n\t}\n\tif n > 1 {\n\t\tresult -= result / n\n\t}\n\treturn result\n}",
           "language": "go"
         },
         {
@@ -457,7 +457,7 @@
           "complexity": "O(k³ log n) — k = matris boyutu",
           "space": "O(k²)",
           "description": "Lineer özyineleme ilişkilerini (Fibonacci, sayma problemleri) O(log n)'de çözer. Oyun teorisi, ekonomik modelleme, Markov chain hesaplamaları, PageRank'te kullanılır.",
-          "code": "func matMul(A, B [][]int, mod int) [][]int {\n\tn := len(A)\n\tC := make([][]int, n)\n\tfor i := range C {\n\t\tC[i] = make([]int, n)\n\t\tfor j := range C[i] {\n\t\t\tfor k := 0; k &lt; n; k++ {\n\t\t\t\tC[i][j] = (C[i][j] + A[i][k]*B[k][j]) % mod\n\t\t\t}\n\t\t}\n\t}\n\treturn C\n}\n\nfunc matPow(M [][]int, n, mod int) [][]int {\n\tn2 := len(M)\n\tresult := make([][]int, n2)\n\tfor i := range result {\n\t\tresult[i] = make([]int, n2)\n\t\tresult[i][i] = 1 // kimlik matrisi\n\t}\n\tfor n &gt; 0 {\n\t\tif n%2 == 1 {\n\t\t\tresult = matMul(result, M, mod)\n\t\t}\n\t\tM = matMul(M, M, mod)\n\t\tn /= 2\n\t}\n\treturn result\n}",
+          "code": "func matMul(A, B [][]int, mod int) [][]int {\n\tn := len(A)\n\tC := make([][]int, n)\n\tfor i := range C {\n\t\tC[i] = make([]int, n)\n\t\tfor j := range C[i] {\n\t\t\tfor k := 0; k < n; k++ {\n\t\t\t\tC[i][j] = (C[i][j] + A[i][k]*B[k][j]) % mod\n\t\t\t}\n\t\t}\n\t}\n\treturn C\n}\n\nfunc matPow(M [][]int, n, mod int) [][]int {\n\tn2 := len(M)\n\tresult := make([][]int, n2)\n\tfor i := range result {\n\t\tresult[i] = make([]int, n2)\n\t\tresult[i][i] = 1 // kimlik matrisi\n\t}\n\tfor n > 0 {\n\t\tif n%2 == 1 {\n\t\t\tresult = matMul(result, M, mod)\n\t\t}\n\t\tM = matMul(M, M, mod)\n\t\tn /= 2\n\t}\n\treturn result\n}",
           "language": "go"
         },
         {
@@ -465,21 +465,21 @@
           "complexity": "O(n log n)",
           "space": "O(n)",
           "description": "Polinom çarpımı, konvolüsyon, frekans analizi. Naif polinom çarpımı O(n²) iken FFT ile O(n log n)'e düşer. Ses/görüntü işleme, JPEG sıkıştırma, 5G sinyal işleme, büyük sayı çarpımında kullanılır.",
-          "code": "function fft(a: Complex[], invert: boolean): void {\n  const n = a.length;\n  for (let i = 1, j = 0; i &lt; n; i++) {\n    let bit = n &gt;&gt; 1;\n    for (; j &amp; bit; bit &gt;&gt;= 1) j ^= bit;\n    j ^= bit;\n    if (i &lt; j) [a[i], a[j]] = [a[j], a[i]];\n  }\n  for (let len = 2; len &lt;= n; len &lt;&lt;= 1) {\n    const ang = (2 * Math.PI / len) * (invert ? -1 : 1);\n    const wlen = { re: Math.cos(ang), im: Math.sin(ang) };\n    for (let i = 0; i &lt; n; i += len) {\n      let w = { re: 1, im: 0 };\n      for (let j = 0; j &lt; len / 2; j++) {\n        const u = a[i + j];\n        const v = cmul(w, a[i + j + len / 2]);\n        a[i + j] = cadd(u, v);\n        a[i + j + len / 2] = csub(u, v);\n        w = cmul(w, wlen);\n      }\n    }\n  }\n  if (invert) a.forEach(x =&gt; { x.re /= n; x.im /= n; });\n}",
+          "code": "function fft(a: Complex[], invert: boolean): void {\n  const n = a.length;\n  for (let i = 1, j = 0; i < n; i++) {\n    let bit = n >> 1;\n    for (; j & bit; bit >>= 1) j ^= bit;\n    j ^= bit;\n    if (i < j) [a[i], a[j]] = [a[j], a[i]];\n  }\n  for (let len = 2; len <= n; len <<= 1) {\n    const ang = (2 * Math.PI / len) * (invert ? -1 : 1);\n    const wlen = { re: Math.cos(ang), im: Math.sin(ang) };\n    for (let i = 0; i < n; i += len) {\n      let w = { re: 1, im: 0 };\n      for (let j = 0; j < len / 2; j++) {\n        const u = a[i + j];\n        const v = cmul(w, a[i + j + len / 2]);\n        a[i + j] = cadd(u, v);\n        a[i + j + len / 2] = csub(u, v);\n        w = cmul(w, wlen);\n      }\n    }\n  }\n  if (invert) a.forEach(x => { x.re /= n; x.im /= n; });\n}",
           "language": "typescript"
         }
       ]
     },
     {
       "id": "divide_and_conquer",
-      "title": "Böl ve Yönet (Divide &amp; Conquer)",
+      "title": "Böl ve Yönet (Divide & Conquer)",
       "items": [
         {
           "name": "Closest Pair of Points",
           "complexity": "O(n log n)",
           "space": "O(n)",
           "description": "n nokta arasındaki en yakın çifti bulur. Naif O(n²) yerine böl-yönet ile O(n log n). Coğrafi bilgi sistemleri (GIS), oyun çarpışma tespiti, makine öğrenmesinde k-NN'de kullanılır.",
-          "code": "public double ClosestPair((double x, double y)[] pts) {\n    Array.Sort(pts, (a, b) =&gt; a.x.CompareTo(b.x));\n    return Closest(pts, 0, pts.Length - 1);\n}\n\ndouble Closest((double x, double y)[] pts, int l, int r) {\n    if (r - l &lt;= 3) return BruteForce(pts, l, r);\n    int mid = (l + r) / 2;\n    double d = Math.Min(Closest(pts, l, mid), Closest(pts, mid + 1, r));\n    var strip = pts[l..(r+1)].Where(p =&gt; Math.Abs(p.x - pts[mid].x) &lt; d).OrderBy(p =&gt; p.y).ToArray();\n    for (int i = 0; i &lt; strip.Length; i++)\n        for (int j = i + 1; j &lt; strip.Length &amp;&amp; strip[j].y - strip[i].y &lt; d; j++)\n            d = Math.Min(d, Dist(strip[i], strip[j]));\n    return d;\n}",
+          "code": "public double ClosestPair((double x, double y)[] pts) {\n    Array.Sort(pts, (a, b) => a.x.CompareTo(b.x));\n    return Closest(pts, 0, pts.Length - 1);\n}\n\ndouble Closest((double x, double y)[] pts, int l, int r) {\n    if (r - l <= 3) return BruteForce(pts, l, r);\n    int mid = (l + r) / 2;\n    double d = Math.Min(Closest(pts, l, mid), Closest(pts, mid + 1, r));\n    var strip = pts[l..(r+1)].Where(p => Math.Abs(p.x - pts[mid].x) < d).OrderBy(p => p.y).ToArray();\n    for (int i = 0; i < strip.Length; i++)\n        for (int j = i + 1; j < strip.Length && strip[j].y - strip[i].y < d; j++)\n            d = Math.Min(d, Dist(strip[i], strip[j]));\n    return d;\n}",
           "language": "csharp"
         },
         {
@@ -487,7 +487,7 @@
           "complexity": "O(n^1.585)",
           "space": "O(n)",
           "description": "Büyük tam sayı çarpımı. Naif O(n²) yerine 3 alt çarpım ile çalışır. Python'un big integer çarpımı, kriptografik kütüphaneler bu algoritmayı kullanır.",
-          "code": "func karatsuba(x, y int) int {\n\tif x &lt; 10 || y &lt; 10 {\n\t\treturn x * y\n\t}\n\tn := len(fmt.Sprintf(\"%d\", max(x, y)))\n\tm := n / 2\n\tp := int(math.Pow10(m))\n\ta, b := x/p, x%p\n\tc, d := y/p, y%p\n\tac := karatsuba(a, c)\n\tbd := karatsuba(b, d)\n\tabcd := karatsuba(a+b, c+d) - ac - bd\n\treturn ac*int(math.Pow10(2*m)) + abcd*p + bd\n}",
+          "code": "func karatsuba(x, y int) int {\n\tif x < 10 || y < 10 {\n\t\treturn x * y\n\t}\n\tn := len(fmt.Sprintf(\"%d\", max(x, y)))\n\tm := n / 2\n\tp := int(math.Pow10(m))\n\ta, b := x/p, x%p\n\tc, d := y/p, y%p\n\tac := karatsuba(a, c)\n\tbd := karatsuba(b, d)\n\tabcd := karatsuba(a+b, c+d) - ac - bd\n\treturn ac*int(math.Pow10(2*m)) + abcd*p + bd\n}",
           "language": "go"
         }
       ]
@@ -501,7 +501,7 @@
           "complexity": "O(n!)",
           "space": "O(n)",
           "description": "n×n tahtaya birbirini tehdit etmeyen n vezir yerleştirme. Kısıt tatmin problemlerinin klasik örneği. Kaynak atama, timetable scheduling, VLSI chip tasarımı için temel yaklaşım.",
-          "code": "func solveNQueens(n int) [][]string {\n\tresult := [][]string{}\n\tboard := make([]int, n) // board[i] = i. satırda vezirlerin sütunu\n\tvar bt func(row int)\n\tbt = func(row int) {\n\t\tif row == n {\n\t\t\tresult = append(result, buildBoard(board, n))\n\t\t\treturn\n\t\t}\n\t\tfor col := 0; col &lt; n; col++ {\n\t\t\tif isValid(board, row, col) {\n\t\t\t\tboard[row] = col\n\t\t\t\tbt(row + 1)\n\t\t\t}\n\t\t}\n\t}\n\tbt(0)\n\treturn result\n}\n\nfunc isValid(board []int, row, col int) bool {\n\tfor i := 0; i &lt; row; i++ {\n\t\tif board[i] == col || abs(board[i]-col) == abs(i-row) {\n\t\t\treturn false\n\t\t}\n\t}\n\treturn true\n}",
+          "code": "func solveNQueens(n int) [][]string {\n\tresult := [][]string{}\n\tboard := make([]int, n) // board[i] = i. satırda vezirlerin sütunu\n\tvar bt func(row int)\n\tbt = func(row int) {\n\t\tif row == n {\n\t\t\tresult = append(result, buildBoard(board, n))\n\t\t\treturn\n\t\t}\n\t\tfor col := 0; col < n; col++ {\n\t\t\tif isValid(board, row, col) {\n\t\t\t\tboard[row] = col\n\t\t\t\tbt(row + 1)\n\t\t\t}\n\t\t}\n\t}\n\tbt(0)\n\treturn result\n}\n\nfunc isValid(board []int, row, col int) bool {\n\tfor i := 0; i < row; i++ {\n\t\tif board[i] == col || abs(board[i]-col) == abs(i-row) {\n\t\t\treturn false\n\t\t}\n\t}\n\treturn true\n}",
           "language": "go"
         },
         {
@@ -509,21 +509,21 @@
           "complexity": "O(9^(n×n)) worst",
           "space": "O(n×n)",
           "description": "Kısıtlara uyan sayıları yerleştirir, çelişki olunca geri döner. Constraint propagation eklenirse dramatik hızlanma sağlanır. Genel CSP (Constraint Satisfaction Problem) çözücüsünün özel halidir.",
-          "code": "public bool SolveSudoku(char[][] board) {\n    for (int i = 0; i &lt; 9; i++)\n        for (int j = 0; j &lt; 9; j++) {\n            if (board[i][j] != '.') continue;\n            for (char c = '1'; c &lt;= '9'; c++) {\n                if (IsValid(board, i, j, c)) {\n                    board[i][j] = c;\n                    if (SolveSudoku(board)) return true;\n                    board[i][j] = '.';\n                }\n            }\n            return false;\n        }\n    return true;\n}\n\nbool IsValid(char[][] b, int r, int c, char ch) {\n    for (int i = 0; i &lt; 9; i++) {\n        if (b[r][i] == ch || b[i][c] == ch) return false;\n        if (b[3*(r/3)+i/3][3*(c/3)+i%3] == ch) return false;\n    }\n    return true;\n}",
+          "code": "public bool SolveSudoku(char[][] board) {\n    for (int i = 0; i < 9; i++)\n        for (int j = 0; j < 9; j++) {\n            if (board[i][j] != '.') continue;\n            for (char c = '1'; c <= '9'; c++) {\n                if (IsValid(board, i, j, c)) {\n                    board[i][j] = c;\n                    if (SolveSudoku(board)) return true;\n                    board[i][j] = '.';\n                }\n            }\n            return false;\n        }\n    return true;\n}\n\nbool IsValid(char[][] b, int r, int c, char ch) {\n    for (int i = 0; i < 9; i++) {\n        if (b[r][i] == ch || b[i][c] == ch) return false;\n        if (b[3*(r/3)+i/3][3*(c/3)+i%3] == ch) return false;\n    }\n    return true;\n}",
           "language": "csharp"
         }
       ]
     },
     {
       "id": "two_pointers_sliding_window",
-      "title": "Two Pointers &amp; Sliding Window",
+      "title": "Two Pointers & Sliding Window",
       "items": [
         {
           "name": "Two Sum (Two Pointers)",
           "complexity": "O(n)",
           "space": "O(1)",
           "description": "Sıralı dizide toplamı hedef olan çifti bulur. İki pointer baştan ve sondan yaklaşır. Pair sum, triplet sum, subarrays gibi pek çok problemin çözüm şablonudur.",
-          "code": "func twoSum(arr []int, target int) (int, int) {\n\tl, r := 0, len(arr)-1\n\tfor l &lt; r {\n\t\tsum := arr[l] + arr[r]\n\t\tif sum == target {\n\t\t\treturn l, r\n\t\t} else if sum &lt; target {\n\t\t\tl++\n\t\t} else {\n\t\t\tr--\n\t\t}\n\t}\n\treturn -1, -1\n}",
+          "code": "func twoSum(arr []int, target int) (int, int) {\n\tl, r := 0, len(arr)-1\n\tfor l < r {\n\t\tsum := arr[l] + arr[r]\n\t\tif sum == target {\n\t\t\treturn l, r\n\t\t} else if sum < target {\n\t\t\tl++\n\t\t} else {\n\t\t\tr--\n\t\t}\n\t}\n\treturn -1, -1\n}",
           "language": "go"
         },
         {
@@ -531,7 +531,7 @@
           "complexity": "O(n)",
           "space": "O(k)",
           "description": "Boyutu k olan kayan penceredeki maksimumu bulur. Deque (monotonic queue) ile her eleman en fazla bir kez eklenir/çıkarılır. Network paket analizi, finansal moving average, video stream işlemede kullanılır.",
-          "code": "function slidingWindowMax(nums: number[], k: number): number[] {\n  const result: number[] = [];\n  const deque: number[] = []; // index saklar\n  for (let i = 0; i &lt; nums.length; i++) {\n    if (deque.length &amp;&amp; deque[0] &lt; i - k + 1) deque.shift();\n    while (deque.length &amp;&amp; nums[deque[deque.length - 1]] &lt; nums[i])\n      deque.pop();\n    deque.push(i);\n    if (i &gt;= k - 1) result.push(nums[deque[0]]);\n  }\n  return result;\n}",
+          "code": "function slidingWindowMax(nums: number[], k: number): number[] {\n  const result: number[] = [];\n  const deque: number[] = []; // index saklar\n  for (let i = 0; i < nums.length; i++) {\n    if (deque.length && deque[0] < i - k + 1) deque.shift();\n    while (deque.length && nums[deque[deque.length - 1]] < nums[i])\n      deque.pop();\n    deque.push(i);\n    if (i >= k - 1) result.push(nums[deque[0]]);\n  }\n  return result;\n}",
           "language": "typescript"
         },
         {
@@ -539,7 +539,7 @@
           "complexity": "O(n)",
           "space": "O(k) — k = karakter sayısı",
           "description": "Bir string içinde tüm hedef karakterleri içeren en kısa alt stringi bulur. Log analizi, biyoinformatik sekans eşleştirme, metin madenciliğinde kullanılır.",
-          "code": "func minWindow(s, t string) string {\n\tneed := make(map[byte]int)\n\tfor i := 0; i &lt; len(t); i++ {\n\t\tneed[t[i]]++\n\t}\n\twindow := make(map[byte]int)\n\tl, valid := 0, 0\n\tstart, minLen := 0, math.MaxInt32\n\tfor r := 0; r &lt; len(s); r++ {\n\t\tc := s[r]\n\t\twindow[c]++\n\t\tif need[c] &gt; 0 &amp;&amp; window[c] == need[c] {\n\t\t\tvalid++\n\t\t}\n\t\tfor valid == len(need) {\n\t\t\tif r-l+1 &lt; minLen {\n\t\t\t\tstart, minLen = l, r-l+1\n\t\t\t}\n\t\t\tif need[s[l]] &gt; 0 &amp;&amp; window[s[l]] == need[s[l]] {\n\t\t\t\tvalid--\n\t\t\t}\n\t\t\twindow[s[l]]--\n\t\t\tl++\n\t\t}\n\t}\n\tif minLen == math.MaxInt32 {\n\t\treturn \"\"\n\t}\n\treturn s[start : start+minLen]\n}",
+          "code": "func minWindow(s, t string) string {\n\tneed := make(map[byte]int)\n\tfor i := 0; i < len(t); i++ {\n\t\tneed[t[i]]++\n\t}\n\twindow := make(map[byte]int)\n\tl, valid := 0, 0\n\tstart, minLen := 0, math.MaxInt32\n\tfor r := 0; r < len(s); r++ {\n\t\tc := s[r]\n\t\twindow[c]++\n\t\tif need[c] > 0 && window[c] == need[c] {\n\t\t\tvalid++\n\t\t}\n\t\tfor valid == len(need) {\n\t\t\tif r-l+1 < minLen {\n\t\t\t\tstart, minLen = l, r-l+1\n\t\t\t}\n\t\t\tif need[s[l]] > 0 && window[s[l]] == need[s[l]] {\n\t\t\t\tvalid--\n\t\t\t}\n\t\t\twindow[s[l]]--\n\t\t\tl++\n\t\t}\n\t}\n\tif minLen == math.MaxInt32 {\n\t\treturn \"\"\n\t}\n\treturn s[start : start+minLen]\n}",
           "language": "go"
         }
       ]

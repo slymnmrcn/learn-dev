@@ -2,12 +2,13 @@ import programming from './modules/programming.json';
 import system from './modules/system.json';
 import networking from './modules/networking.json';
 import database from './modules/database.json';
-import hardware from './modules/hardvare.json';
+import hardware from './modules/hardware.json';
 import security from './modules/security.json';
 import testing from './modules/testing.json';
 import web from './modules/web.json';
+import type { LearningModule, UserData } from '../types';
 
-export const allModules = [
+export const allModules: LearningModule[] = [
   programming,
   system,
   networking,
@@ -18,7 +19,7 @@ export const allModules = [
   web,
 ];
 
-export const userData = {
+export const userData: UserData = {
   name: 'Dev Explorer',
   level: 'Backend geliştirici adayı',
   stats: {
